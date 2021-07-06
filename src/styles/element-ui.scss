@@ -1,0 +1,39 @@
+// dialog
+.el-dialog__wrapper {
+  text-align: center;
+  &:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+}
+
+.el-dialog {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 2vh 0 !important;
+  text-align: left;
+  .el-dialog__body {
+    padding: 30px;
+  }
+}
+
+// table
+.el-table {
+  .el-button {
+    padding: 0;
+  }
+}
+
+// loading
+.el-loading-parent--relative > * {
+  filter: blur(1px);
+}
+.el-loading-mask {
+  background-color: transparent;
+  &,
+  & * {
+    filter: none;
+  }
+}

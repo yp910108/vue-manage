@@ -1,0 +1,47 @@
+<template>
+  <el-dialog
+    :visible.sync="visible"
+    :modal-append-to-body="true"
+    :append-to-body="true"
+    title="图片预览"
+    custom-class="upload__picture__preview__dialog"
+  >
+    <img :src="url" alt />
+  </el-dialog>
+</template>
+
+<script>
+export default {
+  props: {
+    url: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      visible: false
+    }
+  },
+  methods: {
+    show() {
+      this.visible = true
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.upload__picture__preview__dialog {
+  .el-dialog__header {
+    line-height: normal;
+  }
+  .el-dialog__body {
+    text-align: center;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}
+</style>

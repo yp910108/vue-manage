@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="app-header">
     <div class="logo">
       <span class="text">基础后台管理系统</span>
     </div>
@@ -37,9 +37,9 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/styles/variables.scss';
-.header {
+.app-header {
   position: relative;
-  z-index: 10000;
+  z-index: 1002;
   padding: 0 10px;
   height: 60px;
   background: $--color-primary;

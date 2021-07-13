@@ -28,7 +28,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/styles/variables.scss';
-
 .el-scrollbar /deep/ {
   .el-scrollbar__wrap {
     overflow-x: hidden;

@@ -80,15 +80,15 @@ export default {
   &.hide-sidebar:not(.mobile) /deep/ {
     .app-sidebar {
       width: 64px;
-    }
-    .el-submenu__title .el-submenu__icon-arrow {
-      display: none;
+      .el-submenu__title .el-submenu__icon-arrow {
+        display: none;
+      }
+      .title {
+        opacity: 0;
+      }
     }
     .app-container {
       margin-left: 64px;
-    }
-    .title {
-      opacity: 0;
     }
   }
   &.mobile {

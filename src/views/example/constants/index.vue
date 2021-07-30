@@ -28,6 +28,7 @@ import {
   userAuditStatusKeyValue,
   auditStatusColorCls
 } from '@/constants/user'
+
 export default {
   data() {
     return {

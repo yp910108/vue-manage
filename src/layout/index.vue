@@ -10,8 +10,8 @@
   </div>
 </template>
 <script>
-import resizeHandler from './mixin/resize'
 import { mapState } from 'vuex'
+import resizeHandler from './mixin/resize'
 import AppHeader from './app-header'
 import AppSidebar from './app-sidebar'
 import Navbar from './navbar'

@@ -1,7 +1,7 @@
 const storage = sessionStorage
 
 export function getLocalToken() {
-  const token = storage.token
+  const { token } = storage
   return token || ''
 }
 

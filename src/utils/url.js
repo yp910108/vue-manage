@@ -1,5 +1,4 @@
-import { publicPath } from '../../vue.config'
-import { toRawType } from './'
+import { toRawType } from '.'
 
 /**
  * @param {string} path
@@ -26,13 +25,6 @@ export function combineURL(...urls) {
 }
 
 /**
- * 获取当前项目的域名
- */
-export function getRootUrl() {
-  return combineURL(window.location.origin, publicPath, '/#/')
-}
-
-/**
  * 解析对象为 query { a: 1, b: 2 } => ?a=1&b=2
  * @param {*} data
  */
@@ -42,7 +34,7 @@ export function obj2Query(data) {
   Object.keys(data).forEach((key) => {
     const val = data[key]
     if (val || val === 0 || val === false) {
-      ret += (ret.indexOf('?') === -1 ? '?' : '&') + `${encodeURIComponent(key)}=${encodeURIComponent(val)}`
+      ret += `${ret.indexOf('?') === -1 ? '?' : '&'}${encodeURIComponent(key)}=${encodeURIComponent(val)}`
     }
   })
   return ret

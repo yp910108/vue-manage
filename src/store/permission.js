@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { constantRoutes, asyncRoutes, unmatchedRoute } from '@/router'
 
 /**
@@ -7,7 +6,8 @@ import { constantRoutes, asyncRoutes, unmatchedRoute } from '@/router'
  */
 function setSeq(routes) {
   routes.forEach((route) => {
-    let { alwaysShow, meta = {}, children = [] } = route
+    const { alwaysShow, meta = {} } = route
+    let { children = [] } = route
     if (children && children.length) {
       children = children.filter((child) => !child.hidden)
       if (!alwaysShow && children.length === 1) {
@@ -53,8 +53,8 @@ function sortRoutes(routes) {
 function hasPermission(menus, route) {
   const { name, ignorePermission, meta = {} } = route
   if (ignorePermission) return true
-  for (const [i, v] of menus.entries()) {
-    const { code, menuName: title, icon, seq, children } = v
+  for (const menu of menus) {
+    const { code, menuName: title, icon, seq, children } = menu
     if (code && code === name) {
       route.meta = {
         ...meta,
@@ -65,7 +65,7 @@ function hasPermission(menus, route) {
       return true
     }
     if (children && children.length) {
-      let ret = hasPermission(children, route)
+      const ret = hasPermission(children, route)
       if (ret) {
         return ret
       }
@@ -81,7 +81,7 @@ function hasPermission(menus, route) {
 function filterAsyncRoutes(menus, routes) {
   const ret = []
   routes.forEach((router) => {
-    let temp = { ...router }
+    const temp = { ...router }
     if (hasPermission(menus, temp)) {
       ret.push(temp)
       if (temp.children) {
@@ -98,9 +98,9 @@ const state = {
 }
 
 const mutations = {
-  SET_ROUTES(state, routes) {
-    state.addRoutes = [...routes, unmatchedRoute]
-    state.routes = [...constantRoutes, ...routes, unmatchedRoute]
+  SET_ROUTES(_state, routes) {
+    _state.addRoutes = [...routes, unmatchedRoute]
+    _state.routes = [...constantRoutes, ...routes, unmatchedRoute]
   }
 }
 

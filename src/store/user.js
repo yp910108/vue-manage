@@ -6,8 +6,8 @@ const state = {
 }
 
 const mutations = {
-  SET_USER(state, user) {
-    state.user = user
+  SET_USER(_state, user) {
+    _state.user = user
   }
 }
 const actions = {

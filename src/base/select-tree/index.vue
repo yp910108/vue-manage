@@ -65,19 +65,17 @@ export default {
       const { children } = props
       const inner = (list) => {
         list = list || options
-        for (let item of list) {
+        for (const item of list) {
           const currentId = item[nodeKey]
           const arr = item[children]
           if (currentId === this.value) {
             const ret = { ...item }
             delete ret[children]
             return ret
-          } else {
-            if (arr && arr.length) {
-              const ret = inner(arr)
-              if (ret) {
-                return ret
-              }
+          } else if (arr && arr.length) {
+            const ret = inner(arr)
+            if (ret) {
+              return ret
             }
           }
         }
@@ -85,14 +83,15 @@ export default {
       return inner()
     },
     scrollToCurrent() {
-      let $container = this.$refs.scrollbar.$el.querySelector('.el-scrollbar__wrap')
+      const $container = this.$refs.scrollbar.$el.querySelector('.el-scrollbar__wrap')
       if (!this.value) {
-        return ($container.scrollTop = 0)
+        $container.scrollTop = 0
+        return
       }
-      let { offsetHeight } = $container
-      let $target = this.$refs.tree.$el.querySelector('.is-current')
+      const { offsetHeight } = $container
+      const $target = this.$refs.tree.$el.querySelector('.is-current')
       if (!$target) return
-      let { offsetTop } = $target
+      const { offsetTop } = $target
       if (offsetTop >= offsetHeight - 30) {
         $container.scrollTop = offsetTop - offsetHeight + 30
       }
@@ -112,7 +111,7 @@ export default {
     filterMethod(value, data) {
       if (!value) return true
       const { props, options } = this.$_attrs
-      let arr = getParents(options, data[props.value], props)
+      const arr = getParents(options, data[props.value], props)
       return arr.some((item) => item[props.label].indexOf(value) !== -1)
     },
     clear() {

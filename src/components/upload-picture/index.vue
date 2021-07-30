@@ -9,6 +9,7 @@
 
 <script>
 import Preview from './preview'
+
 export default {
   inheritAttrs: false,
   components: { Preview },
@@ -23,7 +24,7 @@ export default {
       this.$refs.preview.show()
     },
     exceed() {
-      let { limit } = this.$attrs
+      const { limit } = this.$attrs
       if (limit) {
         this.$message({
           message: `最多上传${limit}张`,

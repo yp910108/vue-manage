@@ -17,7 +17,7 @@ export default {
     async preview({ response, id }) {
       try {
         if (response) {
-          let value = response.value
+          let { value } = response.value
           value = JSON.parse(value)
           id = value.fileId
         }
@@ -29,7 +29,7 @@ export default {
       }
     },
     exceed() {
-      let { limit } = this.$attrs
+      const { limit } = this.$attrs
       if (limit) {
         this.$message({
           message: `最多上传${limit}个`,

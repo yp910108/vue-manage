@@ -52,9 +52,9 @@ export default {
       return path.resolve(this.basePath, url)
     },
     redirect(route) {
-      let { path, fullPath } = this.$route
-      let targetPath = this.resolve(route.path)
-      if (path === targetPath) {
+      const { path: _path, fullPath } = this.$route
+      const targetPath = this.resolve(route.path)
+      if (_path === targetPath) {
         this.$router.replace({
           path: `/redirect${fullPath}` // fullPath: /foo/index/123456?name=tom
         })
@@ -65,14 +65,16 @@ export default {
   },
   computed: {
     visiable() {
-      let { children, hidden } = this.item
+      const { hidden } = this.item
+      let { children } = this.item
       if (children && children.length) {
         children = children.filter((child) => !child.hidden)
       }
       return !hidden && children && children.length
     },
     isMenu() {
-      let { alwaysShow, children } = this.item
+      const { alwaysShow } = this.item
+      let { children } = this.item
       if (alwaysShow) {
         return true
       }
@@ -80,7 +82,7 @@ export default {
         children = children.filter((child) => !child.hidden)
       }
       if (children.length === 1) {
-        let child = children[0]
+        const child = children[0]
         if (!child || !child.children || !child.children.length) {
           return false
         }
@@ -88,9 +90,9 @@ export default {
       return true
     },
     router() {
-      let { children } = this.item
+      const { children } = this.item
       if (!this.isMenu) {
-        let child = children[0]
+        const child = children[0]
         return child
       }
       return this.item

@@ -5,7 +5,7 @@ const caches = {
   dict: fetchDict
 }
 
-const _originCaches = { ...caches }
+const originCaches = { ...caches }
 
 const inits = {}
 
@@ -33,16 +33,17 @@ const remotes = new Proxy(caches, {
     }
   },
   set(target, key, value) {
-    return (target[key] = value)
+    target[key] = value
+    return true
   }
 })
 
 export function resetRemotes(key) {
   if (key) {
-    remotes[key] = _originCaches[key]
+    remotes[key] = originCaches[key]
   } else {
-    for (const key in _originCaches) {
-      remotes[key] = _originCaches[key]
+    for (const k in originCaches) {
+      remotes[k] = originCaches[k]
     }
   }
 }

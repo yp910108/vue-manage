@@ -1,22 +1,28 @@
 import axios from 'axios'
+import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
 import { baseUrl } from '@/config'
 import { getLocalToken } from './local'
-import { Notification } from 'element-ui'
 
 // 请求成功
 const ERRS_OK = 0
+// token 失效或未登录
+const ERRS_INVALID = 40010
 
 const fadeLogout = () => {
-  Notification({
-    type: 'error',
-    title: '提示',
-    message: '用户信息失效，请重新登录'
+  MessageBox.confirm('用户信息失效，请重新登录', '提示', {
+    type: 'warning',
+    confirmButtonText: '重新登录',
+    showCancelButton: false,
+    showClose: false,
+    closeOnClickModal: false,
+    closeOnPressEscape: false
   })
-  setTimeout(() => {
-    store.dispatch('user/fedLogout')
-    location.reload()
-  }, 1000)
+    .then(() => {
+      store.dispatch('user/fedLogout')
+      window.location.reload()
+    })
+    .catch(() => {})
 }
 
 const service = axios.create({
@@ -27,7 +33,7 @@ const service = axios.create({
 service.interceptors.request.use((config) => {
   const token = getLocalToken()
   if (token) {
-    config['headers']['Authorization'] = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })
@@ -38,15 +44,11 @@ service.interceptors.response.use(
     const { data: { code, data, msg } = {} } = response
     if (code === ERRS_OK) {
       return data
-    } else if (code === 1) {
+    } else if (code === ERRS_INVALID) {
       return fadeLogout()
     } else {
       if (request.responseType !== 'blob') {
-        Notification({
-          type: 'error',
-          title: '提示',
-          message: msg || '请求失败'
-        })
+        Message.error(msg || '请求失败')
       }
       return Promise.reject(response.data)
     }
@@ -56,11 +58,7 @@ service.interceptors.response.use(
     if (status === 401) {
       return fadeLogout()
     }
-    Notification({
-      type: 'error',
-      title: '提示',
-      message: '服务器异常'
-    })
+    Message.error('服务器异常')
     return Promise.reject(e)
   }
 )

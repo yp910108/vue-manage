@@ -26,15 +26,15 @@ module.exports = {
     },
     clientLogLevel: 'warning',
     proxy: {
-      '/': {
-        target: 'http://10.112.2.10',
+      '/api': {
+        target: 'http://49.232.208.239',
         changeOrigin: true,
         ws: false
       }
     }
   },
   configureWebpack: {
-    name: name,
+    name,
     resolve: {
       alias: {
         '@': resolve('src')
@@ -43,10 +43,7 @@ module.exports = {
   },
   chainWebpack(config) {
     // set svg-sprite-loader
-    config.module
-      .rule('svg')
-      .exclude.add(resolve('src/base/icon'))
-      .end()
+    config.module.rule('svg').exclude.add(resolve('src/base/icon')).end()
     config.module
       .rule('icons')
       .test(/\.svg$/)

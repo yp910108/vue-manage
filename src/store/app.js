@@ -4,12 +4,12 @@ const state = {
 }
 
 const mutations = {
-  SET_DEVICE(state, device) {
-    state.device = device
+  SET_DEVICE(_state, device) {
+    _state.device = device
   },
-  SET_SIDEBAR(state, status) {
+  SET_SIDEBAR(_state, status) {
     localStorage.sidebarStatus = status
-    state.sidebarOpened = !!status
+    _state.sidebarOpened = !!status
   }
 }
 

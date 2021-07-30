@@ -11,7 +11,7 @@ Vue.use(Router)
 
 // vue-router3.0+ 版本返回 promise，要求增加 catch 函数 此处进行 hack
 const originalPush = Router.prototype.push
-Router.prototype.push = function(location) {
+Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch((err) => err)
 }
 
@@ -32,7 +32,6 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    ignorePermission: true,
     children: [
       {
         path: 'dashboard',
@@ -69,5 +68,6 @@ export const unmatchedRoute = {
 }
 
 export default new Router({
+  mode: 'history',
   routes: constantRoutes
 })

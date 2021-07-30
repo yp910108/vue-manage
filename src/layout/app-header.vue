@@ -23,7 +23,7 @@ export default {
           type: 'warning'
         })
         await this.$store.dispatch('user/fedLogout')
-        location.reload()
+        window.location.reload()
       } catch (e) {
         // do nothing
       }

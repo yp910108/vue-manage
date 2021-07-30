@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export function fetchDict() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       console.log('调用接口，获取字典...')
       resolve([

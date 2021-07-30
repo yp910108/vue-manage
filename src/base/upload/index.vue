@@ -23,11 +23,11 @@ export default {
   },
   methods: {
     setValue() {
-      let files = this.$refs.upload.uploadFiles.filter((file) => file.status === 'success')
+      const files = this.$refs.upload.uploadFiles.filter((file) => file.status === 'success')
       const newVal = files.map((file) => {
         const { response } = file
         if (response) {
-          let value = response.value
+          let { value } = response
           try {
             value = JSON.parse(value)
             const { fileId: id, fileName: name, size } = value
@@ -66,7 +66,8 @@ export default {
       immediate: true,
       handler(newVal) {
         if (this.isSetValue) {
-          return (this.isSetValue = false)
+          this.isSetValue = false
+          return
         }
         if (newVal && newVal instanceof Array) {
           this.fileList = newVal.map((item) => {

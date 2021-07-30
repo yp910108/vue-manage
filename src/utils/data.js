@@ -1,4 +1,4 @@
-import { toRawType } from './'
+import { toRawType } from '.'
 
 /**
  * 处理传入的 data 并返回
@@ -32,7 +32,7 @@ export function getParents(originList, originValue, props) {
   props = { value: 'value', parentValue: 'parentValue', children: 'children', ...props }
   const ret = []
   const { value: attrValue, parentValue: attrParentValue, children: attrChildren } = props
-  let temp = (list, value) => {
+  const temp = (list, value) => {
     for (let i = 0, len = list.length; i < len; i++) {
       const item = list[i]
       const currValue = item[attrValue]

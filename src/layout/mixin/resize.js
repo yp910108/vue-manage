@@ -18,7 +18,7 @@ export default {
     }
   },
   watch: {
-    $route(route) {
+    $route() {
       if (this.isMobile() && this.$store.state.app.sidebarOpened) {
         this.$store.dispatch('app/setDevice', 'mobile')
         this.$store.dispatch('app/setSidebar', 0)

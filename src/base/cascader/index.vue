@@ -55,9 +55,7 @@ export default {
         }
         const { options } = this.$_attrs
         const parents = getParents(options, this.value[this.value.length - 1], this.$_attrs.props)
-        const parentIds = parents.map((p) => {
-          return p[this.$_attrs.props.value]
-        })
+        const parentIds = parents.map((p) => p[this.$_attrs.props.value])
         return [...parentIds]
       }
     }

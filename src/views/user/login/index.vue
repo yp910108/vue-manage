@@ -3,9 +3,7 @@
     <div class="box">
       <h2 class="sys-name">基础后台管理系统</h2>
       <div class="form-wrapper">
-        <div class="title-wrapper">
-          欢迎登录
-        </div>
+        <div class="title-wrapper">欢迎登录</div>
         <el-form ref="form" :model="form" :rules="rules">
           <el-form-item prop="account">
             <i-icon icon="user" />
@@ -58,7 +56,7 @@ export default {
   methods: {
     validate() {
       let pass = false
-      this.$refs['form'].validate((valid) => {
+      this.$refs.form.validate((valid) => {
         pass = valid
       })
       return pass

@@ -71,7 +71,7 @@ export default {
       const { children } = props
       const ret = []
       const inner = (list) => {
-        for (let item of list) {
+        for (const item of list) {
           const currId = item[nodeKey]
           const arr = item[children]
           if (this.value.indexOf(currId) !== -1) {
@@ -86,14 +86,15 @@ export default {
       return ret
     },
     scrollToCurrent() {
-      let $container = this.$refs.scrollbar.$el.querySelector('.el-scrollbar__wrap')
+      const $container = this.$refs.scrollbar.$el.querySelector('.el-scrollbar__wrap')
       if (!this.value) {
-        return ($container.scrollTop = 0)
+        $container.scrollTop = 0
+        return
       }
-      let { offsetHeight } = $container
-      let $target = this.$refs.tree.$el.querySelector('.is-checked')
+      const { offsetHeight } = $container
+      const $target = this.$refs.tree.$el.querySelector('.is-checked')
       if (!$target) return
-      let { offsetTop } = $target
+      const { offsetTop } = $target
       if (offsetTop >= offsetHeight - 30) {
         $container.scrollTop = offsetTop - offsetHeight + 100
       }
@@ -106,7 +107,7 @@ export default {
     filterMethod(value, data) {
       if (!value) return true
       const { props, options } = this.$_attrs
-      let arr = getParents(options, data[props.value], props)
+      const arr = getParents(options, data[props.value], props)
       return arr.some((item) => item[props.label].indexOf(value) !== -1)
     },
     clear() {
@@ -139,7 +140,7 @@ export default {
     $_listeners() {
       return {
         ...this.$listeners,
-        'check-change': (item) => {
+        'check-change': () => {
           this.$emit('input', this.$refs.tree.getCheckedKeys())
           this.$emit('check-change')
         },

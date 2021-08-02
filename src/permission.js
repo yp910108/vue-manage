@@ -1,5 +1,5 @@
 /* eslint-disable */
-import router from '@/router'
+import router, { unmatchedRoute } from '@/router'
 import store from '@/store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -21,8 +21,10 @@ router.beforeEach(async (to, from, next) => {
         // 如果用户没有拉取完用户信息（当用户F5刷新页面时，没有用户信息）
         try {
           const user = await store.dispatch('user/getUser')
-          store.dispatch('permission/generateRoutes', user)
-          router.addRoutes(store.state.permission.addRoutes)
+          store.dispatch('permission/setMenus', user)
+          const route = await store.dispatch('permission/generateRoute', user)
+          router.addRoute(route)
+          router.addRoute(unmatchedRoute)
           next({ ...to, replace: true }) // hack 确保刷新页面时可以加载当前路由, set replace: true 设置之后不会留下当前路由的记录
         } catch (e) {
           console.warn(e)

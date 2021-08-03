@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Layout, { EmptyLayout } from '@/layouts' // eslint-disable-line
+import Layout from '@/layouts' // eslint-disable-line
 
 /* Router Modules */
 import user from './user'
@@ -28,6 +28,23 @@ const routes = [
     ]
   }
 ]
+
+// 初始路由在这里配置
+export const route = {
+  path: '/',
+  component: Layout,
+  children: [
+    {
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard'),
+      meta: {
+        title: '首页',
+        icon: 'home'
+      }
+    }
+  ]
+}
 
 // 未匹配的路由需要跳转的页面在这里配置
 export const unmatchedRoute = {

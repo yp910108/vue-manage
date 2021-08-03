@@ -18,7 +18,7 @@ export function getUser() {
         mobile: '13793186354',
         menus: [
           {
-            name: '示例',
+            name: '组件示例',
             icon: 'example',
             path: 'example',
             children: [
@@ -61,9 +61,9 @@ export function getUser() {
             ]
           },
           {
-            name: '示例-下拉框',
-            icon: 'example',
-            path: 'example-select'
+            name: '无嵌套的路由',
+            icon: 'nested',
+            path: 'without-nested'
           }
         ]
       })

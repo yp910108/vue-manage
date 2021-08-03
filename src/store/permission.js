@@ -1,5 +1,6 @@
 import { combineURL } from '@/utils'
-import Layout, { EmptyLayout } from '@/layouts' // eslint-disable-line
+import { route } from '@/router'
+import { EmptyLayout } from '@/layouts' // eslint-disable-line
 
 function processMenus(menus, parentPath) {
   return menus.map((menu) => {
@@ -16,15 +17,15 @@ function processMenus(menus, parentPath) {
 
 function generateRoutes(menus, parentPage) {
   return menus.map(({ path, name, children, ...restProps }) => {
-    const page = combineURL(parentPage || '', path || '')
-    const childrenRoutes = generateRoutes(children || [], page)
-    const hasChildrenRoutes = childrenRoutes && childrenRoutes.length
+    const page = `/${combineURL(parentPage || '', path || '')}`
+    const childRoutes = generateRoutes(children || [], page)
+    const hasChildRoutes = childRoutes && childRoutes.length
     return {
       path: combineURL(path),
-      component: hasChildrenRoutes ? EmptyLayout : () => import('@/views/' + page), // eslint-disable-line
-      redirect: hasChildrenRoutes ? combineURL(page, childrenRoutes[0].path) : undefined,
+      component: hasChildRoutes ? EmptyLayout : () => import('@/views' + page), // eslint-disable-line
+      redirect: hasChildRoutes ? combineURL(page, childRoutes[0].path) : undefined,
       meta: { title: name, ...restProps },
-      children: hasChildrenRoutes ? childrenRoutes : undefined
+      children: hasChildRoutes ? childRoutes : undefined
     }
   })
 }
@@ -48,21 +49,9 @@ const actions = {
   generateRoute(_, user) {
     const menus = user.menus || []
     return {
-      path: '/',
-      component: Layout,
-      redirect: '/dashboard',
-      children: [
-        {
-          path: 'dashboard',
-          name: 'Dashboard',
-          component: () => import('@/views/dashboard'),
-          meta: {
-            title: '首页',
-            icon: 'home'
-          }
-        },
-        ...generateRoutes(menus)
-      ]
+      ...route,
+      redirect: route.children && route.children.length ? `/${route.children[0].path}` : undefined,
+      children: [...route.children, ...generateRoutes(menus)]
     }
   }
 }

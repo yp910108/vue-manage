@@ -96,9 +96,9 @@ export default {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -365px;
+    margin-left: -250px;
     margin-top: -225px;
-    width: 666px;
+    width: 500px;
     height: 411px;
     .sys-name {
       position: absolute;
@@ -113,7 +113,7 @@ export default {
       color: #222;
     }
     .form-wrapper {
-      padding: 50px 100px;
+      padding: 50px;
       .title-wrapper {
         line-height: 1;
         text-align: center;
@@ -137,6 +137,10 @@ export default {
           width: 14px;
           height: 14px;
           color: rgba(0, 0, 0, 0.25);
+        }
+        .el-input__inner {
+          height: 40px;
+          line-height: 40px;
         }
       }
     }

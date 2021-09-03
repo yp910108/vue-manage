@@ -36,6 +36,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/variables.scss';
+
 .app-header {
   position: relative;
   z-index: 1002;
@@ -44,7 +46,7 @@ export default {
   align-items: center;
   padding: 0 10px;
   height: 60px;
-  background: #1677ff;
+  background: $--color-primary;
   .logo {
     margin-left: 20px;
     font-size: 16px;

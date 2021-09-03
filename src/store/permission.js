@@ -51,8 +51,7 @@ const actions = {
     commit('SET_MENUS', [...initMenus, ...processMenus(user.menus || [])])
   },
   generateRoute(_, user) {
-    const menus = user.menus || []
-    const children = [...route.children, ...generateRoutes(menus)]
+    const children = [...route.children, ...generateRoutes(user.menus || [])]
     return {
       ...route,
       redirect: children && children.length ? `/${children[0].path}` : undefined,

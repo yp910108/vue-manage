@@ -96,6 +96,11 @@ export default {
           display: none;
         }
       }
+      &.is-opened {
+        .el-menu {
+          display: block !important;
+        }
+      }
     }
     &.el-menu--collapse {
       .i__icon__wrapper {

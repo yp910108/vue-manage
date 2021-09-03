@@ -61,8 +61,23 @@ export function getUser() {
             ]
           },
           {
-            name: '无嵌套的路由',
+            name: '嵌套的路由',
             icon: 'nested',
+            path: 'nested',
+            children: [
+              {
+                name: '子路由1',
+                path: 'child1'
+              },
+              {
+                name: '子路由2',
+                path: 'child2'
+              }
+            ]
+          },
+          {
+            name: '无嵌套的路由',
+            icon: 'file',
             path: 'without-nested'
           }
         ]

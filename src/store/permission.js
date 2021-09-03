@@ -42,7 +42,8 @@ const mutations = {
 
 const actions = {
   setMenus({ commit }, user) {
-    const initMenus = route.children.map(({ path = '', meta = {} }) => ({
+    const children = route.children.filter(({ meta = {} }) => !meta.hidden)
+    const initMenus = children.map(({ path = '', meta = {} }) => ({
       path: `/${combineURL(path)}`,
       name: meta.title,
       icon: meta.icon

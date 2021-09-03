@@ -42,6 +42,24 @@ export const route = {
         title: '首页',
         icon: 'home'
       }
+    },
+    {
+      path: 'nested/child1/second',
+      name: 'NestedChild1Second',
+      component: () => import('@/views/nested/child1/second'),
+      meta: {
+        title: '嵌套的路由 / 子路由1 / 二级路由',
+        hidden: true
+      }
+    },
+    {
+      path: 'without-nested/second',
+      name: 'WithoutNestedSecond',
+      component: () => import('@/views/without-nested/second'),
+      meta: {
+        title: '无嵌套的路由 / 二级路由',
+        hidden: true
+      }
     }
   ]
 }

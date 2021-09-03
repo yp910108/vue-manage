@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar>
+  <el-scrollbar class="app-sidebar">
     <el-menu unique-opened :default-active="$route.path" :collapse="isCollapse">
       <sidebar-item v-for="menu in menus" :key="menu.path" :item="menu" />
     </el-menu>
@@ -28,7 +28,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/styles/variables.scss';
-.el-scrollbar ::v-deep {
+.app-sidebar ::v-deep {
   .el-scrollbar__wrap {
     overflow-x: hidden;
     background: #2b2b2d;

@@ -42,16 +42,20 @@ const mutations = {
 
 const actions = {
   setMenus({ commit }, user) {
-    const menus = processMenus(user.menus || [])
-    menus.unshift({ path: '/dashboard', name: '首页', icon: 'home' })
-    commit('SET_MENUS', menus)
+    const initMenus = route.children.map(({ path = '', meta = {} }) => ({
+      path: `/${combineURL(path)}`,
+      name: meta.title,
+      icon: meta.icon
+    }))
+    commit('SET_MENUS', [...initMenus, ...processMenus(user.menus || [])])
   },
   generateRoute(_, user) {
     const menus = user.menus || []
+    const children = [...route.children, ...generateRoutes(menus)]
     return {
       ...route,
-      redirect: route.children && route.children.length ? `/${route.children[0].path}` : undefined,
-      children: [...route.children, ...generateRoutes(menus)]
+      redirect: children && children.length ? `/${children[0].path}` : undefined,
+      children
     }
   }
 }

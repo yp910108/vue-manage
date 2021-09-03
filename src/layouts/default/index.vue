@@ -2,9 +2,9 @@
   <div class="app-wrapper" :class="classApp">
     <div class="drawer-bg" @click="handleClickOutside"></div>
     <app-header />
-    <app-sidebar class="app-sidebar" />
+    <app-sidebar />
     <div class="app-container">
-      <navbar />
+      <app-breadcrumb />
       <app-main />
     </div>
   </div>
@@ -14,7 +14,7 @@ import { mapState } from 'vuex'
 import resizeHandler from './mixin/resize'
 import AppHeader from './app-header'
 import AppSidebar from './app-sidebar'
-import Navbar from './navbar'
+import AppBreadcrumb from './app-breadcrumb'
 import AppMain from './app-main'
 
 export default {
@@ -22,7 +22,7 @@ export default {
   components: {
     AppHeader,
     AppSidebar,
-    Navbar,
+    AppBreadcrumb,
     AppMain
   },
   methods: {
@@ -56,13 +56,16 @@ export default {
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
   }
+  .app-header {
+    position: relative;
+    z-index: 1002;
+  }
   .app-sidebar {
     position: fixed;
     left: 0;
     top: 60px;
     bottom: 0;
     z-index: 1002;
-    border-right: solid 1px #e6e6e6;
     width: 200px;
     transition: all 0.3s ease-in-out;
     overflow: hidden;
@@ -76,6 +79,13 @@ export default {
     height: calc(100vh - 60px);
     transition: margin-left 0.3s ease-in-out;
     overflow: auto;
+    .app-breadcrumb {
+      position: absolute;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      right: 0;
+    }
   }
   &.hide-sidebar:not(.mobile) ::v-deep {
     .app-sidebar {

@@ -39,8 +39,6 @@ export default {
 @import '@/styles/variables.scss';
 
 .app-header {
-  position: relative;
-  z-index: 1002;
   display: flex;
   justify-content: space-between;
   align-items: center;

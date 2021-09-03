@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-bar">
+  <div class="app-breadcrumb">
     <hamburger class="hamburger-wrapper" />
     <span class="breadcrumb-wrapper">当前位置：{{ locations }}</span>
   </div>
@@ -20,12 +20,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.nav-bar {
-  position: absolute;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  right: 0;
+.app-breadcrumb {
   height: 50px;
   background-color: #fff;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.1);

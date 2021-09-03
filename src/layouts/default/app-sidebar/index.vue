@@ -28,7 +28,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/styles/variables.scss';
-.el-scrollbar /deep/ {
+.el-scrollbar ::v-deep {
   .el-scrollbar__wrap {
     overflow-x: hidden;
     background: #2b2b2d;

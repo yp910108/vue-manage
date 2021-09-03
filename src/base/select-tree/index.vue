@@ -216,7 +216,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles/variables.scss';
 
-.el-scrollbar /deep/ {
+.el-scrollbar ::v-deep {
   .el-scrollbar__wrap {
     max-height: 260px;
     overflow-x: hidden;
@@ -248,7 +248,7 @@ export default {
   }
 }
 
-.reference /deep/ {
+.reference ::v-deep {
   .el-input {
     .el-input__inner {
       overflow: hidden;

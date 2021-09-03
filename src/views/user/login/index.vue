@@ -87,7 +87,7 @@ export default {
 @import '@/styles/variables.scss';
 @import '@/styles/mixins.scss';
 
-.container /deep/ {
+.container ::v-deep {
   position: relative;
   min-height: 100%;
   @include bg('~@/assets/login-bg.svg');

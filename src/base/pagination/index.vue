@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.i__pagination__container /deep/ {
+.i__pagination__container ::v-deep {
   padding: 15px 16px 0;
   text-align: right;
   background: #fff;

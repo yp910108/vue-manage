@@ -176,7 +176,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-content /deep/ {
+.app-content ::v-deep {
   .el-popover__reference {
     display: inline-block;
     width: 300px;

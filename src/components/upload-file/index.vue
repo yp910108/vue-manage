@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.upload__file /deep/ {
+.upload__file ::v-deep {
   .hide-upload-btn {
     .el-upload__tip,
     .el-upload--text {

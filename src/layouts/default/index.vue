@@ -77,7 +77,7 @@ export default {
     transition: margin-left 0.3s ease-in-out;
     overflow: auto;
   }
-  &.hide-sidebar:not(.mobile) /deep/ {
+  &.hide-sidebar:not(.mobile) ::v-deep {
     .app-sidebar {
       width: 64px;
       .el-submenu__title .el-submenu__icon-arrow {

@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.upload__picture /deep/ {
+.upload__picture ::v-deep {
   line-height: 1;
   .el-upload--picture-card {
     margin: 0 8px 8px 0;

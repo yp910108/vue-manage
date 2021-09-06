@@ -1,17 +1,16 @@
 <template>
-  <div v-show="total > 0" class="i__pagination__container">
-    <el-pagination
-      v-bind="$attrs"
-      :layout="layout"
-      :background="background"
-      :current-page.sync="page"
-      :page-size.sync="limit"
-      :page-sizes="pageSizes"
-      :total="total"
-      @size-change="handleChange"
-      @current-change="handleChange"
-    />
-  </div>
+  <el-pagination
+    v-show="total > 0"
+    v-bind="$attrs"
+    :layout="layout"
+    :background="background"
+    :current-page.sync="page"
+    :page-size.sync="limit"
+    :page-sizes="pageSizes"
+    :total="total"
+    @size-change="handleChange"
+    @current-change="handleChange"
+  />
 </template>
 
 <script>
@@ -71,21 +70,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.i__pagination__container ::v-deep {
-  padding: 15px 16px 0;
-  text-align: right;
-  background: #fff;
-  @media screen and (max-width: 750px) {
-    .btn-prev,
-    .el-pager,
-    .btn-next {
-      display: none;
-    }
-  }
-  .el-input__inner {
-    vertical-align: middle;
-  }
-}
-</style>

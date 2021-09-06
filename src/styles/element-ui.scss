@@ -1,3 +1,71 @@
+// input
+.el-input {
+  .el-input__inner {
+    text-align: left;
+  }
+  &.el-input-group--append {
+    .el-input__inner {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+// textarea
+.el-textarea {
+  .el-textarea__inner {
+    font-family: inherit;
+  }
+}
+
+// el-form
+.el-form {
+  .el-form-item {
+    .el-input-number,
+    .el-select,
+    .el-date-editor-wrapper,
+    .el-date-editor {
+      width: 100%;
+    }
+  }
+}
+
+// tabs
+.el-tabs__item:focus.is-active.is-focus:not(:active) {
+  box-shadow: none;
+}
+
+// el-table
+.el-table {
+  .el-button--text {
+    padding: 0;
+  }
+  .pop-btn + .el-button--text,
+  .el-button--text + .pop-btn,
+  .pop-btn + .pop-btn {
+    margin-left: 10px;
+  }
+}
+
+// el-pagination
+.el-pagination {
+  margin-top: 16px;
+  padding: 0 9px;
+  text-align: right;
+  .el-input {
+    .el-input__inner {
+      text-align: center;
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .btn-prev,
+    .el-pager,
+    .btn-next {
+      display: none;
+    }
+  }
+}
+
 // dialog
 .el-dialog__wrapper {
   text-align: center;
@@ -7,21 +75,13 @@
     height: 100%;
     vertical-align: middle;
   }
-}
-
-.el-dialog {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 2vh 0 !important;
-  text-align: left;
-  .el-dialog__body {
-    padding: 30px;
-  }
-}
-
-// table
-.el-table {
-  .el-button {
-    padding: 0;
+  .el-dialog {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 2vh 0 !important;
+    text-align: left;
+    .el-dialog__body {
+      padding: 30px;
+    }
   }
 }

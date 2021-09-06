@@ -8,13 +8,13 @@
     }"
   >
     <div slot="title" class="title-wrapper">
-      <i-icon v-if="item.icon" class="sidebar-icon-wrapper" :icon="item.icon" />
+      <i-icon v-if="item.icon" :icon="item.icon" />
       <span class="title">{{ item.name }}</span>
     </div>
     <sidebar-item v-for="child in item.children" :key="child.path" :item="child" />
   </el-submenu>
   <el-menu-item v-else :index="item.path" :class="{ 'is-active': isActive(item) }" @click="handleItemClick(item.path)">
-    <i-icon v-if="item.icon" class="sidebar-icon-wrapper" :icon="item.icon" />
+    <i-icon v-if="item.icon" :icon="item.icon" />
     <span class="title" slot="title">{{ item.name }}</span>
   </el-menu-item>
 </template>

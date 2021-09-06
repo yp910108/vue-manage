@@ -126,16 +126,15 @@ export default {
       margin-top: 30px;
       .el-form-item {
         input {
-          padding: 0 15px 0 31px;
+          padding: 0 15px 0 32px;
           font-size: 16px;
         }
-        .i__icon__wrapper {
+        .i__icon {
           position: absolute;
           z-index: 1;
           left: 12px;
           top: 12px;
-          width: 14px;
-          height: 14px;
+          font-size: 16px;
           color: rgba(0, 0, 0, 0.25);
         }
         .el-input__inner {

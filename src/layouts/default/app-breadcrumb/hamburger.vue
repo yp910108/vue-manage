@@ -1,7 +1,5 @@
 <template>
-  <span class="hamburger" @click="toggleSideBar">
-    <i-icon :icon="icon" />
-  </span>
+  <i-icon :icon="icon" @click="toggleSideBar" />
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -21,13 +19,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.hamburger {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 20px;
+.i__icon {
+  padding: 5px;
+  font-size: 30px;
   color: #7d7e80;
   cursor: pointer;
 }

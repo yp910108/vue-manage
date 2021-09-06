@@ -23,6 +23,31 @@ export function filterData(data) {
 }
 
 /**
+ * 树形结构，通过子节点 value 查找子节点
+ * @param {*} originList
+ * @param {*} originValue
+ * @param {*} props
+ * @returns
+ */
+export function getChild(originList = [], originValue, props) {
+  props = { value: 'value', children: 'children', ...props }
+  const { value: attrValue, children: attrChildren } = props
+  const temp = (list) => {
+    for (const item of list) {
+      const currValue = item[attrValue]
+      const currChildren = item[attrChildren]
+      if (currValue === originValue) {
+        return item
+      } else if (currChildren && !!currChildren) {
+        const ret = getChild(currChildren)
+        if (ret) return ret
+      }
+    }
+  }
+  return temp(originList)
+}
+
+/**
  * 树形结构，通过子节点查找父节点组成的数组（包含自身）
  * @param {*} props
  * @param {*} originList
@@ -33,8 +58,7 @@ export function getParents(originList, originValue, props) {
   const ret = []
   const { value: attrValue, parentValue: attrParentValue, children: attrChildren } = props
   const temp = (list, value) => {
-    for (let i = 0, len = list.length; i < len; i++) {
-      const item = list[i]
+    for (const item of list) {
       const currValue = item[attrValue]
       const parentValue = item[attrParentValue]
       if (value === currValue) {

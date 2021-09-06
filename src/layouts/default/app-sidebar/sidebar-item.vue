@@ -1,10 +1,10 @@
 <template>
   <el-submenu
-    v-if="item.children && item.children.length"
+    v-if="item.children && !!item.children.length"
     :index="item.path"
     :class="{
-      'is-active': $route.path.startsWith(`${item.path}/`),
-      'is-opened': $route.path.startsWith(`${item.path}/`)
+      'is-active': isActive(item),
+      'is-opened': isActive(item)
     }"
   >
     <div slot="title" class="title-wrapper">
@@ -13,18 +13,15 @@
     </div>
     <sidebar-item v-for="child in item.children" :key="child.path" :item="child" />
   </el-submenu>
-  <el-menu-item
-    v-else
-    :index="item.path"
-    :class="{ 'is-active': $route.path.startsWith(`${item.path}/`) }"
-    @click="handleItemClick(item.path)"
-  >
+  <el-menu-item v-else :index="item.path" :class="{ 'is-active': isActive(item) }" @click="handleItemClick(item.path)">
     <i-icon v-if="item.icon" class="sidebar-icon-wrapper" :icon="item.icon" />
     <span class="title" slot="title">{{ item.name }}</span>
   </el-menu-item>
 </template>
 
 <script>
+import { getChild } from '@/utils'
+
 export default {
   name: 'SidebarItem',
   props: {
@@ -36,6 +33,10 @@ export default {
     }
   },
   methods: {
+    isActive({ path, children }) {
+      const child = getChild(children, this.$route.path, { value: 'path' })
+      return !child && this.$route.path.startsWith(`${path}/`)
+    },
     handleItemClick(targetPath) {
       const { path, fullPath } = this.$route
       if (path === targetPath) {

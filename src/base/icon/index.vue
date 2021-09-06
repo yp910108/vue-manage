@@ -1,9 +1,7 @@
 <template>
-  <span v-on="$listeners" class="i__icon__wrapper">
-    <svg class="i__icon" aria-hidden="true">
-      <use :xlink:href="iconName" />
-    </svg>
-  </span>
+  <svg v-on="$listeners" aria-hidden="true" class="i__icon">
+    <use :xlink:href="iconName" />
+  </svg>
 </template>
 
 <script>
@@ -25,16 +23,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.i__icon__wrapper {
-  display: inline-block;
-  line-height: 1;
-  .i__icon {
-    display: inline-block;
-    vertical-align: top;
-    width: 1em;
-    height: 1em;
-    fill: currentColor;
-    overflow: hidden;
-  }
+.i__icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  overflow: hidden;
 }
 </style>

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Icon from './icon'
+import Table from './table'
 import Pagination from './pagination'
 import DatePicker from './date-picker'
 import Select from './select'
@@ -9,6 +10,7 @@ import Cascader from './cascader'
 import Upload from './upload'
 
 Vue.component(Icon.name, Icon)
+Vue.component(Table.name, Table)
 Vue.component(Pagination.name, Pagination)
 Vue.component(DatePicker.name, DatePicker)
 Vue.component(Select.name, Select)

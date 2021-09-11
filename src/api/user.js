@@ -57,6 +57,10 @@ export function getUser() {
               {
                 name: 'Loading',
                 path: 'loading'
+              },
+              {
+                name: 'Table',
+                path: 'table'
               }
             ]
           },

@@ -1,12 +1,7 @@
 <template>
   <div class="app-content">
     <pro-table :columns="columns" :data="list" border @selection-change="handleSelectionChange">
-      <template slot="nameTitle" slot-scope="{ column, $index }">
-        {{ column.label }}
-        <br />
-        {{ $index }}
-      </template>
-      <template slot="action" slot-scope="{ row }">
+      <template #action="{ row }">
         <el-button type="text" size="small" @click="handleAdd(row)">新增</el-button>
         <el-button type="text" size="small">修改</el-button>
         <el-button type="text" size="small">删除</el-button>
@@ -33,8 +28,7 @@ export default {
         {
           align: 'center',
           label: '姓名',
-          prop: 'name',
-          slotTitle: 'nameTitle'
+          prop: 'name'
         },
         {
           align: 'center',

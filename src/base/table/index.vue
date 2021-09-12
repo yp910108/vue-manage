@@ -9,7 +9,7 @@
       }"
       :key="index"
     >
-      <template slot="header" slot-scope="{ column, $index }">
+      <template #header="{ column, $index }">
         <slot :name="_column.slotTitle" :column="column" :$index="$index">
           {{ _column.label }}
         </slot>

@@ -10,10 +10,9 @@
       :key="index"
     >
       <template slot="header" slot-scope="{ column, $index }">
-        <slot v-if="_column.slotTitle" :name="_column.slotTitle" :column="column" :$index="$index">
+        <slot :name="_column.slotTitle" :column="column" :$index="$index">
           {{ _column.label }}
         </slot>
-        <template v-else>{{ _column.label }}</template>
       </template>
       <template v-if="!_column.type" #default="{ row, $index }">
         <slot :name="_column.slotName" :row="row" :$index="$index">

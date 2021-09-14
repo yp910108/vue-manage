@@ -13,6 +13,19 @@
 <script>
 import ProTable from '@/components/pro-table'
 
+const SEX = {
+  man: 1,
+  woman: 2
+}
+// const sexOptions = [
+//   { value: SEX.man, label: '男' },
+//   { value: SEX.woman, label: '女' }
+// ]
+const sexKeyValue = {
+  [SEX.man]: '男',
+  [SEX.woman]: '女'
+}
+
 export default {
   components: {
     ProTable
@@ -33,7 +46,8 @@ export default {
         {
           align: 'center',
           label: '性别',
-          prop: 'sex'
+          prop: 'sex',
+          render: (text) => sexKeyValue[text]
         },
         {
           align: 'center',
@@ -47,6 +61,11 @@ export default {
         },
         {
           align: 'center',
+          label: '出生日期',
+          prop: 'birthDate'
+        },
+        {
+          align: 'center',
           label: '操作',
           slot: 'action'
         }
@@ -54,11 +73,12 @@ export default {
       list: new Array(10)
         .fill({
           name: '张三',
-          sex: '男',
+          sex: SEX.man,
           phone: '13812345678',
-          idCard: '370181200022222222'
+          idCard: '370181200022222222',
+          birthDate: '1991-04-01'
         })
-        .map((item, index) => ({ id: index, ...item }))
+        .map((item, index) => ({ id: index, ...item, sex: index % 2 === 0 ? SEX.man : SEX.woman }))
     }
   },
   methods: {

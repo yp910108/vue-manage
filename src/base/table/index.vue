@@ -16,7 +16,7 @@
       </template>
       <template v-if="!_column.type" #default="{ row, $index }">
         <slot :name="_column.slotName" :row="row" :$index="$index">
-          {{ row[_column.prop] }}
+          {{ renderText(_column, row, $index) }}
         </slot>
       </template>
     </el-table-column>
@@ -37,6 +37,15 @@ export default {
       type: Array,
       required: true,
       default: () => []
+    }
+  },
+  methods: {
+    renderText({ render, prop }, row, index) {
+      if (render && typeof render === 'function') {
+        return render(row[prop], row, index)
+      } else {
+        return row[prop]
+      }
     }
   },
   computed: {

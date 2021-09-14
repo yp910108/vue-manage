@@ -114,25 +114,48 @@ export const unmatchedRoute = {
 
 ### 菜单权限
 
-> 思路：通过获取当前用户的权限去比对路由表，生成当前用户具的权限可访问的路由表，通过 router.addRoutes 动态挂载到 router 上。
+> 思路：通过获取当前用户的权限信息生成路由表，通过 router.addRoutes 动态挂载到 router 上。
 
-一般前端会维护所有页面的路由表，但是默认只会将静态路由表（一般为白名单页面和首页）维护到路由中。`src/router/index.js`
-
-```js
-// 不需要权限控制的路由在此处配置
-export const constantRoutes = [
-  ...
-]
-```
+一般前端默认会将静态路由表（一般为白名单页面和首页）维护到路由中。`src/router/index.js`
 
 ```js
-// 需要控制权限的路由在此配置
-export const asyncRoutes = [
-  ...
-]
+// 初始路由在这里配置
+export const route = {
+  path: '/',
+  component: Layout,
+  children: [
+    {
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard'),
+      meta: {
+        title: '首页',
+        icon: 'home'
+      }
+    },
+    {
+      path: 'nested/child1/second',
+      name: 'NestedChild1Second',
+      component: () => import('@/views/nested/child1/second'),
+      meta: {
+        title: '嵌套的路由 / 子路由1 / 二级路由',
+        hidden: true
+      }
+    },
+    {
+      path: 'without-nested/second',
+      name: 'WithoutNestedSecond',
+      component: () => import('@/views/without-nested/second'),
+      meta: {
+        title: '无嵌套的路由 / 二级路由',
+        hidden: true
+      }
+    }
+  ]
+}
 ```
 
-用户登录成功后会拉取用户信息（若用户信息中无权限信息，还会获取权限信息），后端一般会存储菜单的唯一标识（一般为`code`或者路径），前端根据后端返回的权限信息与动态路由表进行比对，将符合的路由筛选出来，动态追加到路由中。权限筛选逻辑在`src/store/permission.js`中。
+用户登录成功后会拉取用户信息（若用户信息中无权限信息，还会获取权限信息），前端根据后端返回的权限信息生成路由表，动态追加到路由中。`src/store/permission.js`中。
 
 ### 按钮权限
 
@@ -148,6 +171,56 @@ export const asyncRoutes = [
 
 ```
 <i-icon icon="home" />
+```
+
+### 表格 table
+
+- 与官方`api`尽量保持了一致性，比官方`api`增加了`columns`属性，`columns`与`el-table-column`的属性保持一致（属性名支持驼峰和中划线两种方式）
+- 简化`el-table`用法，不需要手动添加`el-table-column`
+- 通过`columns`配置表格具体渲染逻辑
+
+```js
+// src/views/example/table/index.vue
+// 调用方式
+<pro-table :columns="columns" :data="list" border @selection-change="handleSelectionChange">
+  <template #action="{ row }">
+    <el-button type="text" size="small" @click="handleAdd(row)">新增</el-button>
+    <el-button type="text" size="small">修改</el-button>
+    <el-button type="text" size="small">删除</el-button>
+  </template>
+</pro-table>
+// columns
+columns: [
+  { type: 'selection', width: 50, align: 'center' },
+  { align: 'center', label: '姓名', prop: 'name' },
+  { align: 'center', label: '性别', prop: 'sex', render: (text) => sexKeyValue[text] },
+  { align: 'center', label: '手机号', prop: 'phone' },
+  { align: 'center', label: '身份证号', prop: 'idCard' },
+  { align: 'center', label: '出生日期', prop: 'birthDate' },
+  { align: 'center', label: '操作', slot: 'action' }
+]
+// 数据
+// const SEX = {
+//   man: 1,
+//   woman: 2
+// }
+// const sexOptions = [
+//   { value: SEX.man, label: '男' },
+//   { value: SEX.woman, label: '女' }
+// ]
+// const sexKeyValue = {
+//   [SEX.man]: '男',
+//   [SEX.woman]: '女'
+// }
+list:  new Array(10)
+  .fill({
+    name: '张三',
+    sex: SEX.man,
+    phone: '13812345678',
+    idCard: '370181200022222222',
+    birthDate: '1991-04-01'
+  })
+  .map((item, index) => ({ id: index, ...item, sex: index % 2 === 0 ? SEX.man : SEX.woman }))
 ```
 
 ### 分页 pagination

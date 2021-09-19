@@ -1,7 +1,7 @@
 <template>
   <el-table v-bind="$attrs" v-on="$listeners">
     <el-table-column
-      v-for="(_column, index) of _columns"
+      v-for="({ slotTitle, slot, ..._column }, index) of _columns"
       v-bind="{
         resizable: false,
         showOverflowTooltip: true,
@@ -10,17 +10,17 @@
       :key="index"
     >
       <template #header="{ column, $index }">
-        <slot :name="_column.slotTitle" :column="column" :$index="$index">
+        <slot :name="slotTitle" :column="column" :$index="$index">
           {{ _column.label }}
         </slot>
       </template>
       <template v-if="!_column.type" #default="{ row, $index }">
-        <slot :name="_column.slotName" :row="row" :$index="$index">
+        <slot :name="slot" :row="row" :$index="$index">
           {{ renderText(_column, row, $index) }}
         </slot>
       </template>
     </el-table-column>
-    <template slot="append">
+    <template #append>
       <slot name="append" />
     </template>
   </el-table>
@@ -54,10 +54,6 @@ export default {
         const result = {}
         for (const key in column) {
           result[camelize(key)] = column[key]
-        }
-        if (result.slot) {
-          result.slotName = result.slot
-          delete result.slot
         }
         return result
       })

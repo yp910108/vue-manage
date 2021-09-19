@@ -6,6 +6,9 @@
         <el-button type="text" size="small">修改</el-button>
         <el-button type="text" size="small">删除</el-button>
       </template>
+      <template #append>
+        <div style="padding: 20px">this is page append.</div>
+      </template>
     </pro-table>
   </div>
 </template>
@@ -39,30 +42,31 @@ export default {
           align: 'center'
         },
         {
+          prop: 'name',
           align: 'center',
-          label: '姓名',
-          prop: 'name'
+          label: '姓名'
         },
         {
+          prop: 'sex',
           align: 'center',
           label: '性别',
-          prop: 'sex',
+          slot: 'sex',
           render: (text) => sexKeyValue[text]
         },
         {
+          prop: 'phone',
           align: 'center',
-          label: '手机号',
-          prop: 'phone'
+          label: '手机号'
         },
         {
+          prop: 'idCard',
           align: 'center',
-          label: '身份证号',
-          prop: 'idCard'
+          label: '身份证号'
         },
         {
+          prop: 'birthDate',
           align: 'center',
-          label: '出生日期',
-          prop: 'birthDate'
+          label: '出生日期'
         },
         {
           align: 'center',

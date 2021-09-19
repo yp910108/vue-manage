@@ -20,7 +20,7 @@
       <el-form-item label="创建人">
         <i-select v-model="form.createPerson" :options="[]" />
       </el-form-item> -->
-      <el-form-item v-for="(column, index) of columns" :key="index" :label="column.label">
+      <el-form-item v-for="(column, index) of _columns" :key="index" :label="column.label">
         <el-input v-model.trim="form.projectId" />
       </el-form-item>
     </el-form>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { filterData } from '@/utils/data'
+import { camelize, filterData } from '@/utils'
 
 const form = {
   projectId: undefined,
@@ -59,6 +59,18 @@ export default {
     reset() {
       this.form = this.$options.data().form
       this.query()
+    }
+  },
+  computed: {
+    _columns() {
+      const _columns = this.columns.map((column) => {
+        const result = {}
+        for (const key in column) {
+          result[camelize(key)] = column[key]
+        }
+        return result
+      })
+      return _columns.filter((column) => !column.type)
     }
   }
 }

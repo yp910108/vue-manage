@@ -70,7 +70,7 @@ export default {
           slot: 'action'
         }
       ],
-      list: new Array(10)
+      list: new Array(20)
         .fill({
           name: '张三',
           sex: SEX.man,

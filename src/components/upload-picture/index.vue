@@ -1,5 +1,5 @@
 <template>
-  <div class="upload__picture">
+  <div class="upload-picture">
     <i-upload v-bind="$_attrs" v-on="$listeners" :class="{ 'hide-upload-icon': !uploadAble }">
       <i class="el-icon-plus" />
     </i-upload>
@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.upload__picture ::v-deep {
+.upload-picture ::v-deep {
   line-height: 1;
   .el-upload--picture-card {
     margin: 0 8px 8px 0;

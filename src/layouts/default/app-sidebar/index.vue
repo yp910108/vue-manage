@@ -43,7 +43,7 @@ export default {
     border-right: 0;
     width: 100%;
     background-color: #2b2b2d;
-    .i__icon {
+    .i-icon {
       margin-right: 14px;
     }
     .el-menu-item {
@@ -103,7 +103,7 @@ export default {
       }
     }
     &.el-menu--collapse {
-      .i__icon {
+      .i-icon {
         margin-left: 5px;
       }
     }

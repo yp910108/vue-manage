@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{ i__date__editor__wrapper: true, __hide__icon: hideIcon }"
+    :class="{ 'i-date-editor-wrapper': true, 'i-date-editor-hide-icon-wrapper': hideIcon }"
     @mouseenter="isMouseEnter = true"
     @mouseleave="isMouseEnter = false"
   >
@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.i__date__editor__wrapper ::v-deep {
+.i-date-editor-wrapper ::v-deep {
   display: inline-block;
   .el-date-editor {
     display: flex;
@@ -55,7 +55,7 @@ export default {
 </style>
 
 <style lang="scss">
-.i__date__editor__wrapper.__hide__icon {
+.i-date-editor-wrapper.i-date-editor-hide-icon-wrapper {
   .el-date-editor .el-range__icon {
     display: none;
   }

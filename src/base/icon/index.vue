@@ -1,5 +1,5 @@
 <template>
-  <svg v-on="$listeners" aria-hidden="true" class="i__icon">
+  <svg v-on="$listeners" aria-hidden="true" class="i-icon">
     <use :xlink:href="iconName" />
   </svg>
 </template>
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.i__icon {
+.i-icon {
   width: 1em;
   height: 1em;
   fill: currentColor;

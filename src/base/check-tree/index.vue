@@ -3,7 +3,7 @@
     ref="popover"
     v-model="visible"
     :width="popoverWidth"
-    popper-class="i__check__tree__popover"
+    popper-class="i-check-tree-popover"
     transition="el-zoom-in-top"
     placement="bottom-start"
     @show="show"
@@ -17,7 +17,7 @@
         </template>
       </el-tree>
     </el-scrollbar>
-    <div ref="reference" slot="reference" class="reference">
+    <div ref="reference" slot="reference" class="i-check-tree-reference">
       <el-input
         ref="value"
         v-model="text"
@@ -200,7 +200,7 @@ export default {
 </script>
 
 <style lang="scss">
-.i__check__tree__popover {
+.i-check-tree-popover {
   padding: 8px 0;
   min-width: 0;
   .popper__arrow {
@@ -236,7 +236,7 @@ export default {
   }
 }
 
-.reference ::v-deep {
+.i-check-tree-reference ::v-deep {
   .el-input {
     .el-input__inner {
       overflow: hidden;

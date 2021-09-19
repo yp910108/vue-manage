@@ -1,5 +1,5 @@
 <template>
-  <div class="upload__file">
+  <div class="upload-file">
     <i-upload v-bind="$_attrs" v-on="$listeners" :class="{ 'hide-upload-btn': !uploadAble }">
       <el-button plain>点击上传</el-button>
     </i-upload>
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.upload__file ::v-deep {
+.upload-file ::v-deep {
   .hide-upload-btn {
     .el-upload__tip,
     .el-upload--text {

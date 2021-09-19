@@ -129,7 +129,7 @@ export default {
           padding: 0 15px 0 32px;
           font-size: 16px;
         }
-        .i__icon {
+        .i-icon {
           position: absolute;
           z-index: 1;
           left: 12px;

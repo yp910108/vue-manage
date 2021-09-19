@@ -19,7 +19,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.i__icon {
+.i-icon {
   padding: 5px;
   font-size: 30px;
   color: #7d7e80;

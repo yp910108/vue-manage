@@ -1,11 +1,10 @@
 'use strict'
 const path = require('path')
+const sassLoader = require.resolve('sass-loader')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
-
-const name = '基础后台管理系统' // 浏览器标题
 
 // 前端代码打包后部署的路径
 const publicPath = {
@@ -33,15 +32,24 @@ module.exports = {
       }
     }
   },
-  configureWebpack: {
-    name,
-    resolve: {
-      alias: {
-        '@': resolve('src')
-      }
-    }
+  configureWebpack: (config) => {
+    // 解决 element-ui 字体图标乱码问题
+    config.module.rules
+      .filter((rule) => {
+        return rule.test.toString().indexOf('scss') !== -1
+      })
+      .forEach((rule) => {
+        rule.oneOf.forEach((oneOfRule) => {
+          const sassLoaderIndex = oneOfRule.use.findIndex((item) => item.loader === sassLoader)
+          oneOfRule.use.splice(sassLoaderIndex, 0, { loader: require.resolve('css-unicode-loader') })
+        })
+      })
   },
   chainWebpack(config) {
+    config.plugin('html').tap((args) => {
+      args[0].title = '基础后台管理系统'
+      return args
+    })
     // set svg-sprite-loader
     config.module.rule('svg').exclude.add(resolve('src/base/icon')).end()
     config.module

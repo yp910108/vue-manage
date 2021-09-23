@@ -9,7 +9,7 @@ const ERRS_OK = 0
 // token 失效或未登录
 const ERRS_INVALID = 40010
 
-const fadeLogout = () => {
+const fedLogout = () => {
   MessageBox.confirm('用户信息失效，请重新登录', '提示', {
     type: 'warning',
     confirmButtonText: '重新登录',
@@ -45,7 +45,7 @@ service.interceptors.response.use(
     if (code === ERRS_OK) {
       return data
     } else if (code === ERRS_INVALID) {
-      return fadeLogout()
+      return fedLogout()
     } else {
       if (request.responseType !== 'blob') {
         Message.error(msg || '请求失败')
@@ -56,7 +56,7 @@ service.interceptors.response.use(
   (e) => {
     const { status } = e.response
     if (status === 401) {
-      return fadeLogout()
+      return fedLogout()
     }
     Message.error('服务器异常')
     return Promise.reject(e)

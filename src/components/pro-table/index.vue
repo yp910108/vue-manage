@@ -39,7 +39,7 @@ export default {
 <style lang="scss" scoped>
 .pro-table-content ::v-deep {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; // TODO 100%
   > .query-wrapper {
     flex: 0 0 auto;
     display: flex;

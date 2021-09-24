@@ -1,27 +1,9 @@
 <template>
   <div class="query-wrapper">
     <el-form :model="form" class="query-content" @submit.native.prevent>
-      <!-- <el-form-item label="所属项目">
-        <i-select v-model="form.projectId" :options="[]" />
-      </el-form-item>
-      <el-form-item label="任务环节">
-        <i-select v-model="form.projectLinkStatus" :options="[]" />
-      </el-form-item>
-      <el-form-item label="创建时间">
-        <i-date-picker
-          v-model="form.createTime"
-          type="daterange"
-          value-format="yyyy-MM-dd"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        />
-      </el-form-item>
-      <el-form-item label="创建人">
-        <i-select v-model="form.createPerson" :options="[]" />
-      </el-form-item> -->
-      <el-form-item v-for="(column, index) of _columns" :key="index" :label="column.label">
-        <el-input v-model.trim="form.projectId" />
+      <el-form-item v-for="({ label, valueEnum, prop }, index) of _columns" :key="index" :label="label">
+        <i-select v-if="valueEnum" v-model="form[prop]" :options="valueEnum" />
+        <el-input v-else v-model.trim="form[prop]" placeholder="请选择" />
       </el-form-item>
     </el-form>
     <div class="btn-group">
@@ -34,12 +16,6 @@
 <script>
 import { camelize, filterData } from '@/utils'
 
-const form = {
-  projectId: undefined,
-  projectLinkStatus: undefined,
-  createTime: undefined,
-  createPerson: undefined
-}
 export default {
   props: {
     columns: {
@@ -49,7 +25,7 @@ export default {
   },
   data() {
     return {
-      form: { ...form }
+      form: {}
     }
   },
   methods: {
@@ -70,7 +46,7 @@ export default {
         }
         return result
       })
-      return _columns.filter((column) => !column.type)
+      return _columns.filter((column) => !column.type && !column.hideInSearch)
     }
   }
 }

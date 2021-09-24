@@ -6,9 +6,6 @@
         <el-button type="text" size="small">修改</el-button>
         <el-button type="text" size="small">删除</el-button>
       </template>
-      <template #append>
-        <div style="padding: 20px">this is page append.</div>
-      </template>
     </pro-table>
   </div>
 </template>
@@ -20,10 +17,10 @@ const SEX = {
   man: 1,
   woman: 2
 }
-// const sexOptions = [
-//   { value: SEX.man, label: '男' },
-//   { value: SEX.woman, label: '女' }
-// ]
+const sexOptions = [
+  { value: SEX.man, label: '男' },
+  { value: SEX.woman, label: '女' }
+]
 const sexKeyValue = {
   [SEX.man]: '男',
   [SEX.woman]: '女'
@@ -51,12 +48,14 @@ export default {
           align: 'center',
           label: '性别',
           slot: 'sex',
+          valueEnum: sexOptions,
           render: (text) => sexKeyValue[text]
         },
         {
           prop: 'phone',
           align: 'center',
-          label: '手机号'
+          label: '手机号',
+          hideInSearch: true
         },
         {
           prop: 'idCard',
@@ -64,6 +63,7 @@ export default {
           label: '身份证号'
         },
         {
+          searchType: 'date',
           prop: 'birthDate',
           align: 'center',
           label: '出生日期'
@@ -71,7 +71,8 @@ export default {
         {
           align: 'center',
           label: '操作',
-          slot: 'action'
+          slot: 'action',
+          hideInSearch: true
         }
       ],
       list: new Array(20)

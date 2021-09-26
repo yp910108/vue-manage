@@ -63,7 +63,7 @@ export default {
           label: '身份证号'
         },
         {
-          searchType: 'date',
+          searchType: 'daterange',
           prop: 'birthDate',
           align: 'center',
           label: '出生日期'

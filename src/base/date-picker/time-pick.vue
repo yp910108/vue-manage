@@ -4,7 +4,7 @@
     @mouseenter="isMouseEnter = true"
     @mouseleave="isMouseEnter = false"
   >
-    <el-time-select v-bind="$attrs" v-on="$listeners" />
+    <el-time-picker v-bind="{ valueFormat: 'HH:mm:ss', placeholder: '请选择', ...$attrs }" v-on="$listeners" />
   </div>
 </template>
 

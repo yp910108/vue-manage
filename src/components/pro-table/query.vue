@@ -1,8 +1,9 @@
 <template>
   <div class="query-wrapper">
     <el-form :model="form" class="query-content" @submit.native.prevent>
-      <el-form-item v-for="({ label, valueEnum, prop }, index) of _columns" :key="index" :label="label">
-        <i-select v-if="valueEnum" v-model="form[prop]" :options="valueEnum" />
+      <el-form-item v-for="({ label, searchType, valueEnum, prop }, index) of _columns" :key="index" :label="label">
+        <i-select v-if="searchType === SEARCH_TYPE.select || !!valueEnum" v-model="form[prop]" :options="valueEnum" />
+        <i-date-picker v-else-if="SEARCH_TYPE.date.includes(searchType)" v-model="form[prop]" :type="searchType" />
         <el-input v-else v-model.trim="form[prop]" placeholder="请选择" />
       </el-form-item>
     </el-form>
@@ -15,6 +16,12 @@
 
 <script>
 import { camelize, filterData } from '@/utils'
+import { TYPE as DATE_TYPE } from '@/base/date-picker/constant'
+
+const SEARCH_TYPE = {
+  select: 'select',
+  date: Object.keys(DATE_TYPE)
+}
 
 export default {
   props: {
@@ -25,6 +32,7 @@ export default {
   },
   data() {
     return {
+      SEARCH_TYPE,
       form: {}
     }
   },

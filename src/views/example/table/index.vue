@@ -63,10 +63,10 @@ export default {
           label: '身份证号'
         },
         {
-          searchType: 'daterange',
           prop: 'birthDate',
           align: 'center',
-          label: '出生日期'
+          label: '出生日期',
+          searchType: 'daterange'
         },
         {
           align: 'center',

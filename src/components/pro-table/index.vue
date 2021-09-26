@@ -1,6 +1,10 @@
 <template>
   <div class="pro-table-content">
-    <query :columns="$attrs.columns" />
+    <query :columns="columnSearches">
+      <template v-for="slotSearch of slotSearches" #[slotSearch]>
+        <slot :name="slotSearch" />
+      </template>
+    </query>
     <i-table v-bind="$attrs" v-on="$listeners">
       <template v-for="slotTitle of slotTitles" #[slotTitle]="{ column, $index }">
         <slot :name="slotTitle" :column="column" :$index="$index" />
@@ -16,6 +20,7 @@
 </template>
 
 <script>
+import { camelize } from '@/utils'
 import Query from './query'
 
 export default {
@@ -24,6 +29,20 @@ export default {
     Query
   },
   computed: {
+    columnSearches() {
+      const _columns = this.$attrs.columns.map((column) => {
+        const result = {}
+        for (const key in column) {
+          result[camelize(key)] = column[key]
+        }
+        return result
+      })
+      return _columns.filter((column) => !column.type && !column.hideInSearch)
+    },
+    slotSearches() {
+      const columns = this.columnSearches.filter((column) => !!column.slotSearch)
+      return columns.map((column) => column.slotSearch)
+    },
     slots() {
       const columns = this.$attrs.columns.filter((column) => !!column.slot)
       return columns.map((column) => column.slot)
@@ -39,7 +58,7 @@ export default {
 <style lang="scss" scoped>
 .pro-table-content ::v-deep {
   display: flex;
-  flex-direction: column; // TODO 100%
+  flex-direction: column;
   > .query-wrapper {
     flex: 0 0 auto;
     display: flex;

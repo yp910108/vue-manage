@@ -1,10 +1,10 @@
 <template>
   <div class="pro-table-content">
-    <query :columns="columnSearches">
-      <template v-for="slotSearch of slotSearches" #[slotSearch]>
-        <slot :name="slotSearch" />
+    <search :columns="columnSearches" @search="handleSearch">
+      <template v-for="slotSearch of slotSearches" #[slotSearch]="{ params, prop }">
+        <slot :name="slotSearch" :params="params" :prop="prop" />
       </template>
-    </query>
+    </search>
     <i-table v-bind="$attrs" v-on="$listeners">
       <template v-for="slotTitle of slotTitles" #[slotTitle]="{ column, $index }">
         <slot :name="slotTitle" :column="column" :$index="$index" />
@@ -21,12 +21,17 @@
 
 <script>
 import { camelize } from '@/utils'
-import Query from './query'
+import Search from './search'
 
 export default {
   inheritAttrs: false,
   components: {
-    Query
+    Search
+  },
+  methods: {
+    handleSearch(params) {
+      this.$emit('search', params)
+    }
   },
   computed: {
     columnSearches() {
@@ -59,13 +64,13 @@ export default {
 .pro-table-content ::v-deep {
   display: flex;
   flex-direction: column;
-  > .query-wrapper {
+  > .search-wrapper {
     flex: 0 0 auto;
     display: flex;
     align-items: flex-start;
     margin-left: -30px;
     margin-bottom: 4px;
-    > .query-content {
+    > .search-content {
       flex: 1;
       display: flex;
       flex-wrap: wrap;

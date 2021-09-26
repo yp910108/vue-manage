@@ -1,9 +1,8 @@
 <template>
   <div class="app-content">
-    <pro-table :columns="columns" :data="list" border @selection-change="handleSelectionChange">
+    <pro-table :columns="columns" :data="list" border @search="handleSearch" @selection-change="handleSelectionChange">
       <template #action="{ row }">
-        <el-button type="text" size="small" @click="handleAdd(row)">新增</el-button>
-        <el-button type="text" size="small">修改</el-button>
+        <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>
         <el-button type="text" size="small">删除</el-button>
       </template>
     </pro-table>
@@ -69,6 +68,7 @@ export default {
           searchType: 'daterange'
         },
         {
+          width: 110,
           align: 'center',
           label: '操作',
           slot: 'action',
@@ -90,7 +90,10 @@ export default {
     handleSelectionChange(checked) {
       console.log(checked)
     },
-    handleAdd(item) {
+    handleSearch(params) {
+      console.log(params)
+    },
+    handleEdit(item) {
       console.log(item)
     }
   }

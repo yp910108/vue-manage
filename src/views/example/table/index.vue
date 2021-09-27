@@ -1,6 +1,16 @@
 <template>
   <div class="app-content">
-    <pro-table :columns="columns" :data="list" border @search="handleSearch" @selection-change="handleSelectionChange">
+    <pro-table
+      :columns="columns"
+      :loading="loading"
+      :data="list"
+      :total="total"
+      :pageNo="pageNo"
+      :pageSize="10"
+      border
+      @search="handleSearch"
+      @selection-change="handleSelectionChange"
+    >
       <template #action="{ row }">
         <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>
         <el-button type="text" size="small">删除</el-button>
@@ -23,6 +33,43 @@ const sexOptions = [
 const sexKeyValue = {
   [SEX.man]: '男',
   [SEX.woman]: '女'
+}
+
+function fetchList({ name, sex, idCard, startBirthDate, endBirthDate, pageNo, pageSize }) {
+  return new Promise((resolve) => {
+    let list = []
+    for (let i = 0; i < 20; i++) {
+      list.push({
+        name: `张三${i + 1}`,
+        sex: i % 2 === 0 ? SEX.man : SEX.woman,
+        phone: '13812345678',
+        idCard: '370181200022222222',
+        birthDate: `${1991 + i * 2}-10-01`
+      })
+    }
+    if (name) {
+      list = list.filter((item) => item.name.includes(name))
+    }
+    if (sex) {
+      list = list.filter((item) => item.sex === sex)
+    }
+    if (idCard) {
+      list = list.filter((item) => item.idCard.includes(idCard))
+    }
+    if (startBirthDate && endBirthDate) {
+      list = list.filter(
+        (item) =>
+          new Date(item.birthDate).getTime() >= new Date(startBirthDate).getTime() && // eslint-disable-line
+          new Date(item.birthDate).getTime() <= new Date(endBirthDate).getTime()
+      )
+    }
+    if (pageNo) {
+      list = list.slice(pageNo - 1, pageNo * pageSize || 10)
+    }
+    setTimeout(() => {
+      resolve({ total: 20, list })
+    }, 500)
+  })
 }
 
 export default {
@@ -75,27 +122,45 @@ export default {
           hideInSearch: true
         }
       ],
-      list: new Array(20)
-        .fill({
-          name: '张三',
-          sex: SEX.man,
-          phone: '13812345678',
-          idCard: '370181200022222222',
-          birthDate: '1991-04-01'
-        })
-        .map((item, index) => ({ id: index, ...item, sex: index % 2 === 0 ? SEX.man : SEX.woman }))
+      loading: false,
+      pageNo: 1, // 当前页码
+      pageSize: 10, // 每页显示条数
+      total: 0, // 总条数
+      params: undefined,
+      list: undefined
     }
   },
   methods: {
-    handleSelectionChange(checked) {
-      console.log(checked)
+    async fetchList() {
+      this.loading = true
+      const { total, list } = await fetchList({
+        ...this.params,
+        pageNo: this.pageNo,
+        pageSize: this.pageSize
+      })
+      this.loading = false
+      this.total = total
+      this.list = list
     },
     handleSearch(params) {
-      console.log(params)
+      params = {
+        ...params,
+        startBirthDate: (params.birthDate || [])[0],
+        endBirthDate: (params.birthDate || [])[1]
+      }
+      delete params.birthDate
+      this.params = params
+      this.fetchList()
+    },
+    handleSelectionChange(checked) {
+      console.log(checked)
     },
     handleEdit(item) {
       console.log(item)
     }
+  },
+  created() {
+    this.fetchList()
   }
 }
 </script>

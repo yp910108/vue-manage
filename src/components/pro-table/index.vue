@@ -5,7 +5,7 @@
         <slot :name="slotSearch" :params="params" :prop="prop" />
       </template>
     </search>
-    <i-table v-bind="$attrs" v-on="$listeners">
+    <i-table v-loading="$attrs.loading" v-bind="$attrs" v-on="$listeners">
       <template v-for="slotTitle of slotTitles" #[slotTitle]="{ column, $index }">
         <slot :name="slotTitle" :column="column" :$index="$index" />
       </template>
@@ -16,6 +16,7 @@
         <slot name="append" />
       </template>
     </i-table>
+    <i-pagination v-bind="$attrs" v-on="$listeners" />
   </div>
 </template>
 

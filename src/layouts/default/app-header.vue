@@ -12,6 +12,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { removeLocalToken } from '@/utils'
 
 export default {
   methods: {
@@ -22,7 +23,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         })
-        await this.$store.dispatch('user/fedLogout')
+        removeLocalToken()
         window.location.reload()
       } catch (e) {
         // do nothing

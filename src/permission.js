@@ -10,14 +10,14 @@ NProgress.configure({ showSpinner: false })
 // 白名单
 const whiteList = ['/user/login']
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   NProgress.start()
   if (getLocalToken()) {
     /* has token */
     if (to.path === '/user/login') {
       next('/')
     } else {
-      if (!Object.keys(store.state.user.user).length) {
+      if (!store.state.user.user) {
         // 如果用户没有拉取完用户信息（当用户F5刷新页面时，没有用户信息）
         try {
           const user = await store.dispatch('user/getUser')
@@ -29,7 +29,7 @@ router.beforeEach(async (to, from, next) => {
         } catch (e) {
           console.warn(e)
           store.dispatch('user/fedLogout')
-          next({ path: '/' })
+          next('/')
         }
       } else {
         next()

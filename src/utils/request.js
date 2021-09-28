@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { baseUrl } from '@/config'
 import { getLocalToken } from './local'
@@ -8,22 +8,6 @@ import { getLocalToken } from './local'
 const ERRS_OK = 0
 // token 失效或未登录
 const ERRS_INVALID = 40010
-
-const fedLogout = () => {
-  MessageBox.confirm('用户信息失效，请重新登录', '提示', {
-    type: 'warning',
-    confirmButtonText: '重新登录',
-    showCancelButton: false,
-    showClose: false,
-    closeOnClickModal: false,
-    closeOnPressEscape: false
-  })
-    .then(() => {
-      store.dispatch('user/fedLogout')
-      window.location.reload()
-    })
-    .catch(() => {})
-}
 
 const service = axios.create({
   baseURL: baseUrl,
@@ -45,7 +29,7 @@ service.interceptors.response.use(
     if (code === ERRS_OK) {
       return data
     } else if (code === ERRS_INVALID) {
-      return fedLogout()
+      store.dispatch('user/fedLogout')
     } else {
       if (request.responseType !== 'blob') {
         Message.error(msg || '请求失败')
@@ -56,7 +40,7 @@ service.interceptors.response.use(
   (e) => {
     const { status } = e.response
     if (status === 401) {
-      return fedLogout()
+      return store.dispatch('user/fedLogout')
     }
     Message.error('服务器异常')
     return Promise.reject(e)

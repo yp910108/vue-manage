@@ -1,8 +1,9 @@
+import { MessageBox } from 'element-ui'
 import { login, getUser } from '@/api/user'
 import { setLocalToken, removeLocalToken } from '@/utils'
 
 const state = {
-  user: {}
+  user: undefined
 }
 
 const mutations = {
@@ -23,21 +24,24 @@ const actions = {
       }
     })
   },
-  // 前端 登出
-  fedLogout() {
+  // 前端登出
+  async fedLogout() {
     removeLocalToken()
+    await MessageBox.confirm('用户信息失效，请重新登录', '提示', {
+      type: 'warning',
+      confirmButtonText: '确定',
+      showCancelButton: false,
+      showClose: false,
+      closeOnClickModal: false,
+      closeOnPressEscape: false
+    })
+    window.location.reload()
   },
   // 获取用户信息
-  getUser({ commit }) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const user = await getUser()
-        commit('SET_USER', user)
-        resolve(user)
-      } catch (e) {
-        reject(e)
-      }
-    })
+  async getUser({ commit }) {
+    const user = (await getUser()) || {}
+    commit('SET_USER', user)
+    return user
   }
 }
 

@@ -21,7 +21,6 @@ const routes = [
   {
     path: '/redirect',
     component: Layout,
-    hidden: true,
     children: [
       {
         path: ':path*',
@@ -55,8 +54,7 @@ export const pageRoutes = [
     name: 'NestedChild1Second',
     component: () => import('@/views/nested/child1/second'),
     meta: {
-      title: '嵌套的路由 / 子路由1 / 二级路由',
-      hidden: true
+      title: '嵌套的路由 / 子路由1 / 二级路由'
     }
   },
   {
@@ -64,8 +62,7 @@ export const pageRoutes = [
     name: 'WithoutNestedSecond',
     component: () => import('@/views/without-nested/second'),
     meta: {
-      title: '无嵌套的路由 / 二级路由',
-      hidden: true
+      title: '无嵌套的路由 / 二级路由'
     }
   }
 ]

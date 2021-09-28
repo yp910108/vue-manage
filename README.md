@@ -129,7 +129,6 @@ const routes = [
   {
     path: '/redirect',
     component: Layout,
-    hidden: true,
     children: [
       {
         path: ':path*',

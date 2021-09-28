@@ -1,5 +1,5 @@
 import { combineURL } from '@/utils'
-import { route } from '@/router'
+import { route, pageRoutes } from '@/router'
 import { EmptyLayout } from '@/layouts' // eslint-disable-line
 
 function processMenus(menus, parentPath) {
@@ -42,8 +42,7 @@ const mutations = {
 
 const actions = {
   setMenus({ commit }, user) {
-    const children = route.children.filter(({ meta = {} }) => !meta.hidden)
-    const initMenus = children.map(({ path = '', meta = {} }) => ({
+    const initMenus = route.children.map(({ path = '', meta = {} }) => ({
       path: `/${combineURL(path)}`,
       name: meta.title,
       icon: meta.icon
@@ -51,7 +50,7 @@ const actions = {
     commit('SET_MENUS', [...initMenus, ...processMenus(user.menus || [])])
   },
   generateRoute(_, user) {
-    const children = [...route.children, ...generateRoutes(user.menus || [])]
+    const children = [...route.children, ...generateRoutes(user.menus || []), ...pageRoutes]
     return {
       ...route,
       redirect: children && children.length ? `/${children[0].path}` : undefined,

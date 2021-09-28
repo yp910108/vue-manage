@@ -1,4 +1,4 @@
-# 基础后台管理系统
+# 基础后台管理系统 ✨✨✨
 
 ## 说明
 
@@ -102,7 +102,7 @@ if (!Object.keys(store.state.user.user).length) {
 }
 ```
 
-对于已登录系统的用户，如果输入的页面地址不存在，则强制跳转到首页面。`src/router/index.js`
+对于已登录系统的用户，如果输入的页面地址不存在，则强制跳转到首页面（第一个页面/路由）。`src/router/index.js`
 
 ```js
 // 未匹配的路由需要跳转的页面在这里配置
@@ -114,12 +114,32 @@ export const unmatchedRoute = {
 
 ### 菜单权限
 
-> 思路：通过获取当前用户的权限信息生成路由表，通过 router.addRoutes 动态挂载到 router 上。
+> 思路：通过获取当前用户的权限信息生成路由表，通过 router.addRoute 动态挂载到 router 上。
 
 一般前端默认会将静态路由表（一般为白名单页面和首页）维护到路由中。`src/router/index.js`
 
 ```js
-// 初始路由在这里配置
+// 初始路由（不需要 layout 的路由）在这里配置
+const routes = [
+  {
+    path: '/user/login',
+    name: 'UserLogin',
+    component: () => import('@/views/user/login')
+  },
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: ':path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  }
+]
+
+// 初始路由（需要 layout 的路由）在这里配置
 export const route = {
   path: '/',
   component: Layout,
@@ -131,24 +151,6 @@ export const route = {
       meta: {
         title: '首页',
         icon: 'home'
-      }
-    },
-    {
-      path: 'nested/child1/second',
-      name: 'NestedChild1Second',
-      component: () => import('@/views/nested/child1/second'),
-      meta: {
-        title: '嵌套的路由 / 子路由1 / 二级路由',
-        hidden: true
-      }
-    },
-    {
-      path: 'without-nested/second',
-      name: 'WithoutNestedSecond',
-      component: () => import('@/views/without-nested/second'),
-      meta: {
-        title: '无嵌套的路由 / 二级路由',
-        hidden: true
       }
     }
   ]
@@ -182,13 +184,13 @@ export const route = {
 ```js
 // src/views/example/table/index.vue
 // 调用方式
-<pro-table :columns="columns" :data="list" border @selection-change="handleSelectionChange">
+<i-table :columns="columns" :data="list" border @selection-change="handleSelectionChange">
   <template #action="{ row }">
     <el-button type="text" size="small" @click="handleAdd(row)">新增</el-button>
     <el-button type="text" size="small">修改</el-button>
     <el-button type="text" size="small">删除</el-button>
   </template>
-</pro-table>
+</i-table>
 // columns
 columns: [
   { type: 'selection', width: 50, align: 'center' },
@@ -259,7 +261,7 @@ options: [
 
 ### 下拉树 select-tree
 
-- 因为官方没有下拉树组件，所以此组件是基于`el-tree`进行封装的
+- 因为官方没有下拉树组件，所以基于`el-tree`封装了此组件
 - 与官方`api`尽量保持了一致性，比官方 api 增加了`placeholder`、`claerable`属性，数据属性为`options`
 - `props`属性比官方`api`多了一个`value`、`parentValue`，默认`{ value: 'value', label: 'label', parentValue: 'parentValue', children: 'children' }`
 
@@ -282,7 +284,7 @@ options: [
 
 ### 下拉多选树 check-tree
 
-- 因为官方没有下拉树组件，所以此组件是基于`el-tree`进行封装的
+- 因为官方没有下拉树组件，所以基于`el-tree`封装了此组件
 - 与官方`api`尽量保持了一致性，比官方 api 增加了`placeholder`、`claerable`属性，数据属性为`options`
 - `props`属性比官方`api`多了一个`value`、`parentValue`，默认`{ value: 'value', label: 'label', parentValue: 'parentValue', children: 'children' }`
 
@@ -363,14 +365,21 @@ options: [
 
 ### 路由
 
-入口文件`src/router/index.js`中可进行路由的配置，不同模块的路由建议单独建立文件
+入口文件`src/router/index.js`中可进行路由的配置
 
 ```js
-// 不需要权限控制的路由在此处配置
-export const constantRoutes = []
+// 初始路由（不需要 layout 的路由）在这里配置
+const routes = []
 
-// 需要控制权限的路由在此配置
-export const asyncRoutes = []
+// 初始路由（需要 layout 的路由）在这里配置（注：配置在 children 中 🙌）
+export const route = {
+  path: '/',
+  component: Layout,
+  children: []
+}
+
+// 页面级路由（一般为二级路由）在这里配置，此类路由不会出现在导航菜单中
+export const pageRoutes = []
 
 // 未匹配的路由需要跳转的页面在这里配置
 export const unmatchedRoute = {
@@ -414,10 +423,8 @@ const caches = {
   dict: fetchDict // fetchDict 为异步获取字典的方法
 }
 // 使用
-<template>
-  <aside>
-    {{ dict }}
-  </aside>
+;<template>
+  <aside>{{ dict }}</aside>
 </template>
 import remotes from '@/mixins/remotes'
 export default {

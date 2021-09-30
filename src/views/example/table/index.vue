@@ -5,11 +5,12 @@
       :loading="loading"
       :data="list"
       :total="total"
-      :pageNo="pageNo"
-      :pageSize="10"
+      :pageNo.sync="pageNo"
+      :pageSize.sync="pageSize"
       border
       @search="handleSearch"
       @selection-change="handleSelectionChange"
+      @pagination="fetchList"
     >
       <template #action="{ row }">
         <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>
@@ -38,7 +39,7 @@ const sexKeyValue = {
 function fetchList({ name, sex, idCard, startBirthDate, endBirthDate, pageNo, pageSize }) {
   return new Promise((resolve) => {
     let list = []
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 23; i++) {
       list.push({
         name: `张三${i + 1}`,
         sex: i % 2 === 0 ? SEX.man : SEX.woman,
@@ -63,11 +64,12 @@ function fetchList({ name, sex, idCard, startBirthDate, endBirthDate, pageNo, pa
           new Date(item.birthDate).getTime() <= new Date(endBirthDate).getTime()
       )
     }
+    let result = list
     if (pageNo) {
-      list = list.slice(pageNo - 1, pageNo * pageSize || 10)
+      result = list.slice((pageNo - 1) * pageSize, pageNo * pageSize)
     }
     setTimeout(() => {
-      resolve({ total: 20, list })
+      resolve({ total: list.length, list: result })
     }, 500)
   })
 }

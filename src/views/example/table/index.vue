@@ -113,13 +113,7 @@ export default {
           slot: 'action',
           hideInSearch: true
         }
-      ],
-      loading: false,
-      currentPage: 1, // 当前页码
-      pageSize: 20, // 每页显示条数
-      total: 0, // 总条数
-      params: undefined,
-      list: undefined
+      ]
     }
   },
   methods: {

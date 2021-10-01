@@ -224,12 +224,6 @@ list:  new Array(10)
   .map((item, index) => ({ id: index, ...item, sex: index % 2 === 0 ? SEX.man : SEX.woman }))
 ```
 
-### 分页 pagination
-
-```js
-<i-pagination :total="total" :pageNo.sync="pageNo" :pageSize.sync="pageSize" @change="fetchList" />
-```
-
 ### 下拉框 select
 
 - 与官方`api`尽量保持了一致性，比官方`api`增加了`props`属性，默认`{ value: 'value', label: 'label' }`

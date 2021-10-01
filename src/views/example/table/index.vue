@@ -4,13 +4,18 @@
       :columns="columns"
       :loading="loading"
       :data="list"
-      :total="total"
-      :pageNo.sync="pageNo"
-      :pageSize.sync="pageSize"
+      :pagination="{
+        total,
+        'current-page': pageNo,
+        'page-size': pageSize,
+        'update:currentPage': (currentPage) => (pageNo = currentPage),
+        'update:pageSize': (newPageSize) => (pageSize = newPageSize),
+        'current-change': fetchList,
+        'size-change': fetchList
+      }"
       border
       @search="handleSearch"
       @selection-change="handleSelectionChange"
-      @pagination-change="fetchList"
     >
       <template #action="{ row }">
         <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>
@@ -145,6 +150,7 @@ export default {
       this.list = list
     },
     handleSearch(params) {
+      this.pageNo = 1
       params = {
         ...params,
         startBirthDate: (params.birthDate || [])[0],

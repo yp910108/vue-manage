@@ -1,11 +1,11 @@
 <template>
   <div class="pro-table-content">
-    <search :columns="searchColumns" @search="handleSearch">
+    <search :columns="columnsSearch" @search="handleSearch">
       <template v-for="slotSearch of slotsSearch" #[slotSearch]="{ params, prop }">
         <slot :name="slotSearch" :params="params" :prop="prop" />
       </template>
     </search>
-    <i-table v-loading="loadingTable" v-bind="getAttrs().table" v-on="$listeners">
+    <i-table v-loading="loadingTable" v-bind="$attrs" v-on="$listeners">
       <template v-for="slotHeader of slotsHeader" #[slotHeader]="{ column, $index }">
         <slot :name="slotHeader" :column="column" :$index="$index" />
       </template>
@@ -16,7 +16,7 @@
         <slot name="append" />
       </template>
     </i-table>
-    <i-pagination v-bind="getAttrs().pagination" v-on="{ change: $listeners['pagination-change'], ...$listeners }" />
+    <i-pagination v-if="pagination" v-bind="pagination" v-on="pagination" />
   </div>
 </template>
 
@@ -26,6 +26,12 @@ import Search from './search'
 
 export default {
   inheritAttrs: false,
+  props: {
+    pagination: {
+      type: [Object, Boolean],
+      default: () => {}
+    }
+  },
   components: {
     Search
   },
@@ -40,16 +46,12 @@ export default {
     }
   },
   methods: {
-    getAttrs() {
-      const { pageNo, pageSize, total, ...restAttrs } = this.$attrs
-      return { pagination: { pageNo, pageSize, total }, table: restAttrs }
-    },
     handleSearch(params) {
       this.$emit('search', params)
     }
   },
   computed: {
-    searchColumns() {
+    columnsSearch() {
       const _columns = this.$attrs.columns.map((column) => {
         const result = {}
         for (const key in column) {
@@ -60,7 +62,7 @@ export default {
       return _columns.filter((column) => !column.type && !column.hideInSearch)
     },
     slotsSearch() {
-      const columns = this.searchColumns.filter((column) => !!column.slotSearch)
+      const columns = this.columnsSearch.filter((column) => !!column.slotSearch)
       return columns.map((column) => column.slotSearch)
     },
     slotsHeader() {

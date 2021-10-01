@@ -1,13 +1,13 @@
 <template>
   <div class="pro-table-content">
-    <search :columns="columnSearches" @search="handleSearch">
-      <template v-for="slotSearch of slotSearches" #[slotSearch]="{ params, prop }">
-        <slot :name="slotSearch" :params="params" :prop="prop" />
+    <search :columns="searchColumns" @search="handleSearch">
+      <template v-for="searchSlot of searchSlots" #[searchSlot]="{ params, prop }">
+        <slot :name="searchSlot" :params="params" :prop="prop" />
       </template>
     </search>
     <i-table v-loading="$attrs.loading" v-bind="$attrs" v-on="$listeners">
-      <template v-for="slotTitle of slotTitles" #[slotTitle]="{ column, $index }">
-        <slot :name="slotTitle" :column="column" :$index="$index" />
+      <template v-for="headerSlot of headerSlots" #[headerSlot]="{ column, $index }">
+        <slot :name="headerSlot" :column="column" :$index="$index" />
       </template>
       <template v-for="slot of slots" #[slot]="{ row, $index }">
         <slot :name="slot" :row="row" :$index="$index" />
@@ -35,7 +35,7 @@ export default {
     }
   },
   computed: {
-    columnSearches() {
+    searchColumns() {
       const _columns = this.$attrs.columns.map((column) => {
         const result = {}
         for (const key in column) {
@@ -45,17 +45,17 @@ export default {
       })
       return _columns.filter((column) => !column.type && !column.hideInSearch)
     },
-    slotSearches() {
-      const columns = this.columnSearches.filter((column) => !!column.slotSearch)
-      return columns.map((column) => column.slotSearch)
+    searchSlots() {
+      const columns = this.searchColumns.filter((column) => !!column.searchSlot)
+      return columns.map((column) => column.searchSlot)
+    },
+    headerSlots() {
+      const columns = this.$attrs.columns.filter((column) => !!column.headerSlot)
+      return columns.map((column) => column.headerSlot)
     },
     slots() {
       const columns = this.$attrs.columns.filter((column) => !!column.slot)
       return columns.map((column) => column.slot)
-    },
-    slotTitles() {
-      const columns = this.$attrs.columns.filter((column) => !!column.slotTitle)
-      return columns.map((column) => column.slotTitle)
     }
   }
 }

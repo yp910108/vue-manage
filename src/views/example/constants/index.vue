@@ -10,13 +10,13 @@
     <aside>
       <h3>显示文字，并设置状态颜色</h3>
       审核状态：
-      <span :class="auditStatusColorCls[res.status]">
-        {{ userAuditStatusKeyValue[res.status] }}
+      <span :class="userAuditStatusColorCls[status]">
+        {{ userAuditStatusKeyValue[status] }}
       </span>
     </aside>
     <aside>
       <h3>判断逻辑</h3>
-      <el-button v-if="res.status === USER_AUDIT_STATUS.pass">测试按钮</el-button>
+      <el-button v-if="status === USER_AUDIT_STATUS.pass" plain>测试按钮</el-button>
     </aside>
   </div>
 </template>
@@ -26,8 +26,16 @@ import {
   USER_AUDIT_STATUS,
   userAuditStatusOptions,
   userAuditStatusKeyValue,
-  auditStatusColorCls
+  userAuditStatusColorCls
 } from '@/constants/user'
+
+function fetchRes() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ status: 1 })
+    }, 1000)
+  })
+}
 
 export default {
   data() {
@@ -35,22 +43,18 @@ export default {
       USER_AUDIT_STATUS,
       userAuditStatusOptions,
       userAuditStatusKeyValue,
-      auditStatusColorCls,
-      status: undefined,
-      res: {}
+      userAuditStatusColorCls,
+      status: USER_AUDIT_STATUS.pass
     }
   },
   methods: {
-    fetchRes() {
-      this.res = {
-        status: 1
-      }
+    async fetchRes() {
+      const { status } = await fetchRes()
+      this.status = status
     }
   },
   created() {
-    setTimeout(() => {
-      this.fetchRes()
-    }, 1000)
+    this.fetchRes()
   }
 }
 </script>

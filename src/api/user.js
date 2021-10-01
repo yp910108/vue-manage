@@ -28,11 +28,11 @@ export function getUser() {
               },
               {
                 name: '下拉树',
-                path: 'select-tree'
+                path: 'tree-select'
               },
               {
                 name: '下拉多选树',
-                path: 'check-tree'
+                path: 'tree-checkbox'
               },
               {
                 name: '级联选择',

@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import formatDate from './format-date'
+import formatDate from './date-format'
 
 Vue.filter('formatDate', formatDate)

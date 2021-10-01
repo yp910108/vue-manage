@@ -1,4 +1,4 @@
-# 基础后台管理系统 ✨✨✨
+# 基础后台管理系统 🚀🚀🚀
 
 ## 说明
 
@@ -258,16 +258,16 @@ options: [
 ]
 ```
 
-### 下拉树 select-tree
+### 下拉树 tree-select
 
 - 因为官方没有下拉树组件，所以基于`el-tree`封装了此组件
 - 与官方`api`尽量保持了一致性，比官方 api 增加了`placeholder`、`claerable`属性，数据属性为`options`
 - `props`属性比官方`api`多了一个`value`、`parentValue`，默认`{ value: 'value', label: 'label', parentValue: 'parentValue', children: 'children' }`
 
 ```js
-// src/views/example/select-tree/index.vue
+// src/views/example/tree-select/index.vue
 // 调用方式
-<i-select-tree
+<i-tree-select
   v-model="val"
   :props="{
     value: 'id',
@@ -281,16 +281,16 @@ options: [
 // 数据略，见 example
 ```
 
-### 下拉多选树 check-tree
+### 下拉多选树 tree-checkbox
 
 - 因为官方没有下拉树组件，所以基于`el-tree`封装了此组件
 - 与官方`api`尽量保持了一致性，比官方 api 增加了`placeholder`、`claerable`属性，数据属性为`options`
 - `props`属性比官方`api`多了一个`value`、`parentValue`，默认`{ value: 'value', label: 'label', parentValue: 'parentValue', children: 'children' }`
 
 ```js
-// src/views/example/check-tree/index.vue
+// src/views/example/tree-checkbox/index.vue
 // 调用方式
-<i-check-tree
+<i-tree-checkbox
   v-model="val"
   :props="{
     value: 'id',
@@ -393,7 +393,7 @@ export const unmatchedRoute = {
 
 ### 用户信息
 
-由于用户信息使用交频繁，所以直接将用户信息放入全局`mixin`中
+由于用户信息使用较频繁，所以直接将用户信息放入全局`mixin`中
 
 ```js
 // 使用

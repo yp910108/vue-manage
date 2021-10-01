@@ -11,4 +11,4 @@ export const userAuditStatusOptions = [
 ]
 export const userAuditStatusKeyValue = getKeyValue(userAuditStatusOptions)
 
-export const auditStatusColorCls = getCls(USER_AUDIT_STATUS, 'color-status-')
+export const userAuditStatusColorCls = getCls(USER_AUDIT_STATUS, 'color-status-')

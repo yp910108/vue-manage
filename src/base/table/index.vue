@@ -1,7 +1,7 @@
 <template>
   <el-table v-bind="$attrs" v-on="$listeners">
     <el-table-column
-      v-for="({ slotTitle, slot, ..._column }, index) of _columns"
+      v-for="({ headerSlot, slot, ..._column }, index) of _columns"
       v-bind="{
         resizable: false,
         showOverflowTooltip: true,
@@ -10,7 +10,7 @@
       :key="index"
     >
       <template #header="{ column, $index }">
-        <slot :name="slotTitle" :column="column" :$index="$index">
+        <slot :name="headerSlot" :column="column" :$index="$index">
           {{ _column.label }}
         </slot>
       </template>

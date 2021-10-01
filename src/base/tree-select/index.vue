@@ -3,7 +3,7 @@
     ref="popover"
     v-model="visible"
     :width="popoverWidth"
-    popper-class="i-check-tree-popover"
+    popper-class="i-tree-select-popover"
     transition="el-zoom-in-top"
     placement="bottom-start"
     @show="show"
@@ -17,7 +17,7 @@
         </template>
       </el-tree>
     </el-scrollbar>
-    <div ref="reference" slot="reference" class="i-check-tree-reference">
+    <div ref="reference" slot="reference" class="i-tree-select-reference">
       <el-input
         ref="value"
         v-model="text"
@@ -41,14 +41,9 @@
 import { getParents } from '@/utils'
 
 export default {
-  name: 'ICheckTree',
+  name: 'ITreeSelect',
   inheritAttrs: false,
-  props: {
-    value: {
-      type: Array,
-      default: () => []
-    }
-  },
+  props: ['value'],
   data() {
     return {
       visible: false,
@@ -59,31 +54,33 @@ export default {
   methods: {
     show() {
       this.popoverWidth = this.$refs.reference.clientWidth
-      this.$refs.tree.setCheckedKeys(this.value)
+      this.$refs.tree.setCurrentKey(this.value)
       this.$nextTick(() => {
         this.scrollToCurrent()
       })
     },
-    // 获取已选中的节点
-    getCheckedNodes() {
+    getCurrentNode() {
       const nodeKey = this.$_attrs['node-key']
       const { options, props } = this.$_attrs
       const { children } = props
-      const ret = []
       const inner = (list) => {
+        list = list || options
         for (const item of list) {
-          const currId = item[nodeKey]
+          const currentId = item[nodeKey]
           const arr = item[children]
-          if (this.value.indexOf(currId) !== -1) {
-            const obj = { ...item }
-            delete obj[children]
-            ret.push(obj)
+          if (currentId === this.value) {
+            const ret = { ...item }
+            delete ret[children]
+            return ret
+          } else if (arr && arr.length) {
+            const ret = inner(arr)
+            if (ret) {
+              return ret
+            }
           }
-          if (arr && arr.length) inner(arr)
         }
       }
-      inner(options)
-      return ret
+      return inner()
     },
     scrollToCurrent() {
       const $container = this.$refs.scrollbar.$el.querySelector('.el-scrollbar__wrap')
@@ -92,11 +89,18 @@ export default {
         return
       }
       const { offsetHeight } = $container
-      const $target = this.$refs.tree.$el.querySelector('.is-checked')
+      const $target = this.$refs.tree.$el.querySelector('.is-current')
       if (!$target) return
       const { offsetTop } = $target
       if (offsetTop >= offsetHeight - 30) {
-        $container.scrollTop = offsetTop - offsetHeight + 100
+        $container.scrollTop = offsetTop - offsetHeight + 30
+      }
+    },
+    removeCurrentKey() {
+      const $target = this.$refs.tree.$el.querySelector('.is-current')
+      if ($target) {
+        const cls = $target.className
+        $target.className = cls.replace('is-current', '')
       }
     },
     updatePopper() {
@@ -111,7 +115,7 @@ export default {
       return arr.some((item) => item[props.label].indexOf(value) !== -1)
     },
     clear() {
-      this.$emit('input', [])
+      this.$emit('input', undefined)
     }
   },
   computed: {
@@ -126,7 +130,6 @@ export default {
         'highlight-current': true,
         'node-key': props.value || 'value',
         ...this.$attrs,
-        'show-checkbox': true,
         props: {
           value: 'value',
           label: 'label',
@@ -138,11 +141,13 @@ export default {
       }
     },
     $_listeners() {
+      const nodeKey = this.$_attrs['node-key']
       return {
         ...this.$listeners,
-        'check-change': () => {
-          this.$emit('input', this.$refs.tree.getCheckedKeys())
-          this.$emit('check-change')
+        'node-click': (item) => {
+          this.$emit('input', item[nodeKey])
+          this.$emit('node-click', item)
+          this.visible = false
         },
         'node-expand': () => {
           this.updatePopper()
@@ -158,9 +163,8 @@ export default {
       return this.$_attrs.filterable
     },
     label() {
-      const nodes = this.getCheckedNodes()
-      const names = nodes.map((node) => node[this.$_attrs.props.label])
-      return names.join('，')
+      const node = this.getCurrentNode()
+      return node ? node[this.$_attrs.props.label] : ''
     },
     text: {
       get() {
@@ -200,7 +204,7 @@ export default {
 </script>
 
 <style lang="scss">
-.i-check-tree-popover {
+.i-tree-select-popover {
   padding: 8px 0;
   min-width: 0;
   .popper__arrow {
@@ -234,9 +238,17 @@ export default {
       padding: 9px;
     }
   }
+  .is-current > .el-tree-node__content {
+    font-weight: bold;
+    background-color: #fff;
+    color: $--color-primary;
+    &:hover {
+      background-color: #f5f7fa;
+    }
+  }
 }
 
-.i-check-tree-reference ::v-deep {
+.i-tree-select-reference ::v-deep {
   .el-input {
     .el-input__inner {
       overflow: hidden;

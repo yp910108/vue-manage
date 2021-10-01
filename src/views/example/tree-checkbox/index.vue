@@ -13,14 +13,14 @@
     <aside>
       普通用法
       <br />
-      <i-select-tree v-model="val1" :options="options1" placeholder="请选择" />
+      <i-tree-checkbox v-model="val1" :options="options1" placeholder="请选择" />
       {{ val1 }}
     </aside>
     <aside>
       设置
       <code>props: { value: 'id', label: 'name', parentValue: 'parentId', children: 'childNode' }</code>
       <br />
-      <i-select-tree
+      <i-tree-checkbox
         v-model="val2"
         :props="{
           value: 'id',
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       val1: undefined,
-      val2: 1000203,
+      val2: [1000103, 1000203],
       options1: [
         {
           value: 10001,

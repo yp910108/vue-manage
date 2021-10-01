@@ -14,7 +14,7 @@ export function getUser() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        username: '张三',
+        username: 'admin',
         mobile: '13793186354',
         menus: [
           {

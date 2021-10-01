@@ -5,7 +5,7 @@
         <slot :name="slotSearch" :params="params" :prop="prop" />
       </template>
     </search>
-    <i-table v-loading="loadingTable" v-bind="$attrs" v-on="$listeners">
+    <i-table v-loading="loadingTable" v-bind="{ data, ...$attrs }" v-on="$listeners">
       <template v-for="slotHeader of slotsHeader" #[slotHeader]="{ column, $index }">
         <slot :name="slotHeader" :column="column" :$index="$index" />
       </template>
@@ -16,7 +16,22 @@
         <slot name="append" />
       </template>
     </i-table>
-    <i-pagination v-if="paginationProps" v-bind="paginationProps" v-on="paginationProps" />
+    <i-pagination
+      v-if="paginationProps"
+      v-bind="{
+        total,
+        'current-page': currentPage,
+        'page-size': pageSize,
+        ...paginationProps
+      }"
+      v-on="{
+        'update:currentPage': (newCurrentPage) => (currentPage = newCurrentPage),
+        'update:pageSize': (newPageSize) => (pageSize = newPageSize),
+        'current-change': fetch,
+        'size-change': fetch,
+        ...paginationProps
+      }"
+    />
   </div>
 </template>
 
@@ -29,7 +44,11 @@ export default {
   props: {
     paginationProps: {
       type: [Object, Boolean],
-      default: () => {}
+      default: () => ({})
+    },
+    request: {
+      type: Function,
+      default: () => async () => {}
     }
   },
   components: {
@@ -38,15 +57,33 @@ export default {
   data() {
     return {
       loading: false,
-      pageNo: 1, // 当前页码
-      pageSize: 10, // 每页显示条数
+      currentPage: 1, // 当前页码
+      pageSize: 20, // 每页显示条数
       total: 0, // 总条数
       params: undefined,
-      list: undefined
+      data: undefined
     }
   },
   methods: {
+    async fetch() {
+      if (this.request) {
+        const { currentPage, pageSize } = this
+        try {
+          this.loading = true
+          const { total = 0, data = [] } = (await this.request({ currentPage, pageSize, ...this.params })) || {}
+          this.loading = false
+          this.total = total
+          this.data = data
+        } catch (e) {
+          console.warn(e)
+          this.loading = false
+        }
+      }
+    },
     handleSearch(params) {
+      this.currentPage = 1
+      this.params = params
+      this.fetch(params)
       this.$emit('search', params)
     }
   },
@@ -77,6 +114,9 @@ export default {
       const { $attrs, loading } = this
       return $attrs.loading !== undefined ? $attrs.loading : loading
     }
+  },
+  created() {
+    this.fetch()
   }
 }
 </script>

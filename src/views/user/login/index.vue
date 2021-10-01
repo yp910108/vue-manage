@@ -27,13 +27,9 @@
         <el-button type="primary" class="btn-login" :loading="loading" @click="login">登 录</el-button>
       </div>
     </div>
-    <div class="copyright">{{ COPYRIGHT }}<br />技术支持电话：{{ CONTACT }}</div>
   </div>
 </template>
 <script>
-import { timeFix } from '@/utils'
-import { CONTACT, COPYRIGHT } from '@/constants/common'
-
 const form = {
   account: undefined,
   password: undefined
@@ -43,8 +39,6 @@ export default {
   name: 'UserWrapper',
   data() {
     return {
-      CONTACT,
-      COPYRIGHT,
       form: { ...form },
       rules: {
         account: [{ required: true, message: '请输入用户名称', trigger: 'blur' }],
@@ -69,13 +63,6 @@ export default {
         this.loading = false
         const { query } = this.$route
         this.$router.push(query.redirect || '/')
-        setTimeout(() => {
-          this.$notify({
-            type: 'success',
-            title: '欢迎',
-            message: `${timeFix()}，欢迎回来`
-          })
-        }, 500)
       } catch (e) {
         this.loading = false
       }
@@ -150,17 +137,6 @@ export default {
       height: 40px;
       font-size: 16px;
     }
-  }
-  .copyright {
-    position: absolute;
-    left: 0;
-    bottom: 10px;
-    width: 100%;
-    padding: 10px 0;
-    line-height: 1.5;
-    text-align: center;
-    font-weight: 500;
-    color: #00000073;
   }
 }
 </style>

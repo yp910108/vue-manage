@@ -1,9 +1,23 @@
 <template>
   <div class="app-content">
-    <pro-table :columns="columns" :request="methodRequest">
+    <pro-table
+      :columns="columns"
+      :loading="loading"
+      :data="list"
+      :pagination-props="{
+        total,
+        'current-page': currentPage,
+        'page-size': pageSize,
+        'update:currentPage': (newCurrentPage) => (currentPage = newCurrentPage),
+        'update:pageSize': (newPageSize) => (pageSize = newPageSize),
+        'current-change': fetchList,
+        'size-change': fetchList
+      }"
+      @search="handleSearch"
+    >
       <template #action="{ row }">
         <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>
-        <el-button type="text" size="small" @click="handleDelete(row)">删除</el-button>
+        <el-button type="text" size="small">删除</el-button>
       </template>
     </pro-table>
   </div>
@@ -123,18 +137,34 @@ export default {
     }
   },
   methods: {
-    async methodRequest(params) {
-      params = { ...params, pageNo: params.currentPage }
-      delete params.currentPage
-      const { list, total } = await fetchList(params)
-      return { data: list, total }
+    async fetchList() {
+      this.loading = true
+      const { total, list } = await fetchList({
+        ...this.params,
+        pageNo: this.currentPage,
+        pageSize: this.pageSize
+      })
+      this.loading = false
+      this.total = total
+      this.list = list
+    },
+    handleSearch(params) {
+      this.currentPage = 1
+      params = {
+        ...params,
+        startBirthDate: (params.birthDate || [])[0],
+        endBirthDate: (params.birthDate || [])[1]
+      }
+      delete params.birthDate
+      this.params = params
+      this.fetchList()
     },
     handleEdit(item) {
       console.log(item)
-    },
-    handleDelete(item) {
-      console.log(item)
     }
+  },
+  created() {
+    this.fetchList()
   }
 }
 </script>

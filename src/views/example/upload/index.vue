@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import UploadPicture from '@/components/picture-upload'
-import UploadFile from '@/components/file-upload'
+import UploadPicture from '@/components/upload-picture'
+import UploadFile from '@/components/upload-file'
 
 export default {
   components: {

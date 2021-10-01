@@ -4,7 +4,7 @@
     :modal-append-to-body="true"
     :append-to-body="true"
     title="图片预览"
-    custom-class="picture-upload-preview-dialog"
+    custom-class="upload-picture-preview-dialog"
   >
     <img :src="url" alt />
   </el-dialog>
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="scss">
-.picture-upload-preview-dialog {
+.upload-picture-preview-dialog {
   .el-dialog__header {
     line-height: normal;
   }

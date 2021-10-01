@@ -227,7 +227,7 @@ list:  new Array(10)
 ### 分页 pagination
 
 ```js
-<i-pagination :total="total" :pageNo.sync="pageNo" :pageSize.sync="pageSize" @pagination="fetchList" />
+<i-pagination :total="total" :pageNo.sync="pageNo" :pageSize.sync="pageSize" @change="fetchList" />
 ```
 
 ### 下拉框 select

@@ -1,13 +1,13 @@
 <template>
   <div class="pro-table-content">
     <search :columns="searchColumns" @search="handleSearch">
-      <template v-for="searchSlot of searchSlots" #[searchSlot]="{ params, prop }">
-        <slot :name="searchSlot" :params="params" :prop="prop" />
+      <template v-for="slotSearch of slotsSearch" #[slotSearch]="{ params, prop }">
+        <slot :name="slotSearch" :params="params" :prop="prop" />
       </template>
     </search>
-    <i-table v-loading="$attrs.loading" v-bind="$attrs" v-on="$listeners">
-      <template v-for="headerSlot of headerSlots" #[headerSlot]="{ column, $index }">
-        <slot :name="headerSlot" :column="column" :$index="$index" />
+    <i-table v-loading="loadingTable" v-bind="getAttrs().table" v-on="$listeners">
+      <template v-for="slotHeader of slotsHeader" #[slotHeader]="{ column, $index }">
+        <slot :name="slotHeader" :column="column" :$index="$index" />
       </template>
       <template v-for="slot of slots" #[slot]="{ row, $index }">
         <slot :name="slot" :row="row" :$index="$index" />
@@ -16,7 +16,7 @@
         <slot name="append" />
       </template>
     </i-table>
-    <i-pagination v-bind="$attrs" v-on="$listeners" />
+    <i-pagination v-bind="getAttrs().pagination" v-on="{ change: $listeners['pagination-change'], ...$listeners }" />
   </div>
 </template>
 
@@ -29,7 +29,21 @@ export default {
   components: {
     Search
   },
+  data() {
+    return {
+      loading: false,
+      pageNo: 1, // 当前页码
+      pageSize: 10, // 每页显示条数
+      total: 0, // 总条数
+      params: undefined,
+      list: undefined
+    }
+  },
   methods: {
+    getAttrs() {
+      const { pageNo, pageSize, total, ...restAttrs } = this.$attrs
+      return { pagination: { pageNo, pageSize, total }, table: restAttrs }
+    },
     handleSearch(params) {
       this.$emit('search', params)
     }
@@ -45,17 +59,21 @@ export default {
       })
       return _columns.filter((column) => !column.type && !column.hideInSearch)
     },
-    searchSlots() {
-      const columns = this.searchColumns.filter((column) => !!column.searchSlot)
-      return columns.map((column) => column.searchSlot)
+    slotsSearch() {
+      const columns = this.searchColumns.filter((column) => !!column.slotSearch)
+      return columns.map((column) => column.slotSearch)
     },
-    headerSlots() {
-      const columns = this.$attrs.columns.filter((column) => !!column.headerSlot)
-      return columns.map((column) => column.headerSlot)
+    slotsHeader() {
+      const columns = this.$attrs.columns.filter((column) => !!column.slotHeader)
+      return columns.map((column) => column.slotHeader)
     },
     slots() {
       const columns = this.$attrs.columns.filter((column) => !!column.slot)
       return columns.map((column) => column.slot)
+    },
+    loadingTable() {
+      const { $attrs, loading } = this
+      return $attrs.loading !== undefined ? $attrs.loading : loading
     }
   }
 }

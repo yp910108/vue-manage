@@ -23,13 +23,15 @@ export default {
       return this.$attrs.value && this.isMouseEnter
     },
     valueFormat() {
-      return {
-        [TYPE.year]: 'yyyy',
-        [TYPE.month]: 'yyyy-MM',
-        [TYPE.date]: 'yyyy-MM-dd',
-        [TYPE.dates]: 'yyyy-MM-dd',
-        [TYPE.datetime]: 'yyyy-MM-dd HH:mm:ss'
-      }[this.$attrs.type]
+      return (
+        {
+          [TYPE.year]: 'yyyy',
+          [TYPE.month]: 'yyyy-MM',
+          [TYPE.date]: 'yyyy-MM-dd',
+          [TYPE.dates]: 'yyyy-MM-dd',
+          [TYPE.datetime]: 'yyyy-MM-dd HH:mm:ss'
+        }[this.$attrs.type] || 'yyyy-MM-dd'
+      )
     }
   }
 }

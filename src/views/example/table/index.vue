@@ -10,7 +10,7 @@
       border
       @search="handleSearch"
       @selection-change="handleSelectionChange"
-      @pagination="fetchList"
+      @pagination-change="fetchList"
     >
       <template #action="{ row }">
         <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>

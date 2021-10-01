@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     handleChange() {
-      this.$emit('pagination')
+      this.$emit('change')
     }
   },
   computed: {

@@ -1,33 +1,38 @@
 <template>
-  <div class="picture-upload">
-    <i-upload v-bind="$_attrs" v-on="$listeners" :class="{ 'upload-icon-hide': !uploadAble }">
-      <i class="el-icon-plus" />
+  <div class="upload-file">
+    <i-upload v-bind="$_attrs" v-on="$listeners" :class="{ 'upload-btn-hide': !uploadAble }">
+      <el-button plain>点击上传</el-button>
     </i-upload>
-    <preview ref="preview" :url="currUrl" />
   </div>
 </template>
 
 <script>
-import Preview from './preview'
+import { baseUrl } from '@/config'
+import { combineURL } from '@/utils'
+import { getPreviewUrl } from '@/api/common'
 
 export default {
   inheritAttrs: false,
-  components: { Preview },
-  data() {
-    return {
-      currUrl: ''
-    }
-  },
   methods: {
-    preview({ url }) {
-      this.currUrl = url
-      this.$refs.preview.show()
+    async preview({ response, id }) {
+      try {
+        if (response) {
+          let { value } = response.value
+          value = JSON.parse(value)
+          id = value.fileId
+        }
+        const { pdfUrl, currentUrl } = await getPreviewUrl({ fileId: id })
+        const url = combineURL(baseUrl, '/portal/', pdfUrl || currentUrl)
+        window.open(url)
+      } catch (e) {
+        // do nothing
+      }
     },
     exceed() {
       const { limit } = this.$attrs
       if (limit) {
         this.$message({
-          message: `最多上传${limit}张`,
+          message: `最多上传${limit}个`,
           type: 'warning'
         })
       }
@@ -37,8 +42,6 @@ export default {
     $_attrs() {
       const { disabled } = this.$attrs
       return {
-        accept: 'image/jpg, image/jpeg, image/gif, image/png',
-        'list-type': 'picture-card',
         limit: 0,
         'on-preview': this.preview,
         'on-exceed': this.exceed,
@@ -58,14 +61,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.picture-upload ::v-deep {
-  line-height: 1;
-  .el-upload--picture-card {
-    margin: 0 8px 8px 0;
-  }
-  .upload-icon-hide {
+.upload-file ::v-deep {
+  .upload-btn-hide {
     .el-upload__tip,
-    .el-upload--picture-card {
+    .el-upload--text {
       display: none;
     }
   }

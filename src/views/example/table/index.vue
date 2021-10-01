@@ -4,7 +4,7 @@
       :columns="columns"
       :loading="loading"
       :data="list"
-      :pagination="{
+      :pagination-props="{
         total,
         'current-page': pageNo,
         'page-size': pageSize,
@@ -13,9 +13,7 @@
         'current-change': fetchList,
         'size-change': fetchList
       }"
-      border
       @search="handleSearch"
-      @selection-change="handleSelectionChange"
     >
       <template #action="{ row }">
         <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>
@@ -87,9 +85,10 @@ export default {
     return {
       columns: [
         {
-          type: 'selection',
+          type: 'index',
           width: 50,
-          align: 'center'
+          align: 'center',
+          label: '序号'
         },
         {
           prop: 'name',

@@ -1,5 +1,5 @@
 <template>
-  <el-table v-bind="$attrs" v-on="$listeners">
+  <el-table v-bind="{ border: true, ...$attrs }" v-on="$listeners">
     <el-table-column
       v-for="({ slotHeader, slot, ..._column }, index) of _columns"
       v-bind="{

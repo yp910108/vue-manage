@@ -16,7 +16,7 @@
         <slot name="append" />
       </template>
     </i-table>
-    <i-pagination v-if="pagination" v-bind="pagination" v-on="pagination" />
+    <i-pagination v-if="paginationProps" v-bind="paginationProps" v-on="paginationProps" />
   </div>
 </template>
 
@@ -27,7 +27,7 @@ import Search from './search'
 export default {
   inheritAttrs: false,
   props: {
-    pagination: {
+    paginationProps: {
       type: [Object, Boolean],
       default: () => {}
     }

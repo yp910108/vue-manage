@@ -2,11 +2,11 @@
   <div class="search-wrapper">
     <el-form :model="form" class="search-content" @submit.native.prevent>
       <el-form-item
-        v-for="({ label, searchSlot, searchType, valueEnum, prop }, index) of columns"
+        v-for="({ label, slotSearch, searchType, valueEnum, prop }, index) of columns"
         :key="index"
         :label="label"
       >
-        <slot :name="searchSlot" :params="form" :prop="prop">
+        <slot :name="slotSearch" :params="form" :prop="prop">
           <i-select v-if="searchType === SEARCH_TYPE.select || !!valueEnum" v-model="form[prop]" :options="valueEnum" />
           <i-date-picker v-else-if="SEARCH_TYPE.date.includes(searchType)" v-model="form[prop]" :type="searchType" />
           <i-input v-else v-model.trim="form[prop]" />

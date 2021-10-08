@@ -1,6 +1,9 @@
 <template>
   <div class="app-content">
     <pro-table :columns="columns" :request="methodRequest">
+      <template #toolbar>
+        <el-button type="primary">新 建</el-button>
+      </template>
       <template #action="{ row }">
         <el-button type="text" @click="handleEdit(row)">修改</el-button>
         <el-popconfirm title="确定删除该条数据吗？" class="pop-btn" @onConfirm="handleDelete(row)">

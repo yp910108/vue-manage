@@ -1,37 +1,47 @@
 <template>
   <div class="pro-table-content">
-    <search :columns="columnsSearch" @search="handleSearch">
+    <search v-if="!!columnsSearch && columnsSearch.length > 1" :columns="columnsSearch" @search="handleSearch">
       <template v-for="slotSearch of slotsSearch" #[slotSearch]="{ params, prop }">
         <slot :name="slotSearch" :params="params" :prop="prop" />
       </template>
     </search>
-    <i-table v-loading="loadingTable" v-bind="{ data, ...$attrs }" v-on="$listeners">
-      <template v-for="slotHeader of slotsHeader" #[slotHeader]="{ column, $index }">
-        <slot :name="slotHeader" :column="column" :$index="$index" />
-      </template>
-      <template v-for="slot of slots" #[slot]="{ row, $index }">
-        <slot :name="slot" :row="row" :$index="$index" />
-      </template>
-      <template #append>
-        <slot name="append" />
-      </template>
-    </i-table>
-    <i-pagination
-      v-if="paginationProps"
-      v-bind="{
-        total,
-        'current-page': currentPage,
-        'page-size': pageSize,
-        ...paginationProps
-      }"
-      v-on="{
-        'update:currentPage': (newCurrentPage) => (currentPage = newCurrentPage),
-        'update:pageSize': (newPageSize) => (pageSize = newPageSize),
-        'current-change': fetch,
-        'size-change': fetch,
-        ...paginationProps
-      }"
-    />
+    <div v-if="$slots.toolbar || (!!columnsSearch && columnsSearch.length === 1)" class="toolbar">
+      <slot name="toolbar" />
+      <search v-if="!!columnsSearch && columnsSearch.length === 1" :columns="columnsSearch" @search="handleSearch">
+        <template v-for="slotSearch of slotsSearch" #[slotSearch]="{ params, prop }">
+          <slot :name="slotSearch" :params="params" :prop="prop" />
+        </template>
+      </search>
+    </div>
+    <div class="table-wrapper">
+      <i-table v-loading="loadingTable" v-bind="{ data, ...$attrs, columns: columnsTable }" v-on="$listeners">
+        <template v-for="slotHeader of slotsHeader" #[slotHeader]="{ column, $index }">
+          <slot :name="slotHeader" :column="column" :$index="$index" />
+        </template>
+        <template v-for="slotColumn of slotsColumn" #[slotColumn]="{ row, $index }">
+          <slot :name="slotColumn" :row="row" :$index="$index" />
+        </template>
+        <template #append>
+          <slot name="append" />
+        </template>
+      </i-table>
+      <i-pagination
+        v-if="paginationProps"
+        v-bind="{
+          total,
+          'current-page': currentPage,
+          'page-size': pageSize,
+          ...paginationProps
+        }"
+        v-on="{
+          'update:currentPage': (newCurrentPage) => (currentPage = newCurrentPage),
+          'update:pageSize': (newPageSize) => (pageSize = newPageSize),
+          'current-change': fetch,
+          'size-change': fetch,
+          ...paginationProps
+        }"
+      />
+    </div>
   </div>
 </template>
 
@@ -88,26 +98,31 @@ export default {
     }
   },
   computed: {
-    columnsSearch() {
-      const _columns = this.$attrs.columns.map((column) => {
+    _columns() {
+      return this.$attrs.columns.map((column) => {
         const result = {}
         for (const key in column) {
           result[camelize(key)] = column[key]
         }
         return result
       })
-      return _columns.filter((column) => !column.type && !column.hideInSearch)
+    },
+    columnsSearch() {
+      return this._columns.filter((column) => !column.type && !column.hideInSearch)
+    },
+    columnsTable() {
+      return this._columns.filter((column) => !column.hideInTable)
     },
     slotsSearch() {
       const columns = this.columnsSearch.filter((column) => !!column.slotSearch)
       return columns.map((column) => column.slotSearch)
     },
     slotsHeader() {
-      const columns = this.$attrs.columns.filter((column) => !!column.slotHeader)
+      const columns = this.columnsTable.filter((column) => !!column.slotHeader)
       return columns.map((column) => column.slotHeader)
     },
-    slots() {
-      const columns = this.$attrs.columns.filter((column) => !!column.slot)
+    slotsColumn() {
+      const columns = this._columns.filter((column) => !!column.slot)
       return columns.map((column) => column.slot)
     },
     loadingTable() {
@@ -149,6 +164,7 @@ export default {
           width: 25%;
         }
         display: flex;
+        align-items: flex-start;
         .el-form-item__label {
           flex: 0 0 auto;
           width: 123px;
@@ -174,9 +190,43 @@ export default {
       transition: transform 0.2s linear;
     }
     &.collapse {
-      height: 51px;
+      height: 50px;
       > .el-icon-arrow-up {
         transform: rotate(-180deg);
+      }
+    }
+  }
+  > .toolbar {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    .search-wrapper {
+      display: flex;
+      .search-content {
+        margin-right: 10px;
+        .el-form-item {
+          margin-bottom: 0;
+          .el-form-item__label {
+            display: none;
+          }
+          .el-form-item__content {
+            .el-input,
+            .el-input-number,
+            .el-select,
+            .i-date-editor-wrapper,
+            .el-date-editor-wrapper,
+            .el-date-editor {
+              width: 250px;
+            }
+          }
+        }
+      }
+      .btn-group {
+        .el-button:nth-child(2) {
+          display: none;
+        }
       }
     }
   }

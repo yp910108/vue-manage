@@ -17,7 +17,7 @@
       <el-button type="primary" @click="handleSearch">查 询</el-button>
       <el-button plain @click="handleReset">重 置</el-button>
     </div>
-    <i v-show="visibleCollapse" class="el-icon-arrow-up" @click="collapse = !collapse" />
+    <i v-if="visibleCollapse" class="el-icon-arrow-up" @click="collapse = !collapse" />
   </div>
 </template>
 
@@ -30,7 +30,7 @@ const SEARCH_TYPE = {
   date: Object.keys(DATE_TYPE)
 }
 
-const HEIGHT_WRAPPER = 51
+const WRAPPER_HEIGHT = 50
 
 export default {
   props: {
@@ -53,10 +53,10 @@ export default {
         this.$set(this.form, prop, initialValue)
       })
     },
-    setVisibleCollapse() {
+    setCollapseVisible() {
       const elSearchContent = this.$refs.wrapper.querySelector('.search-content')
-      const heightContent = elSearchContent.clientHeight
-      this.visibleCollapse = heightContent > HEIGHT_WRAPPER
+      const contentHeight = elSearchContent.clientHeight
+      this.visibleCollapse = contentHeight > WRAPPER_HEIGHT
     },
     handleSearch() {
       this.$emit('search', filterData(this.form))
@@ -70,7 +70,7 @@ export default {
     columns: {
       immediate: true,
       handler() {
-        this.$nextTick(this.setVisibleCollapse)
+        this.$nextTick(this.setCollapseVisible)
       }
     }
   },
@@ -78,10 +78,10 @@ export default {
     this.initForm()
   },
   beforeMount() {
-    window.addEventListener('resize', this.setVisibleCollapse)
+    window.addEventListener('resize', this.setCollapseVisible)
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.setVisibleCollapse)
+    window.removeEventListener('resize', this.setCollapseVisible)
   }
 }
 </script>

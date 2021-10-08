@@ -43,13 +43,38 @@
 
 // el-table
 .el-table {
-  .el-button--text {
-    padding: 0;
+  .el-table__header {
+    th {
+      padding: 6px 0;
+      background: #f5f7fa;
+      .cell {
+        font-family: PingFangSC-Semibold;
+        font-weight: 600;
+        color: #909399;
+        .caret-wrapper {
+          margin-top: -7px;
+          margin-bottom: -8px;
+        }
+      }
+    }
   }
-  .pop-btn + .el-button--text,
-  .el-button--text + .pop-btn,
-  .pop-btn + .pop-btn {
-    margin-left: 10px;
+  .el-table__body {
+    td {
+      padding: 6px 0;
+      &.el-table-column--selection {
+        .cell {
+          padding-right: 10px;
+        }
+      }
+      .el-button--text {
+        padding: 0;
+      }
+      .pop-btn + .el-button--text,
+      .el-button--text + .pop-btn,
+      .pop-btn + .pop-btn {
+        margin-left: 10px;
+      }
+    }
   }
 }
 

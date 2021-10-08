@@ -1,5 +1,5 @@
 <template>
-  <div class="search-wrapper">
+  <div ref="wrapper" :class="{ 'search-wrapper': true, collapse }">
     <el-form :model="form" class="search-content" @submit.native.prevent>
       <el-form-item
         v-for="({ label, slotSearch, searchType, valueEnum, prop }, index) of columns"
@@ -14,9 +14,10 @@
       </el-form-item>
     </el-form>
     <div class="btn-group">
-      <el-button type="primary" @click="search">查 询</el-button>
-      <el-button plain @click="reset">重 置</el-button>
+      <el-button type="primary" @click="handleSearch">查 询</el-button>
+      <el-button plain @click="handleReset">重 置</el-button>
     </div>
+    <i v-show="visibleCollapse" class="el-icon-arrow-up" @click="collapse = !collapse" />
   </div>
 </template>
 
@@ -29,6 +30,8 @@ const SEARCH_TYPE = {
   date: Object.keys(DATE_TYPE)
 }
 
+const HEIGHT_WRAPPER = 51
+
 export default {
   props: {
     columns: {
@@ -39,6 +42,8 @@ export default {
   data() {
     return {
       SEARCH_TYPE,
+      visibleCollapse: false,
+      collapse: true,
       form: {}
     }
   },
@@ -48,16 +53,35 @@ export default {
         this.$set(this.form, prop, initialValue)
       })
     },
-    search() {
+    setVisibleCollapse() {
+      const elSearchContent = this.$refs.wrapper.querySelector('.search-content')
+      const heightContent = elSearchContent.clientHeight
+      this.visibleCollapse = heightContent > HEIGHT_WRAPPER
+    },
+    handleSearch() {
       this.$emit('search', filterData(this.form))
     },
-    reset() {
+    handleReset() {
       this.form = this.$options.data().form
-      this.search()
+      this.handleSearch()
+    }
+  },
+  watch: {
+    columns: {
+      immediate: true,
+      handler() {
+        this.$nextTick(this.setVisibleCollapse)
+      }
     }
   },
   created() {
     this.initForm()
+  },
+  beforeMount() {
+    window.addEventListener('resize', this.setVisibleCollapse)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.setVisibleCollapse)
   }
 }
 </script>

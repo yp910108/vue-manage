@@ -83,7 +83,7 @@ export default {
     handleSearch(params) {
       this.currentPage = 1
       this.params = params
-      this.fetch(params)
+      this.fetch()
       this.$emit('search', params)
     }
   },
@@ -131,6 +131,7 @@ export default {
     align-items: flex-start;
     margin-left: -30px;
     margin-bottom: 4px;
+    overflow: hidden;
     > .search-content {
       flex: 1;
       display: flex;
@@ -172,8 +173,11 @@ export default {
       cursor: pointer;
       transition: transform 0.2s linear;
     }
-    > .collapse {
-      transform: rotate(-180deg);
+    &.collapse {
+      height: 51px;
+      > .el-icon-arrow-up {
+        transform: rotate(-180deg);
+      }
     }
   }
   > .table-wrapper {

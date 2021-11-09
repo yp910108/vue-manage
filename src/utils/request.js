@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import { baseUrl } from '@/config'
 import { getLocalToken } from './local'
 
 // 请求成功
@@ -10,7 +9,7 @@ const ERRS_OK = 0
 const ERRS_INVALID = 40010
 
 const service = axios.create({
-  baseURL: baseUrl,
+  baseURL: process.env.VUE_APP_API_URL,
   timeout: 20000
 })
 

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { baseUrl } from '@/config'
 import { getLocalToken, combineURL } from '@/utils'
 
 export default {
@@ -52,7 +51,7 @@ export default {
         headers: {
           Authorization: `Bearer ${getLocalToken()}`
         },
-        action: combineURL(baseUrl, '/portal/system/file/v1/upload'),
+        action: combineURL(process.env.VUE_APP_API_URL, '/portal/system/file/v1/upload'),
         'file-list': this.fileList,
         'on-success': this.setValue,
         'on-remove': this.setValue,
@@ -74,7 +73,7 @@ export default {
             const { id } = item
             return {
               ...item,
-              url: combineURL(baseUrl, `/portal/file/onlinePreviewController/v1/getFileById_${id}`)
+              url: combineURL(process.env.VUE_APP_API_URL, `/portal/file/onlinePreviewController/v1/getFileById_${id}`)
             }
           })
         }

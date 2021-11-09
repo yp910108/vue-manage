@@ -7,29 +7,17 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-// 前端代码打包后部署的路径
-const publicPath = {
-  development: '/',
-  staging: '/',
-  production: '/'
-}[process.env.VUE_APP_ENV]
-
 module.exports = {
-  productionSourceMap: false,
-  publicPath,
   devServer: {
     port: 9000, // 本地项目端口
-    open: true,
-    overlay: {
-      errors: true,
-      warnings: false
-    },
-    clientLogLevel: 'warning',
     proxy: {
-      '/api': {
+      [process.env.VUE_APP_BASE_URL]: {
         target: 'http://49.232.208.239',
         changeOrigin: true,
-        ws: false
+        ws: false,
+        pathRewrite: {
+          [`^${process.env.VUE_APP_BASE_URL}`]: ''
+        }
       }
     }
   },

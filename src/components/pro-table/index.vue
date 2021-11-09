@@ -26,7 +26,7 @@
         </template>
       </i-table>
       <i-pagination
-        v-if="paginationProps"
+        v-if="!!paginationProps"
         v-bind="{
           total,
           'current-page': currentPage,

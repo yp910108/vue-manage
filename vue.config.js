@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const sassLoader = require.resolve('sass-loader')
+const settings = require('./src/settings')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -47,7 +48,7 @@ module.exports = {
   },
   chainWebpack(config) {
     config.plugin('html').tap((args) => {
-      args[0].title = '基础后台管理系统'
+      args[0].title = settings.title
       return args
     })
     // set svg-sprite-loader

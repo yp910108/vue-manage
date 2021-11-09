@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="box">
-      <h2 class="sys-name">基础后台管理系统</h2>
+      <h2 class="sys-name">{{ settings.title }}</h2>
       <div class="form-wrapper">
         <div class="title-wrapper">欢迎登录</div>
         <el-form ref="form" :model="form" :rules="rules">
@@ -30,15 +30,17 @@
   </div>
 </template>
 <script>
+import settings from '@/settings'
+
 const form = {
   account: undefined,
   password: undefined
 }
 
 export default {
-  name: 'UserWrapper',
   data() {
     return {
+      settings,
       form: { ...form },
       rules: {
         account: [{ required: true, message: '请输入用户名称', trigger: 'blur' }],

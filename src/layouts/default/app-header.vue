@@ -1,6 +1,6 @@
 <template>
   <div class="app-header">
-    <div class="logo">基础后台管理系统</div>
+    <div class="logo">{{ settings.title }}</div>
     <el-dropdown @command="handleLogout">
       <span class="user-name">欢迎您，{{ user.username }}<i class="el-icon-arrow-down ml-10" /></span>
       <el-dropdown-menu slot="dropdown">
@@ -12,9 +12,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import settings from '@/settings'
 import { removeLocalToken } from '@/utils'
 
 export default {
+  data() {
+    return { settings }
+  },
   methods: {
     async handleLogout() {
       try {

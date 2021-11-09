@@ -142,6 +142,7 @@ export default {
 .pro-table-content ::v-deep {
   display: flex;
   flex-direction: column;
+  height: 100%;
   > .search-wrapper {
     flex: 0 0 auto;
     display: flex;

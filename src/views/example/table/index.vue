@@ -1,6 +1,6 @@
 <template>
   <div class="app-content">
-    <pro-table :columns="columns" :request="methodRequest">
+    <pro-table :columns="columns" :request="methodRequest" height="calc(100% - 44px)">
       <template #toolbar>
         <el-button type="primary">新 建</el-button>
       </template>

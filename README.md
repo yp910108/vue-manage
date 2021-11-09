@@ -478,4 +478,4 @@ $--color-status-back: #bf1c1c; // 驳回
 
 ### element-ui
 
-如果需要切换主题色，可到`element`[在线主题生成工具](https://elementui.github.io/theme-chalk-preview/#/zh-CN)进行下载并将下载的文件放入`src/styles/element`文件夹中。
+如果需要切换主题色，可到`element`[在线主题生成工具](https://element.eleme.cn/#/zh-CN/theme/preview)进行下载并将下载的文件放入`src/styles/element`文件夹中。

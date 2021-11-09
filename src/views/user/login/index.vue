@@ -73,8 +73,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/styles/variables.scss';
-@import '@/styles/mixins.scss';
+@import '@/styles/variables';
+@import '@/styles/mixins';
 
 .container ::v-deep {
   position: relative;

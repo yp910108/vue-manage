@@ -137,6 +137,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/variables';
+
 .pro-table-content ::v-deep {
   display: flex;
   flex-direction: column;
@@ -185,7 +187,7 @@ export default {
       margin-right: -3px;
       padding: 7px 8px;
       font-size: 18px;
-      color: #1890ff;
+      color: $--color-primary;
       cursor: pointer;
       transition: transform 0.2s linear;
     }

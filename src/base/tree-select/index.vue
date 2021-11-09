@@ -214,7 +214,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-@import '@/styles/variables.scss';
+@import '@/styles/variables';
 
 .el-scrollbar ::v-deep {
   .el-scrollbar__wrap {

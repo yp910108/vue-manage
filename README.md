@@ -354,7 +354,7 @@ options: [
 ### css
 
 - 对`element-ui`进行的修改统一放入`src/styles/element-ui.scss`中
-- 公用样式的维护放入`/src/styles/common.scss`中
+- 公用样式的维护放入`/src/styles/_common.scss`中
 
 ### 路由
 
@@ -429,7 +429,7 @@ export default {
 
 常量的应用场景一般有：下拉框、根据`code`显示文字、设置状态颜色、逻辑判断，如果需要配置常量，可以在`src/constants`下面添加。建议分模块管理，如果想要统一出口可以添加`index.js`并在`index.js`中通过`export * from './xxx'`把全部模块导出。下面以用户状态为例演示常量的用法，假设用户状态为：1 通过、2 驳回，后台返回的数据为`{ status: 1 }`。
 
-> 注：如果非状态常量，则无需增加`auditStatusColorCls`常量，`variables.scss`、`common.scss`也无需添加对应 css
+> 注：如果非状态常量，则无需增加`auditStatusColorCls`常量，`_variables.scss`、`_common.scss`也无需添加对应 css
 
 ```js
 // src/constants/user.js
@@ -444,11 +444,11 @@ export const userAuditStatusOptions = [
 export const userAuditStatusKeyValue = getKeyValue(userAuditStatusOptions)
 export const auditStatusColorCls = getCls(USER_AUDIT_STATUS, 'color-status-')
 
-// src/variables.scss
+// src/styles/_variables.scss
 $--color-status-pass: #4c9e10; // 通过
 $--color-status-back: #bf1c1c; // 驳回
 
-// src/styles/common.scss
+// src/styles/_common.scss
 .color-status-pass {
   color: $--color-status-pass; // 草稿
 }

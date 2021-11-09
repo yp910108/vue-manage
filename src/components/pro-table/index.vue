@@ -14,7 +14,11 @@
       </search>
     </div>
     <div class="table-wrapper">
-      <i-table v-loading="loadingTable" v-bind="{ data, ...$attrs, columns: columnsTable }" v-on="$listeners">
+      <i-table
+        v-loading="loadingTable"
+        v-bind="{ data, ...$attrs, columns: columnsTable, height: 'calc(100% - 44px)' }"
+        v-on="$listeners"
+      >
         <template v-for="slotHeader of slotsHeader" #[slotHeader]="{ column, $index }">
           <slot :name="slotHeader" :column="column" :$index="$index" />
         </template>

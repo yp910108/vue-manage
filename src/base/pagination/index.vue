@@ -1,6 +1,5 @@
 <template>
   <el-pagination
-    v-show="$attrs.total > 0"
     v-bind="{
       layout: 'total, sizes, prev, pager, next, jumper',
       background: true,

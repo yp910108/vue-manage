@@ -23,7 +23,6 @@ export default {
   width: 100%;
   height: 100%;
   background: #f0f2f5;
-  overflow: auto;
   overflow-x: hidden;
   .fade-transform-enter-active,
   .fade-transform-leave-active {

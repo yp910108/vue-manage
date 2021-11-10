@@ -2,30 +2,42 @@ import { combineURL } from '@/utils'
 import { route, pageRoutes } from '@/router'
 import { EmptyLayout } from '@/layouts' // eslint-disable-line
 
-function processMenus(menus, parentPath) {
-  return menus.map((menu) => {
-    const path = `/${combineURL(parentPath || '', menu.path || '')}`
-    const children = processMenus(menu.children || [], path)
+function processInitMenus(initMenus = [], parentPath = '') {
+  return initMenus.map(({ path = '', meta = {}, children = [] }) => {
+    const _path = `/${combineURL(parentPath, path)}`
+    const _children = processInitMenus(children, _path)
     return {
-      ...menu,
-      path,
-      parentPath,
-      children: children && children.length ? children : undefined
+      path: _path,
+      name: meta.title,
+      icon: meta.icon,
+      children: !!_children && !!_children.length ? _children : undefined
     }
   })
 }
 
-function generateRoutes(menus, parentPage) {
-  return menus.map(({ path, name, children, ...restProps }) => {
-    const page = `/${combineURL(parentPage || '', path || '')}`
-    const childRoutes = generateRoutes(children || [], page)
-    const hasChildRoutes = childRoutes && childRoutes.length
+function processMenus(menus, parentPath = '') {
+  return (menus || []).map((menu) => {
+    const path = `/${combineURL(parentPath, menu.path || '')}`
+    const children = processMenus(menu.children, path)
+    return {
+      ...menu,
+      path,
+      children: !!children && !!children.length ? children : undefined
+    }
+  })
+}
+
+function generateRoutes(menus, parentPage = '') {
+  return (menus || []).map(({ path, name, children, ...restProps }) => {
+    const page = `/${combineURL(parentPage, path || '')}`
+    const _children = generateRoutes(children, page)
+    const hasChild = !!_children && !!_children.length
     return {
       path: combineURL(path),
-      component: hasChildRoutes ? EmptyLayout : () => import('@/views' + page), // eslint-disable-line
-      redirect: hasChildRoutes ? combineURL(page, childRoutes[0].path) : undefined,
+      component: hasChild ? EmptyLayout : () => import('@/views' + page), // eslint-disable-line
+      redirect: hasChild ? combineURL(page, _children[0].path) : undefined,
       meta: { title: name, ...restProps },
-      children: hasChildRoutes ? childRoutes : undefined
+      children: hasChild ? _children : undefined
     }
   })
 }
@@ -42,15 +54,10 @@ const mutations = {
 
 const actions = {
   setMenus({ commit }, user) {
-    const initMenus = route.children.map(({ path = '', meta = {} }) => ({
-      path: `/${combineURL(path)}`,
-      name: meta.title,
-      icon: meta.icon
-    }))
-    commit('SET_MENUS', [...initMenus, ...processMenus(user.menus || [])])
+    commit('SET_MENUS', [...processInitMenus(route.children), ...processMenus(user.menus)])
   },
   generateRoute(_, user) {
-    const children = [...route.children, ...generateRoutes(user.menus || []), ...pageRoutes]
+    const children = [...route.children, ...generateRoutes(user.menus), ...pageRoutes]
     return {
       ...route,
       redirect: children && children.length ? `/${children[0].path}` : undefined,

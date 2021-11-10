@@ -1,6 +1,6 @@
 <template>
   <el-submenu
-    v-if="item.children && !!item.children.length"
+    v-if="!!item.children && !!item.children.length"
     :index="item.path"
     :class="{
       'is-active': isActive(item),

@@ -28,7 +28,7 @@ service.interceptors.response.use(
     if (code === ERRS_OK) {
       return data
     } else if (code === ERRS_INVALID) {
-      store.dispatch('user/fedLogout')
+      return store.dispatch('user/fedLogout', msg)
     } else {
       if (request.responseType !== 'blob') {
         Message.error(msg || '请求失败')

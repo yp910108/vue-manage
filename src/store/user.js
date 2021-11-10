@@ -25,9 +25,9 @@ const actions = {
     })
   },
   // 前端登出
-  async fedLogout() {
+  async fedLogout(_, msg) {
     removeLocalToken()
-    await MessageBox.confirm('用户信息失效，请重新登录', '提示', {
+    await MessageBox.confirm(msg || '用户信息失效，请重新登录', '提示', {
       type: 'warning',
       confirmButtonText: '确定',
       showCancelButton: false,

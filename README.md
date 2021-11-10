@@ -94,8 +94,8 @@ if (!Object.keys(store.state.user.user).length) {
     next({ ...to, replace: true }) // hack 确保刷新页面时可以加载当前路由, set replace: true 设置之后不会留下当前路由的记录
   } catch (e) {
     console.warn(e)
-    await store.dispatch('user/fedLogout')
-    next({ path: '/' })
+    store.dispatch('user/fedLogout')
+    next('/')
   }
 } else {
   next()

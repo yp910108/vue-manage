@@ -28,7 +28,7 @@ export default {
           type: 'warning'
         })
         removeLocalToken()
-        window.location.reload()
+        window.location.href = '/'
       } catch (e) {
         // do nothing
       }

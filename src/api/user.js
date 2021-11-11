@@ -83,6 +83,11 @@ export function getUser() {
             name: '无嵌套的路由',
             icon: 'file',
             path: 'without-nested'
+          },
+          {
+            name: '测试',
+            icon: 'file',
+            path: 'test'
           }
         ]
       })

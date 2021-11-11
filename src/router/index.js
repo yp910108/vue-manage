@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Layout from '@/layouts' // eslint-disable-line
+import Layout from '@/layouts'
 
 Vue.use(Router)
 
@@ -24,9 +24,13 @@ const routes = [
     children: [
       {
         path: ':path*',
-        component: () => import('@/views/redirect/index')
+        component: () => import('@/views/redirect')
       }
     ]
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/404')
   }
 ]
 
@@ -70,7 +74,7 @@ export const pageRoutes = [
 // 未匹配的路由需要跳转的页面在这里配置
 export const unmatchedRoute = {
   path: '*',
-  redirect: '/'
+  redirect: '/404'
 }
 
 export default new Router({

@@ -1,6 +1,8 @@
+/* eslint-disable */
 import { combineURL } from '@/utils'
 import { route, pageRoutes } from '@/router'
-import { EmptyLayout } from '@/layouts' // eslint-disable-line
+import { EmptyLayout } from '@/layouts'
+import NotFound from '@/views/404'
 
 function processInitMenus(initMenus = [], parentPath = '') {
   return initMenus.map(({ path = '', meta = {}, children = [] }) => {
@@ -27,15 +29,19 @@ function processMenus(menus, parentPath = '') {
   })
 }
 
-function generateRoutes(menus, parentPage = '') {
+function generateRoutes(menus, parentPageUrl = '') {
   return (menus || []).map(({ path, name, children, ...restProps }) => {
-    const page = `/${combineURL(parentPage, path || '')}`
-    const _children = generateRoutes(children, page)
+    const pageUrl = `/${combineURL(parentPageUrl, path || '')}`
+    const _children = generateRoutes(children, pageUrl)
     const hasChild = !!_children && !!_children.length
+    const page = () =>
+      import('@/views' + pageUrl)
+        .then((res) => res)
+        .catch(() => NotFound)
     return {
       path: combineURL(path),
-      component: hasChild ? EmptyLayout : () => import('@/views' + page), // eslint-disable-line
-      redirect: hasChild ? combineURL(page, _children[0].path) : undefined,
+      component: hasChild ? EmptyLayout : page,
+      redirect: hasChild ? combineURL(pageUrl, _children[0].path) : undefined,
       meta: { title: name, ...restProps },
       children: hasChild ? _children : undefined
     }

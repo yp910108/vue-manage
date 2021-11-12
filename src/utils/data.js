@@ -39,7 +39,7 @@ export function getChild(originList = [], originValue, props) {
       if (currValue === originValue) {
         return item
       } else if (currChildren && !!currChildren) {
-        const ret = getChild(currChildren)
+        const ret = temp(currChildren)
         if (ret) return ret
       }
     }

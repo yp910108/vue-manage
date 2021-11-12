@@ -1,12 +1,13 @@
 <template>
   <el-scrollbar class="app-sidebar">
-    <el-menu unique-opened :default-active="$route.path" :collapse="isCollapse">
+    <el-menu unique-opened :default-active="defaultActive" :collapse="isCollapse">
       <sidebar-item v-for="menu in menus" :key="menu.path" :item="menu" />
     </el-menu>
   </el-scrollbar>
 </template>
 <script>
 import { mapState } from 'vuex'
+import { getChild } from '@/utils'
 import SidebarItem from './sidebar-item.vue'
 
 export default {
@@ -16,6 +17,14 @@ export default {
   computed: {
     ...mapState('app', ['device', 'sidebarOpened']),
     ...mapState('permission', ['menus']),
+    defaultActive() {
+      let { path } = this.$route
+      while (path) {
+        if (getChild(this.menus, path, { value: 'path' })) break
+        path = path.slice(0, path.lastIndexOf('/'))
+      }
+      return path
+    },
     isCollapse() {
       if (this.device === 'mobile') {
         return false

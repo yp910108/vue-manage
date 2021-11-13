@@ -21,7 +21,7 @@ export default {
           id = value.fileId
         }
         const { pdfUrl, currentUrl } = await getPreviewUrl({ fileId: id })
-        const url = combineURL(process.env.VUE_APP_API_URL, '/portal/', pdfUrl || currentUrl)
+        const url = `/${combineURL(process.env.VUE_APP_API_URL, '/portal/', pdfUrl || currentUrl)}`
         window.open(url)
       } catch (e) {
         // do nothing

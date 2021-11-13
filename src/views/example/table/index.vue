@@ -41,7 +41,6 @@ export default {
           prop: 'sex',
           align: 'center',
           label: '性别',
-          slot: 'sex',
           valueEnum: sexOptions,
           render: (text) => sexKeyValue[text]
         },

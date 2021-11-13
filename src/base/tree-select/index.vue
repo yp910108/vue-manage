@@ -204,9 +204,43 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/styles/variables';
+
 .i-tree-select-popover {
   padding: 8px 0;
   min-width: 0;
+  .el-scrollbar {
+    .el-scrollbar__wrap {
+      margin-bottom: 0 !important;
+      max-height: 260px;
+      overflow-x: hidden;
+    }
+    .el-tree > .el-tree-node > .el-tree-node__content {
+      padding: 0 3px !important;
+    }
+    .el-tree-node {
+      white-space: normal;
+      .el-tree-node__content {
+        padding-right: 20px;
+        height: auto;
+        line-height: 30px;
+      }
+    }
+    .el-tree-node__content {
+      align-items: flex-start;
+      .el-tree-node__expand-icon {
+        padding: 9px;
+      }
+    }
+    .is-current > .el-tree-node__content {
+      font-weight: bold;
+      background-color: #fff;
+      color: $--color-primary;
+      &:hover {
+        background-color: #f5f7fa;
+      }
+    }
+  }
   .popper__arrow {
     left: 35px !important;
   }
@@ -215,38 +249,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/styles/variables';
-
-.el-scrollbar ::v-deep {
-  .el-scrollbar__wrap {
-    max-height: 260px;
-    overflow-x: hidden;
-  }
-  .el-tree > .el-tree-node > .el-tree-node__content {
-    padding: 0 3px !important;
-  }
-  .el-tree-node {
-    white-space: normal;
-    .el-tree-node__content {
-      padding-right: 20px;
-      height: auto;
-      line-height: 30px;
-    }
-  }
-  .el-tree-node__content {
-    align-items: flex-start;
-    .el-tree-node__expand-icon {
-      padding: 9px;
-    }
-  }
-  .is-current > .el-tree-node__content {
-    font-weight: bold;
-    background-color: #fff;
-    color: $--color-primary;
-    &:hover {
-      background-color: #f5f7fa;
-    }
-  }
-}
 
 .i-tree-select-reference ::v-deep {
   .el-input {

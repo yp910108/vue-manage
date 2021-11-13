@@ -16,7 +16,7 @@
     <div class="table-wrapper">
       <i-table
         v-loading="loadingTable"
-        v-bind="{ data, ...$attrs, columns: columnsTable, height: 'calc(100% - 44px)' }"
+        v-bind="{ data, ...$attrs, columns: columnsTable, height: !!pagination ? 'calc(100% - 44px)' : '100%' }"
         v-on="$listeners"
       >
         <template v-for="slotHeader of slotsHeader" #[slotHeader]="{ column, $index }">
@@ -30,19 +30,19 @@
         </template>
       </i-table>
       <i-pagination
-        v-if="!!paginationProps"
+        v-if="!!pagination"
         v-bind="{
           total,
           'current-page': currentPage,
           'page-size': pageSize,
-          ...paginationProps
+          ...pagination
         }"
         v-on="{
           'update:currentPage': (newCurrentPage) => (currentPage = newCurrentPage),
           'update:pageSize': (newPageSize) => (pageSize = newPageSize),
           'current-change': fetch,
           'size-change': fetch,
-          ...paginationProps
+          ...pagination
         }"
       />
     </div>
@@ -56,7 +56,7 @@ import Search from './search'
 export default {
   inheritAttrs: false,
   props: {
-    paginationProps: {
+    pagination: {
       type: [Object, Boolean],
       default: () => ({})
     },

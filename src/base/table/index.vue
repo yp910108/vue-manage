@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     renderText({ render, prop }, row, index) {
-      if (render && typeof render === 'function') {
+      if (!!render && typeof render === 'function') {
         return render(row[prop], row, index)
       } else {
         return row[prop]

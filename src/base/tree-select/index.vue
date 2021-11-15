@@ -24,6 +24,7 @@
         :placeholder="placeholder"
         :class="{ 'arrow-up': this.visible, 'is-focus': this.visible }"
         :clearable="$_attrs.clearable"
+        :disabled="$_attrs.disabled"
         suffix-icon="el-icon-arrow-down"
         @clear="clear"
       />
@@ -53,6 +54,9 @@ export default {
   },
   methods: {
     show() {
+      if (this.$_attrs.disabled) {
+        return (this.visible = false)
+      }
       this.popoverWidth = this.$refs.reference.clientWidth
       this.$refs.tree.setCurrentKey(this.value)
       this.$nextTick(() => {
@@ -159,16 +163,13 @@ export default {
         }
       }
     },
-    editable() {
-      return this.$_attrs.filterable
-    },
     label() {
       const node = this.getCurrentNode()
       return node ? node[this.$_attrs.props.label] : ''
     },
     text: {
       get() {
-        if (!this.editable) {
+        if (!this.$_attrs.filterable) {
           return this.label
         } else {
           return this.visible ? this.filterText : this.label
@@ -179,11 +180,11 @@ export default {
       }
     },
     placeholder() {
-      const { placeholder } = this.$_attrs
-      if (!this.editable) {
+      const { placeholder, filterable } = this.$_attrs
+      if (!filterable) {
         return placeholder
       } else {
-        return !this.label ? placeholder : this.visible ? this.label : placeholder
+        return !!this.label ? this.label : placeholder
       }
     }
   },
@@ -196,7 +197,7 @@ export default {
     }
   },
   mounted() {
-    if (!this.editable) {
+    if (!this.$_attrs.filterable) {
       this.$refs.value.$el.querySelector('.el-input__inner').setAttribute('readonly', true)
     }
   }

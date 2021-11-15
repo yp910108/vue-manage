@@ -25,6 +25,8 @@ module.exports = {
     'import/prefer-default-export': 0,
     'import/extensions': 0,
     'import/no-unresolved': 0,
-    'no-underscore-dangle': 0
+    'no-underscore-dangle': 0,
+    'no-extra-boolean-cast': 0,
+    'no-return-assign': 0
   }
 }

@@ -23,12 +23,13 @@ export default {
   },
   methods: {
     handleItemClick(targetPath) {
-      const { path, fullPath } = this.$route
-      if (path === targetPath) {
-        this.$router.replace(`/redirect${fullPath}`) // fullPath: /foo/index/123456?name=tom
-      } else {
-        this.$router.push(targetPath)
-      }
+      // const { path, fullPath } = this.$route
+      // if (path === targetPath) {
+      //   this.$router.replace(`/redirect${fullPath}`) // fullPath: /foo/index/123456?name=tom
+      // } else {
+      //   this.$router.push(targetPath)
+      // }
+      this.$router.push(targetPath)
     }
   }
 }

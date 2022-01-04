@@ -1,25 +1,20 @@
 <template>
   <div class="app-content">
-    <pro-table
-      :columns="columns"
-      :loading="loading"
-      :data="list"
-      :pagination="{
-        total,
-        currentPage,
-        pageSize,
-        'update:currentPage': (newCurrentPage) => (currentPage = newCurrentPage),
-        'update:pageSize': (newPageSize) => (pageSize = newPageSize),
-        currentChange: fetchList,
-        sizeChange: fetchList
-      }"
-      @search="handleSearch"
-    >
+    <pro-table :columns="columns" :loading="loading" :data="list" :pagination="false" @search="handleSearch">
       <template #action="{ row }">
         <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>
         <el-button type="text" size="small">删除</el-button>
       </template>
     </pro-table>
+    <i-pagination
+      :total="total"
+      :currentPage="currentPage"
+      :pageSize="pageSize"
+      @update:currentPage="(newCurrentPage) => (currentPage = newCurrentPage)"
+      @update:pageSize="(newPageSize) => (pageSize = newPageSize)"
+      @size-change="fetchList"
+      @current-change="fetchList"
+    />
   </div>
 </template>
 
@@ -119,3 +114,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.pro-table-content {
+  height: 90%;
+}
+</style>

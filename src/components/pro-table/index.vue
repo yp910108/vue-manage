@@ -16,7 +16,7 @@
     <div class="table-wrapper">
       <i-table
         v-loading="loadingTable"
-        v-bind="{ data, ...$attrs, columns: columnsTable, height: !!pagination ? 'calc(100% - 44px)' : '100%' }"
+        v-bind="{ data, ...$attrs, columns: columnsTable, height: !!_pagination ? 'calc(100% - 44px)' : '100%' }"
         v-on="$listeners"
       >
         <template v-for="slotHeader of slotsHeader" #[slotHeader]="{ column, $index }">
@@ -30,19 +30,19 @@
         </template>
       </i-table>
       <i-pagination
-        v-if="!!pagination"
+        v-if="!!_pagination"
         v-bind="{
           total,
-          'current-page': currentPage,
-          'page-size': pageSize,
-          ...pagination
+          currentPage,
+          pageSize,
+          ..._pagination
         }"
         v-on="{
           'update:currentPage': (newCurrentPage) => (currentPage = newCurrentPage),
           'update:pageSize': (newPageSize) => (pageSize = newPageSize),
           'current-change': fetch,
           'size-change': fetch,
-          ...pagination
+          ..._pagination
         }"
       />
     </div>
@@ -132,6 +132,22 @@ export default {
     loadingTable() {
       const { $attrs, loading } = this
       return $attrs.loading !== undefined ? $attrs.loading : loading
+    },
+    _pagination() {
+      if (typeof this.pagination === 'boolean') {
+        return this.pagination
+      }
+      const result = {}
+      for (const key in this.pagination) {
+        if (['current-change', 'currentChange'].includes(key)) {
+          result['current-change'] = this.pagination[key]
+        } else if (['size-change', 'sizeChange'].includes(key)) {
+          result['size-change'] = this.pagination[key]
+        } else {
+          result[camelize(key)] = this.pagination[key]
+        }
+      }
+      return result
     }
   },
   created() {

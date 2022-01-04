@@ -16,7 +16,7 @@
 
 <script>
 import ProTable from '@/components/pro-table'
-import { sexOptions, sexKeyValue } from './constant'
+import { sexOptions, sexKeyValue, SEX } from './constant'
 import { fetchList } from './api'
 
 export default {
@@ -42,7 +42,8 @@ export default {
           align: 'center',
           label: '性别',
           valueEnum: sexOptions,
-          render: (text) => sexKeyValue[text]
+          render: (text) => sexKeyValue[text],
+          initialValue: SEX.woman
         },
         {
           prop: 'phone',
@@ -73,6 +74,7 @@ export default {
   },
   methods: {
     async methodRequest(params) {
+      console.log(params)
       params = { ...params, pageNo: params.currentPage }
       delete params.currentPage
       const { list, total } = await fetchList(params)

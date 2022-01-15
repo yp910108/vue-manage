@@ -4,7 +4,6 @@ import router from './router'
 
 import './styles/index.scss'
 import './plugins'
-import './base'
 import './mixins'
 import './filters'
 import './directives'

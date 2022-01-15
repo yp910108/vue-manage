@@ -85,12 +85,14 @@ if (to.path === '/user/login') {
 当用户已经是登录状态但是`f5`刷新页面时，此时`vuex`并没有用户信息以及权限信息，需要请求后台接口通过`token`获取用户信息以及权限信息。对于普通的路由跳转则无需做任何处理，直接跳转即可。
 
 ```js
-if (!Object.keys(store.state.user.user).length) {
+if (!store.state.user.user) {
   // 如果用户没有拉取完用户信息（当用户F5刷新页面时，没有用户信息）
   try {
     const user = await store.dispatch('user/getUser')
-    store.dispatch('permission/generateRoutes', user)
-    router.addRoutes(store.state.permission.addRoutes)
+    store.dispatch('permission/setMenus', user)
+    const route = await store.dispatch('permission/generateRoute', user)
+    router.addRoute(route)
+    router.addRoute({ path: '*', redirect: '/404' })
     next({ ...to, replace: true }) // hack 确保刷新页面时可以加载当前路由, set replace: true 设置之后不会留下当前路由的记录
   } catch (e) {
     console.warn(e)
@@ -102,58 +104,37 @@ if (!Object.keys(store.state.user.user).length) {
 }
 ```
 
-对于已登录系统的用户，如果输入的页面地址不存在，则强制跳转到首页面（第一个页面/路由）。`src/router/index.js`
-
-```js
-// 未匹配的路由需要跳转的页面在这里配置
-export const unmatchedRoute = {
-  path: '*',
-  redirect: '/'
-}
-```
-
 ### 菜单权限
 
 > 思路：通过获取当前用户的权限信息生成路由表，通过 router.addRoute 动态挂载到 router 上。
 
-一般前端默认会将静态路由表（一般为白名单页面和首页）维护到路由中。`src/router/index.js`
+一般前端默认会将静态路由表（一般为白名单页面）维护到路由中。`src/router/index.js`
 
 ```js
-// 初始路由（不需要 layout 的路由）在这里配置
-const routes = [
-  {
-    path: '/user/login',
-    name: 'UserLogin',
-    component: () => import('@/views/user/login')
-  },
-  {
-    path: '/redirect',
-    component: Layout,
-    children: [
-      {
-        path: ':path*',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
-  }
-]
-
-// 初始路由（需要 layout 的路由）在这里配置
-export const route = {
-  path: '/',
-  component: Layout,
-  children: [
+export default new Router({
+  mode: 'history',
+  routes: [
     {
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard'),
-      meta: {
-        title: '首页',
-        icon: 'home'
-      }
+      path: '/user/login',
+      name: 'UserLogin',
+      component: () => import('@/views/user/login')
+    },
+    {
+      path: '/redirect',
+      component: Layout,
+      children: [
+        {
+          path: ':path*',
+          component: () => import('@/views/redirect')
+        }
+      ]
+    },
+    {
+      path: '/404',
+      component: () => import('@/views/404')
     }
   ]
-}
+})
 ```
 
 用户登录成功后会拉取用户信息（若用户信息中无权限信息，还会获取权限信息），前端根据后端返回的权限信息生成路由表，动态追加到路由中。`src/store/permission.js`中。
@@ -358,27 +339,41 @@ options: [
 
 ### 路由
 
-入口文件`src/router/index.js`中可进行路由的配置
-
 ```js
-// 初始路由（不需要 layout 的路由）在这里配置
-const routes = []
+// src/router/index.js
+export default new Router({
+  mode: 'history',
+  routes: [
+    {
+      path: '/user/login',
+      name: 'UserLogin',
+      component: () => import('@/views/user/login')
+    },
+    {
+      path: '/redirect',
+      component: Layout,
+      children: [
+        {
+          path: ':path*',
+          component: () => import('@/views/redirect')
+        }
+      ]
+    },
+    {
+      path: '/404',
+      component: () => import('@/views/404')
+    }
+  ]
+})
 
-// 初始路由（需要 layout 的路由）在这里配置（注：配置在 children 中 🙌）
-export const route = {
-  path: '/',
-  component: Layout,
-  children: []
-}
-
-// 页面级路由（一般为二级路由）在这里配置，此类路由不会出现在导航菜单中
-export const pageRoutes = []
-
-// 未匹配的路由需要跳转的页面在这里配置
-export const unmatchedRoute = {
-  path: '*',
-  redirect: '/'
-}
+// 初始路由（需要 layout 的路由）在这里配置 src/router/routes
+export default [
+  {
+    path: 'dashboard',
+    title: '首页',
+    icon: 'home'
+  }
+]
 ```
 
 ### vuex

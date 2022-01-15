@@ -6,7 +6,8 @@
     popper-class="i-tree-checkbox-popover"
     transition="el-zoom-in-top"
     placement="bottom-start"
-    @show="show"
+    @show="handleShow"
+    @hide="hanldeHide"
   >
     <el-scrollbar ref="scrollbar">
       <el-tree ref="tree" v-bind="$_attrs" v-on="$_listeners" :filter-node-method="filterMethod">
@@ -58,15 +59,21 @@ export default {
     }
   },
   methods: {
-    show() {
+    handleShow() {
       if (this.$_attrs.disabled) {
         return (this.visible = false)
       }
+      if (this.$parent.removeValidateEvents) {
+        this.$parent.removeValidateEvents()
+      }
       this.popoverWidth = this.$refs.reference.clientWidth
       this.$refs.tree.setCheckedKeys(this.value)
-      this.$nextTick(() => {
-        this.scrollToCurrent()
-      })
+      this.$nextTick(this.scrollToCurrent)
+    },
+    hanldeHide() {
+      if (this.$parent.addValidateEvents) {
+        this.$parent.addValidateEvents()
+      }
     },
     // 获取已选中的节点
     getCheckedNodes() {
@@ -104,9 +111,7 @@ export default {
       }
     },
     updatePopper() {
-      setTimeout(() => {
-        this.$refs.popover.updatePopper()
-      }, 300)
+      setTimeout(this.$refs.popover.updatePopper, 300)
     },
     filterMethod(value, data) {
       if (!value) return true
@@ -255,14 +260,24 @@ export default {
         border-color: $--color-primary;
       }
     }
-  }
-  .el-icon-circle-close {
-    position: absolute;
-    top: 1px;
-    margin-left: -25px;
-    height: 30px;
-    line-height: 30px;
-    background: #fff;
+    &.is-disabled {
+      .el-input__inner,
+      .el-input__suffix {
+        cursor: not-allowed;
+      }
+    }
+    .el-input__suffix {
+      .el-input__suffix-inner {
+        .el-icon-circle-close {
+          position: absolute;
+          top: 1px;
+          margin-left: -25px;
+          height: 30px;
+          line-height: 30px;
+          background: #fff;
+        }
+      }
+    }
   }
   .arrow-up {
     .el-icon-arrow-down {

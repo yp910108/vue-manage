@@ -18,76 +18,80 @@ export function getUser() {
         mobile: '13793186354',
         menus: [
           {
-            name: '组件示例',
+            title: '组件示例',
             icon: 'example',
             path: 'example',
+            isMenu: 1,
             children: [
               {
-                name: '下拉框',
-                path: 'select'
+                title: '下拉框',
+                path: 'select',
+                isMenu: 1
               },
               {
-                name: '下拉树',
-                path: 'tree-select'
+                title: '下拉树',
+                path: 'tree-select',
+                isMenu: 1
               },
               {
-                name: '下拉多选树',
-                path: 'tree-checkbox'
+                title: '下拉多选树',
+                path: 'tree-checkbox',
+                isMenu: 1
               },
               {
-                name: '级联选择',
-                path: 'cascader'
+                title: '级联选择',
+                path: 'cascader',
+                isMenu: 1
               },
               {
-                name: '上传',
-                path: 'upload'
+                title: '上传',
+                path: 'upload',
+                isMenu: 1
               },
               {
-                name: '字典',
-                path: 'dict'
+                title: '字典',
+                path: 'dict',
+                isMenu: 1
               },
               {
-                name: '用户信息',
-                path: 'user-info'
+                title: '用户信息',
+                path: 'user-info',
+                isMenu: 1
               },
               {
-                name: '常量',
-                path: 'constants'
+                title: '常量',
+                path: 'constants',
+                isMenu: 1
               },
               {
-                name: 'Loading',
-                path: 'loading'
+                title: 'Loading',
+                path: 'loading',
+                isMenu: 1
               },
               {
-                name: 'Table',
-                path: 'table'
+                title: 'Table',
+                path: 'table',
+                isMenu: 1,
+                children: [{ path: 'add' }, { path: 'edit' }, { path: 'delete' }]
               }
             ]
           },
           {
-            name: '嵌套的路由',
+            title: '嵌套的路由',
             icon: 'nested',
             path: 'nested',
             children: [
               {
-                name: '子路由1',
-                path: 'child1'
+                title: '子路由1',
+                path: 'child1',
+                isMenu: 1
               },
               {
-                name: '子路由2',
-                path: 'child2'
+                title: '子路由2',
+                path: 'child2',
+                isMenu: 1
               }
             ]
-          },
-          {
-            name: '无嵌套的路由',
-            icon: 'file',
-            path: 'without-nested'
-          },
-          {
-            name: '测试',
-            icon: 'file',
-            path: 'test'
           }
         ]
       })

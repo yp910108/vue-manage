@@ -1,19 +1,26 @@
 <template>
   <div class="app-main">
     <transition name="fade-transform" mode="out-in">
-      <router-view :key="key" />
+      <keep-alive :include="views">
+        <router-view :key="key" />
+      </keep-alive>
     </transition>
   </div>
 </template>
+
 <script>
+import { mapState } from 'vuex'
+
 export default {
   computed: {
+    ...mapState('tagsView', ['views']),
     key() {
       return this.$route.fullPath
     }
   }
 }
 </script>
+
 <style lang="scss" scoped>
 @import '@/styles/variables';
 

@@ -1,5 +1,5 @@
 <template>
-  <el-input v-bind="{ placeholder: '请输入 ', clearable: true, ...$attrs }" v-on="$listeners">
+  <el-input ref="input" v-bind="{ placeholder: '请输入 ', clearable: true, ...$attrs }" v-on="$listeners">
     <template #prepend>
       <slot name="prepend" />
     </template>
@@ -18,6 +18,13 @@
 <script>
 export default {
   name: 'IInput',
-  inheritAttrs: false
+  inheritAttrs: false,
+  mounted() {
+    for (const key in this.$refs.input) {
+      if (!(key in this) && typeof this.$refs.input[key] === 'function') {
+        this[key] = this.$refs.input[key]
+      }
+    }
+  }
 }
 </script>

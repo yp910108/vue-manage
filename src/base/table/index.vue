@@ -1,5 +1,5 @@
 <template>
-  <el-table v-bind="{ border: true, ...$attrs }" v-on="$listeners">
+  <el-table ref="table" v-bind="{ border: true, ...$attrs }" v-on="$listeners">
     <el-table-column
       v-for="({ slotHeader, slot, ..._column }, index) of _columns"
       v-bind="{
@@ -7,14 +7,14 @@
         showOverflowTooltip: true,
         ..._column
       }"
-      :key="index"
+      :key="_column.prop || _column.type || index"
     >
       <template #header="{ column, $index }">
         <slot :name="slotHeader" :column="column" :$index="$index">
-          {{ _column.label }}
+          {{ column.label }}
         </slot>
       </template>
-      <template v-if="!_column.type" #default="{ row, $index }">
+      <template v-if="!_column.type || _column.type === 'expand'" #default="{ row, $index }">
         <slot :name="slot" :row="row" :$index="$index">
           {{ renderText(_column, row, $index) }}
         </slot>
@@ -58,6 +58,25 @@ export default {
         return result
       })
     }
+  },
+  watch: {
+    '$attrs.data'() {
+      this.$nextTick(this.$refs.table.doLayout)
+    }
+  },
+  activated() {
+    this.$refs.table.doLayout()
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.$refs.table.doLayout)
+  },
+  mounted() {
+    for (const key in this.$refs.table) {
+      if (!(key in this) && typeof this.$refs.table[key] === 'function') {
+        this[key] = this.$refs.table[key]
+      }
+    }
+    window.addEventListener('resize', this.$refs.table.doLayout)
   }
 }
 </script>

@@ -5,6 +5,7 @@
     <app-sidebar />
     <div class="app-container">
       <app-breadcrumb />
+      <app-tags />
       <app-main />
     </div>
   </div>
@@ -15,14 +16,17 @@ import resizeHandler from './mixin/resize'
 import AppHeader from './app-header'
 import AppSidebar from './app-sidebar'
 import AppBreadcrumb from './app-breadcrumb'
+import AppTags from './app-tags'
 import AppMain from './app-main'
 
 export default {
+  name: 'Layout',
   mixins: [resizeHandler],
   components: {
     AppHeader,
     AppSidebar,
     AppBreadcrumb,
+    AppTags,
     AppMain
   },
   methods: {
@@ -63,7 +67,7 @@ export default {
   .app-sidebar {
     position: fixed;
     left: 0;
-    top: 60px;
+    top: 50px;
     bottom: 0;
     z-index: 1002;
     width: 200px;
@@ -75,8 +79,8 @@ export default {
     position: relative;
     z-index: 1000;
     margin-left: 200px;
-    padding-top: 50px;
-    height: calc(100vh - 60px);
+    padding-top: 84px;
+    height: calc(100vh - 50px);
     transition: margin-left 0.3s ease-in-out;
     overflow: auto;
     .app-breadcrumb {
@@ -84,6 +88,13 @@ export default {
       z-index: 1000;
       left: 0;
       top: 0;
+      right: 0;
+    }
+    .app-tags {
+      position: absolute;
+      z-index: 1000;
+      left: 0;
+      top: 50px;
       right: 0;
     }
   }

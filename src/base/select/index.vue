@@ -1,5 +1,5 @@
 <template>
-  <el-select v-bind="$_attrs" v-on="$_listeners" :value="value">
+  <el-select ref="select" v-bind="$_attrs" v-on="$_listeners" :value="value">
     <el-option
       v-for="item in $_attrs.options"
       :key="item[$_attrs.props.value]"
@@ -47,6 +47,13 @@ export default {
             this.$emit('change', this.getItem())
           })
         }
+      }
+    }
+  },
+  mounted() {
+    for (const key in this.$refs.select) {
+      if (!(key in this) && typeof this.$refs.select[key] === 'function') {
+        this[key] = this.$refs.select[key]
       }
     }
   }

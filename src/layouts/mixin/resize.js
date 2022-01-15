@@ -1,5 +1,5 @@
 const { body } = document
-const WIDTH = process.env.NODE_ENV === 'production' ? 1360 : 500
+const WIDTH = process.env.NODE_ENV === 'production' ? 1366 : 500
 
 export default {
   methods: {

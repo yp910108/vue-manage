@@ -1,5 +1,5 @@
 /* eslint-disable */
-import router, { unmatchedRoute } from '@/router'
+import router from '@/router'
 import store from '@/store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -24,7 +24,7 @@ router.beforeEach(async (to, _, next) => {
           store.dispatch('permission/setMenus', user)
           const route = await store.dispatch('permission/generateRoute', user)
           router.addRoute(route)
-          router.addRoute(unmatchedRoute)
+          router.addRoute({ path: '*', redirect: '/404' })
           next({ ...to, replace: true }) // hack 确保刷新页面时可以加载当前路由, set replace: true 设置之后不会留下当前路由的记录
         } catch (e) {
           console.warn(e)

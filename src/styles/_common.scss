@@ -21,6 +21,10 @@ html {
   ::-webkit-scrollbar-corner {
     background: #f6f6f6;
   }
+  ::selection {
+    color: #fff;
+    background: $--color-primary;
+  }
 }
 
 body {

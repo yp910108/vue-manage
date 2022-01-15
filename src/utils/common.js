@@ -33,6 +33,24 @@ export function getCls(obj, prefix) {
 }
 
 /**
+ * 函数截流
+ * @param {*} func
+ * @param {*} delay
+ * @returns
+ */
+export function debounce(func, delay) {
+  let timer
+  return function _debounce(...args) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      func.apply(this, args)
+    }, delay)
+  }
+}
+
+/**
  * 将中划线转化为驼峰
  * @param {*} str
  * @returns
@@ -40,4 +58,14 @@ export function getCls(obj, prefix) {
 const camelizeRE = /-(\w)/g
 export function camelize(str) {
   return str.replace(camelizeRE, (_, c) => (c ? c.toUpperCase() : ''))
+}
+
+/**
+ * 将首字母转化为大写开头
+ * @param {*} str
+ * @returns
+ */
+export function toUpperCase(str) {
+  const strs = str.split('-').filter((s) => !!s)
+  return strs.map((s) => `${s.charAt(0).toUpperCase()}${s.slice(1)}`).join('')
 }

@@ -1,5 +1,5 @@
 <template>
-  <el-cascader v-bind="$_attrs" v-on="$_listeners" :value="newVal" />
+  <el-cascader ref="cascader" v-bind="$_attrs" v-on="$_listeners" :value="newVal" />
 </template>
 
 <script>
@@ -57,6 +57,13 @@ export default {
         const parents = getParents(options, this.value[this.value.length - 1], this.$_attrs.props)
         const parentIds = parents.map((p) => p[this.$_attrs.props.value])
         return [...parentIds]
+      }
+    }
+  },
+  mounted() {
+    for (const key in this.$refs.cascader) {
+      if (!(key in this) && typeof this.$refs.cascader[key] === 'function') {
+        this[key] = this.$refs.cascader[key]
       }
     }
   }

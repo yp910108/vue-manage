@@ -127,7 +127,7 @@ export default {
           color: rgba(0, 0, 0, 0.25);
         }
         .el-input__inner {
-          height: 40px;
+          height: 40px !important;
           line-height: 40px;
         }
       }

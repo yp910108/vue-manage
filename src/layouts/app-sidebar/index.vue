@@ -54,7 +54,14 @@ export default {
     width: 100%;
     background-color: #2b2b2d;
     .i-icon {
-      margin-right: 14px;
+      margin-right: 6px;
+      font-size: 14px;
+    }
+    .el-submenu.is-active > .el-submenu__title,
+    .el-menu-item.is-active {
+      .i-icon {
+        color: $--color-primary;
+      }
     }
     .el-menu-item {
       font-family: PingFangSC-Semibold;
@@ -79,7 +86,7 @@ export default {
       }
     }
     .el-submenu {
-      .el-submenu__title {
+      > .el-submenu__title {
         font-family: PingFangSC-Semibold;
         font-weight: 600;
         font-size: 14px;
@@ -90,10 +97,10 @@ export default {
         }
       }
       &.is-active {
-        .el-submenu__title {
+        > .el-submenu__title {
           color: $--color-primary;
         }
-        .el-submenu__title:before {
+        > .el-submenu__title:before {
           content: '';
           position: absolute;
           left: 0;
@@ -105,11 +112,6 @@ export default {
         .el-menu .el-menu-item:before {
           display: none;
         }
-      }
-    }
-    &.el-menu--collapse {
-      .i-icon {
-        margin-left: 5px;
       }
     }
   }

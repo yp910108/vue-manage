@@ -48,7 +48,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
-  height: 60px;
+  height: 50px;
   background: $--color-primary;
   .logo {
     margin-left: 20px;

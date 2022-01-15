@@ -27,6 +27,8 @@ module.exports = {
     'import/no-unresolved': 0,
     'no-underscore-dangle': 0,
     'no-extra-boolean-cast': 0,
-    'no-return-assign': 0
+    'no-return-assign': 0,
+    'operator-linebreak': 0,
+    'object-shorthand': 0
   }
 }

@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     hideIcon() {
-      return this.$attrs.value && this.isMouseEnter
+      return this.$attrs.disabled === undefined && this.$attrs.value && this.isMouseEnter
     }
   }
 }

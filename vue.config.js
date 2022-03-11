@@ -11,12 +11,12 @@ module.exports = {
   devServer: {
     port: 9000, // 本地项目端口
     proxy: {
-      [process.env.VUE_APP_BASE_URL]: {
+      [process.env.VUE_APP_API_URL]: {
         target: 'http://49.232.208.239',
         changeOrigin: true,
         ws: false,
         pathRewrite: {
-          [`^${process.env.VUE_APP_BASE_URL}`]: ''
+          [`^${process.env.VUE_APP_API_URL}`]: ''
         }
       }
     }

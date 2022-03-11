@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper" :class="classApp">
-    <div class="drawer-bg" @click="handleClickOutside"></div>
+    <div class="drawer-bg" @click="handleClickOutside" />
     <app-header />
     <app-sidebar />
     <div class="app-container">

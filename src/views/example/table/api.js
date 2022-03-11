@@ -3,7 +3,7 @@ import { SEX } from './constant'
 export function fetchList({ name, sex, idCard, startBirthDate, endBirthDate, pageNo, pageSize }) {
   return new Promise((resolve) => {
     let list = []
-    for (let i = 0; i < 23; i++) {
+    for (let i = 0; i < 100; i++) {
       list.push({
         name: `张三${i + 1}`,
         sex: i % 2 === 0 ? SEX.man : SEX.woman,

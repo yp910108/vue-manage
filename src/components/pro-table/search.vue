@@ -136,14 +136,17 @@ export default {
     }
   },
   watch: {
-    columns(newColumns) {
-      for (const { prop, initialValue } of newColumns) {
-        if (toRawType(initialValue) === 'Array') {
-          this.$set(this.form, prop, [...initialValue])
-        } else if (toRawType(initialValue) === 'Object') {
-          this.$set(this.form, prop, { ...initialValue })
-        } else {
-          this.$set(this.form, prop, initialValue)
+    columns(newColumns, oldColumns) {
+      for (const [i, { prop, initialValue }] of newColumns.entries()) {
+        const { initialValue: oldInitialValue } = oldColumns[i] || {}
+        if (initialValue !== oldInitialValue) {
+          if (toRawType(initialValue) === 'Array') {
+            this.$set(this.form, prop, [...initialValue])
+          } else if (toRawType(initialValue) === 'Object') {
+            this.$set(this.form, prop, { ...initialValue })
+          } else {
+            this.$set(this.form, prop, initialValue)
+          }
         }
       }
     }

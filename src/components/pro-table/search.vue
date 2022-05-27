@@ -90,6 +90,52 @@ export default {
         }
       }
     },
+    getFieldValue(prop) {
+      return this.form[prop]
+    },
+    getFielsValue(...props) {
+      const result = {}
+      for (const prop of props) {
+        result[prop] = this.getFieldValue(prop)
+      }
+      return result
+    },
+    setFieldValue(prop, value) {
+      this.form[prop] = value
+    },
+    setFieldsValue(fields) {
+      for (const prop of Object.keys(fields)) {
+        this.setFieldValue(prop, fields[prop])
+      }
+    },
+    resetFieldValue(prop) {
+      const { initialValue } = this.columns.find(({ prop: _prop }) => _prop === prop)
+      if (toRawType(initialValue) === 'Array') {
+        this.form[prop] = [...initialValue]
+      } else if (toRawType(initialValue) === 'Object') {
+        this.form[prop] = { ...initialValue }
+      } else {
+        this.form[prop] = initialValue
+      }
+    },
+    resetFieldsValue(...props) {
+      props = !!props.length
+        ? props
+        : this.columns.filter(({ ignoreOnReset }) => !ignoreOnReset).map(({ prop: _prop }) => _prop)
+      for (const prop of props) {
+        this.resetFieldValue(prop)
+      }
+    },
+    setInitialValue(prop, value) {
+      const column = this.columns.find(({ prop: _prop }) => _prop === prop)
+      column.initialValue = value
+      this.setFieldValue(prop, value)
+    },
+    setInitialsValue(fields) {
+      for (const prop of Object.keys(fields)) {
+        this.setInitialValue(prop, fields[prop])
+      }
+    },
     setWidth() {
       if (this.$refs.wrapper) {
         const elParent = getParentDom(this.$refs.wrapper, 'pro-table-content', true)
@@ -122,7 +168,10 @@ export default {
       setTimeout(() => {
         this.reseting = false
       }, 100)
-      this.initForm()
+      this.resetFieldsValue()
+      this.handleSearch()
+    },
+    submit() {
       this.handleSearch()
     },
     reset() {
@@ -135,26 +184,14 @@ export default {
       return !!columns && columns.length === 1 ? columns[0].label : ''
     }
   },
-  watch: {
-    columns(newColumns, oldColumns) {
-      for (const [i, { prop, initialValue }] of newColumns.entries()) {
-        const { initialValue: oldInitialValue } = oldColumns[i] || {}
-        if (initialValue !== oldInitialValue) {
-          if (toRawType(initialValue) === 'Array') {
-            this.$set(this.form, prop, [...initialValue])
-          } else if (toRawType(initialValue) === 'Object') {
-            this.$set(this.form, prop, { ...initialValue })
-          } else {
-            this.$set(this.form, prop, initialValue)
-          }
-        }
-      }
-    }
-  },
   created() {
     this.initForm()
     this.initWatch()
     this.handleSearch()
+  },
+  beforeMount() {
+    window.addEventListener('resize', this.setWidth)
+    window.addEventListener('resize', this.setCollapseVisible)
   },
   mounted() {
     const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
@@ -164,6 +201,10 @@ export default {
       this.setCollapseVisible()
     })
     observer.observe(elParent, { attributes: true, subtree: true, attributeFilter: ['style'] })
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.setWidth)
+    window.removeEventListener('resize', this.setCollapseVisible)
   }
 }
 </script>

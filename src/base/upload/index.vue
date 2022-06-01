@@ -60,10 +60,7 @@ export default {
           return
         }
         if (newVal && newVal instanceof Array) {
-          this.fileList = newVal.map((item) => ({
-            ...item,
-            url: `/${combineURL(process.env.VUE_APP_API_URL, item.url)}`
-          }))
+          this.fileList = newVal
         }
       }
     }

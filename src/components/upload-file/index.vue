@@ -7,14 +7,12 @@
 </template>
 
 <script>
-import { combineURL } from '@/utils'
-
 export default {
   inheritAttrs: false,
   methods: {
     async preview({ response, url }) {
       if (response) {
-        url = `/${combineURL(process.env.VUE_APP_API_URL, response.url)}`
+        url = response.url
       }
       window.open(url)
     },

@@ -8,24 +8,15 @@
 
 <script>
 import { combineURL } from '@/utils'
-import { getPreviewUrl } from '@/api/common'
 
 export default {
   inheritAttrs: false,
   methods: {
-    async preview({ response, id }) {
-      try {
-        if (response) {
-          let { value } = response.value
-          value = JSON.parse(value)
-          id = value.fileId
-        }
-        const { pdfUrl, currentUrl } = await getPreviewUrl({ fileId: id })
-        const url = `/${combineURL(process.env.VUE_APP_API_URL, '/portal/', pdfUrl || currentUrl)}`
-        window.open(url)
-      } catch (e) {
-        // do nothing
+    async preview({ response, url }) {
+      if (response) {
+        url = `/${combineURL(process.env.VUE_APP_API_URL, response.url)}`
       }
+      window.open(url)
     },
     exceed() {
       const { limit } = this.$attrs

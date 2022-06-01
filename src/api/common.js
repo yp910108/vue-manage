@@ -1,5 +1,3 @@
-import request from '@/utils/request'
-
 export function fetchDict() {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -12,14 +10,5 @@ export function fetchDict() {
         { name: '字典5', code: 10005 }
       ])
     }, 1000)
-  })
-}
-
-// 根据文件id获取文件路径（若为world或者excel则转化为pdf）
-export function getPreviewUrl(params) {
-  return request({
-    method: 'get',
-    url: '/portal/file/onlinePreviewController/v1/onlinePreview',
-    params
   })
 }

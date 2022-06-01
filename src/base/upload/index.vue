@@ -24,20 +24,11 @@ export default {
     setValue() {
       const files = this.$refs.upload.uploadFiles.filter((file) => file.status === 'success')
       const newVal = files.map((file) => {
-        const { response } = file
-        if (response) {
-          let { value } = response
-          try {
-            value = JSON.parse(value)
-            const { fileId: id, fileName: name, size } = value
-            value = { id, name, size, username: this.user.name }
-          } catch (e) {
-            value = {}
-          }
-          return value
+        if (file.response) {
+          return file.response
         } else {
-          const { id, name, size, username } = file
-          return { id, name, size, username }
+          const { name, url } = file
+          return { name, url }
         }
       })
       this.isSetValue = true
@@ -51,7 +42,7 @@ export default {
         headers: {
           Authorization: `Bearer ${getLocalToken()}`
         },
-        action: `/${combineURL(process.env.VUE_APP_API_URL, '/portal/system/file/v1/upload')}`,
+        action: `/${combineURL(process.env.VUE_APP_API_URL, '/upload')}`,
         'file-list': this.fileList,
         'on-success': this.setValue,
         'on-remove': this.setValue,
@@ -69,16 +60,10 @@ export default {
           return
         }
         if (newVal && newVal instanceof Array) {
-          this.fileList = newVal.map((item) => {
-            const { id } = item
-            return {
-              ...item,
-              url: `/${combineURL(
-                process.env.VUE_APP_API_URL,
-                `/portal/file/onlinePreviewController/v1/getFileById_${id}`
-              )}`
-            }
-          })
+          this.fileList = newVal.map((item) => ({
+            ...item,
+            url: `/${combineURL(process.env.VUE_APP_API_URL, item.url)}`
+          }))
         }
       }
     }

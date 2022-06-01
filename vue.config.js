@@ -12,7 +12,7 @@ module.exports = {
     port: 9000, // 本地项目端口
     proxy: {
       [process.env.VUE_APP_API_URL]: {
-        target: 'http://localhost:9214',
+        target: 'http://localhost:3001/',
         changeOrigin: true,
         ws: false,
         pathRewrite: {

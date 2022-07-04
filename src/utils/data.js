@@ -1,4 +1,4 @@
-import { toRawType } from '.'
+import { toRawType } from './common'
 
 /**
  * 处理传入的 data 并返回

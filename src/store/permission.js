@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { getMenuData, combineURL, toUpperCase } from '@/utils'
 import { routes } from '@/router'
-import Layout from '@/layouts'
+import Layout from '@/layout'
 import NotFound from '@/views/404'
 
 function generateMenus(menuData, parentPath = '') {

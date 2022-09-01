@@ -1,4 +1,4 @@
-export * from './common'
+export * from './util'
 export * from './reg'
 export * from './local'
 export * from './url'

@@ -1,28 +1,27 @@
 <template>
   <div class="app-content">
-    <pro-table :columns="columns" :request="methodRequest">
+    <y-pro-table :columns="columns" :request="methodRequest">
       <template #toolbar-left>
-        <el-button v-has="'add'" type="primary">新 建</el-button>
+        <y-button v-has="'add'" type="primary">新 建</y-button>
       </template>
       <template #action="{ row }">
-        <el-button v-has="'edit'" type="text" @click="handleEdit(row)">修改</el-button>
-        <el-popconfirm v-has="'delete'" title="确定删除该条数据吗？" class="pop-btn" @onConfirm="handleDelete(row)">
-          <el-button slot="reference" type="text">删除</el-button>
-        </el-popconfirm>
+        <y-button v-has="'edit'" type="text" @click="handleEdit(row)">修改</y-button>
+        <y-divider direction="vertical" />
+        <y-popconfirm v-has="'delete'" title="确定删除该条数据吗？" @onConfirm="handleDelete(row)">
+          <y-button slot="reference" type="text">删除</y-button>
+        </y-popconfirm>
       </template>
-    </pro-table>
+    </y-pro-table>
   </div>
 </template>
 
 <script>
-import ProTable from '@/components/pro-table'
+import { has } from '@/directives'
 import { sexOptions, sexKeyValue, SEX } from './constant'
 import { fetchList } from './api'
 
 export default {
-  components: {
-    ProTable
-  },
+  directives: { has },
   data() {
     return {
       columns: [

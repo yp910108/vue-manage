@@ -1,12 +1,12 @@
 <template>
   <div class="app-content">
-    <pro-table :columns="columns" :loading="loading" :data="list" :pagination="false" @search="handleSearch">
+    <y-pro-table :columns="columns" :loading="loading" :data="list" :pagination="false" @search="handleSearch">
       <template #action="{ row }">
-        <el-button type="text" size="small" @click="handleEdit(row)">修改</el-button>
-        <el-button type="text" size="small">删除</el-button>
+        <y-button type="text" size="small" @click="handleEdit(row)">修改</y-button>
+        <y-button type="text" size="small">删除</y-button>
       </template>
-    </pro-table>
-    <i-pagination
+    </y-pro-table>
+    <y-pagination
       :total="total"
       :currentPage="currentPage"
       :pageSize="pageSize"
@@ -19,14 +19,10 @@
 </template>
 
 <script>
-import ProTable from '@/components/pro-table'
 import { sexOptions, sexKeyValue } from './constant'
 import { fetchList } from './api'
 
 export default {
-  components: {
-    ProTable
-  },
   data() {
     return {
       columns: [

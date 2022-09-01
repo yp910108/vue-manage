@@ -1,5 +1,5 @@
-import { combineURL } from '@/utils'
-import { YES_OR_NO } from '@/constants/common'
+import { YES_OR_NO } from '@/constants'
+import { combineURL } from './url'
 
 /**
  * 处理菜单，将菜单和按钮分离开，获取菜单信息

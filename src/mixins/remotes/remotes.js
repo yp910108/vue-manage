@@ -1,5 +1,5 @@
 import { toRawType } from '@/utils'
-import { fetchDict } from '@/api/common'
+import { fetchDict } from '@/api'
 
 const caches = {
   dict: fetchDict

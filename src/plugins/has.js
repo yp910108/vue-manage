@@ -7,6 +7,8 @@ function has(...vals) {
   return vals.some((val) => auth.includes(val))
 }
 
-export default function (Vue) {
-  Vue.prototype.has = has
+export default {
+  install(Vue) {
+    Vue.prototype.has = has
+  }
 }

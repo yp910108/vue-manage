@@ -1,7 +1,7 @@
 <template>
-  <el-scrollbar ref="scrollContainer" class="scroll-container" @wheel.native.prevent="handleScroll">
+  <y-scrollbar ref="scrollContainer" class="scroll-container" @wheel.native.prevent="handleScroll">
     <slot />
-  </el-scrollbar>
+  </y-scrollbar>
 </template>
 
 <script>
@@ -17,7 +17,8 @@ export default {
       if (!target || !vnodes || !vnodes.length) return
       const $container = this.$refs.scrollContainer.$el
       const $containerWidth = $container.offsetWidth
-      const $scrollWrapper = this.$refs.scrollContainer.$refs.wrap
+      // const $scrollWrapper = this.$refs.scrollContainer.$refs.scrollBar.$refs.wrap
+      const $scrollWrapper = $container.querySelector('.el-scrollbar__wrap')
       const $scrollWidth = $scrollWrapper.scrollWidth
       if ($scrollWidth <= $containerWidth) return
       const $els = vnodes.map((vnode) => vnode.elm)

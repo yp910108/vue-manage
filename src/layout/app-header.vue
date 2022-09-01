@@ -1,12 +1,12 @@
 <template>
   <div class="app-header">
     <div class="logo">{{ settings.title }}</div>
-    <el-dropdown @command="handleLogout">
+    <y-dropdown @command="handleLogout">
       <span class="user-name">欢迎您，{{ user.username }}<i class="el-icon-arrow-down ml-10" /></span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>退出登录</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+      <y-dropdown-menu slot="dropdown">
+        <y-dropdown-item>退出登录</y-dropdown-item>
+      </y-dropdown-menu>
+    </y-dropdown>
   </div>
 </template>
 

@@ -62,13 +62,6 @@ ul {
   padding: 0;
 }
 
-.color-status-pass {
-  color: $--color-status-pass; // 草稿
-}
-.color-status-back {
-  color: $--color-status-back; // 驳回
-}
-
 .app-content {
   position: relative;
   overflow: hidden;
@@ -76,24 +69,4 @@ ul {
   padding: 16px;
   height: 100%;
   background: #fff;
-}
-
-// 可删除
-aside {
-  background: #eef1f6;
-  padding: 8px 24px;
-  margin-bottom: 20px;
-  border-radius: 2px;
-  display: block;
-  line-height: 32px;
-  font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
-  color: #2c3e50;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  code {
-    color: #d63384;
-  }
 }

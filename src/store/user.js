@@ -1,5 +1,5 @@
-import { MessageBox } from 'element-ui'
-import { login, getUser } from '@/api/user'
+import { MessageBox } from '@yp910108/y-components'
+import { login, fetchUser } from '@/api'
 import { setLocalToken, removeLocalToken } from '@/utils'
 
 const state = {
@@ -39,7 +39,7 @@ const actions = {
   },
   // 获取用户信息
   async getUser({ commit }) {
-    const user = (await getUser()) || {}
+    const user = (await fetchUser()) || {}
     commit('SET_USER', user)
     return user
   }

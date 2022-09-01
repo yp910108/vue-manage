@@ -1,8 +1,8 @@
 <template>
   <div class="upload-picture">
-    <i-upload v-bind="$_attrs" v-on="$listeners" :class="{ 'upload-icon-hide': !uploadAble }">
-      <i class="el-icon-plus" />
-    </i-upload>
+    <y-upload v-bind="$_attrs" v-on="$listeners" :class="{ 'upload-icon-hide': !uploadAble }">
+      <y class="el-icon-plus" />
+    </y-upload>
     <preview ref="preview" :url="currUrl" />
   </div>
 </template>

@@ -1,8 +1,8 @@
 <template>
   <div class="upload-file">
-    <i-upload v-bind="$_attrs" v-on="$listeners" :class="{ 'upload-btn-hide': !uploadAble }">
-      <el-button plain>点击上传</el-button>
-    </i-upload>
+    <y-upload v-bind="$_attrs" v-on="$listeners" :class="{ 'upload-btn-hide': !uploadAble }">
+      <y-button plain>点击上传</y-button>
+    </y-upload>
   </div>
 </template>
 

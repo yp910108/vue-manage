@@ -1,5 +1,5 @@
 <template>
-  <el-dialog
+  <y-dialog
     :visible.sync="visible"
     :modal-append-to-body="true"
     :append-to-body="true"
@@ -7,7 +7,7 @@
     custom-class="upload-picture-preview-dialog"
   >
     <img :src="url" alt />
-  </el-dialog>
+  </y-dialog>
 </template>
 
 <script>

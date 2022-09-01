@@ -24,16 +24,17 @@ function generateRoutes(originMenuData) {
       if (!!children && !!children.length) {
         generate(children, pageUrl)
       } else {
-        const page = () =>
-          import('@/views/' + pageUrl)
-            .then((res) => {
+        const page = (r) =>
+          require.ensure([], () => {
+            try {
+              const res = require(`@/views/${pageUrl}`)
               res.default.name = name
-              return res
-            })
-            .catch((e) => {
-              console.error(e)
-              return NotFound
-            })
+              r(res)
+            } catch (e) {
+              console.warn(e)
+              r(NotFound)
+            }
+          })
         routes.push({ path: pageUrl, name, component: page, meta: restProps })
       }
     }

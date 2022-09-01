@@ -1,11 +1,11 @@
 <template>
   <div class="app-breadcrumb">
     <hamburger class="hamburger-wrapper" />
-    <el-breadcrumb class="breadcrumb-wrapper">
-      <el-breadcrumb-item v-for="{ path, title } of matched" :key="path" :to="{ path: getFirstPath(menus, path) }">
+    <y-breadcrumb class="breadcrumb-wrapper">
+      <y-breadcrumb-item v-for="{ path, title } of matched" :key="path" :to="{ path: getFirstPath(menus, path) }">
         {{ title }}
-      </el-breadcrumb-item>
-    </el-breadcrumb>
+      </y-breadcrumb-item>
+    </y-breadcrumb>
   </div>
 </template>
 <script>

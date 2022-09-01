@@ -4,8 +4,8 @@
     <span class="title">页面不存在</span>
     <span class="desc">对不起, 您访问的页面地址不存在。</span>
     <div class="operation">
-      <el-button type="primary" @click="$router.back()">返 回</el-button>
-      <el-button plain @click="$router.replace('/')">返回首页</el-button>
+      <y-button type="primary" @click="$router.back()">返 回</y-button>
+      <y-button plain @click="$router.replace('/')">返回首页</y-button>
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 import { processMenuAuthData, getAuthData } from '@/utils'
 
-const has = {
+export default {
   inserted(el, { value }, { context }) {
     if (value && value.length > 0) {
       const { path } = context.$route
@@ -15,8 +15,4 @@ const has = {
       console.error('need args like v-has="add"')
     }
   }
-}
-
-export default function (Vue) {
-  Vue.directive('has', has)
 }

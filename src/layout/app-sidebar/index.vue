@@ -1,9 +1,9 @@
 <template>
-  <el-scrollbar class="app-sidebar">
-    <el-menu unique-opened :default-active="defaultActive" :collapse="isCollapse">
+  <y-scrollbar class="app-sidebar">
+    <y-menu unique-opened :default-active="defaultActive" :collapse="isCollapse">
       <sidebar-item v-for="menu in menus" :key="menu.path" :item="menu" />
-    </el-menu>
-  </el-scrollbar>
+    </y-menu>
+  </y-scrollbar>
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -52,14 +52,14 @@ export default {
   .el-menu {
     border-right: 0;
     width: 100%;
-    background-color: #2b2b2d;
-    .i-icon {
+    background: #2b2b2d;
+    .y-icon {
       margin-right: 6px;
       font-size: 14px;
     }
     .el-submenu.is-active > .el-submenu__title,
     .el-menu-item.is-active {
-      .i-icon {
+      .y-icon {
         color: $--color-primary;
       }
     }

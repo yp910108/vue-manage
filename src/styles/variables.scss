@@ -1,20 +1,5 @@
 // color
 $--color-primary: #1677ff;
-$--color-primary-light-9: mix(#fff, $--color-primary, 90%);
-$--color-danger: #f56c6c;
-
-// border-color
-$--border-color-lighter: #ebeef5;
-
-// drop-down-menu-item
-$--dropdown-menuItem-hover-fill: $--color-primary-light-9;
-
-// el-table
-$--table-border-color: $--border-color-lighter;
-$--table-border: 1px solid $--table-border-color;
-
-$--color-status-pass: #4c9e10; // 通过
-$--color-status-back: #bf1c1c; // 驳回
 
 :export {
   primaryColor: $--color-primary;

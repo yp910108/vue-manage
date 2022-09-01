@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Message } from '@yp910108/y-components'
 import store from '@/store'
 import { getLocalToken } from './local'
 

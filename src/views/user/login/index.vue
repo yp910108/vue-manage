@@ -4,27 +4,22 @@
       <h2 class="sys-name">{{ settings.title }}</h2>
       <div class="form-wrapper">
         <div class="title-wrapper">欢迎登录</div>
-        <el-form ref="form" :model="form" :rules="rules">
-          <el-form-item prop="account">
-            <i-icon icon="user" />
-            <el-input
-              v-model.trim="form.account"
-              type="text"
-              placeholder="请输入用户名称"
-              @keyup.enter.native="login"
-            />
-          </el-form-item>
-          <el-form-item prop="password">
-            <i-icon icon="password" />
-            <el-input
+        <y-form ref="form" :model="form" :rules="rules">
+          <y-form-item prop="account">
+            <y-icon icon="user" />
+            <y-input v-model.trim="form.account" type="text" placeholder="请输入用户名称" @keyup.enter.native="login" />
+          </y-form-item>
+          <y-form-item prop="password">
+            <y-icon icon="password" />
+            <y-input
               v-model.trim="form.password"
               type="password"
               placeholder="请输入登录密码"
               @keyup.enter.native="login"
             />
-          </el-form-item>
-        </el-form>
-        <el-button type="primary" class="btn-login" :loading="loading" @click="login">登 录</el-button>
+          </y-form-item>
+        </y-form>
+        <y-button type="primary" class="btn-login" :loading="loading" @click="login">登 录</y-button>
       </div>
     </div>
   </div>
@@ -118,7 +113,7 @@ export default {
           padding: 0 15px 0 32px;
           font-size: 16px;
         }
-        .i-icon {
+        .y-icon {
           position: absolute;
           z-index: 1;
           left: 12px;

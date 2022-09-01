@@ -1,5 +1,5 @@
 <template>
-  <i-icon :icon="icon" @click="toggleSideBar" />
+  <y-icon :icon="icon" @click="toggleSideBar" />
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -19,7 +19,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.i-icon {
+.y-icon {
   padding: 5px;
   font-size: 30px;
   color: #7d7e80;

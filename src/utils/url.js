@@ -1,4 +1,4 @@
-import { toRawType } from './common'
+import { toRawType } from './util'
 
 /**
  * @param {string} path

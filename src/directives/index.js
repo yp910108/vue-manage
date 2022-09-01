@@ -1,4 +1,1 @@
-import Vue from 'vue'
-import has from './has'
-
-Vue.use(has)
+export { default as has } from './has'

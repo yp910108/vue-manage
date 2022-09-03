@@ -1,7 +1,7 @@
 <template>
   <div class="app-content">
-    <y-card shadow="hover" @click.native="$router.push('/example/table')">
-      <y-button size="medium" type="text"> 表格 </y-button>
+    <y-card shadow="hover" @click.native="$router.push('/demo')">
+      <y-button size="medium" type="text">Demo 演示</y-button>
     </y-card>
   </div>
 </template>

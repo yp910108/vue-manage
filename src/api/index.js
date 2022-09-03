@@ -18,36 +18,11 @@ export function fetchUser() {
         mobile: '13793186354',
         menus: [
           {
-            title: '组件示例',
-            icon: 'example',
-            path: 'example',
+            title: 'Demo 演示',
+            icon: 'demo',
+            path: 'demo',
             isMenu: 1,
-            children: [
-              {
-                title: 'Table',
-                path: 'table',
-                isMenu: 1,
-                children: [{ path: 'add' }, { path: 'edit' }, { path: 'delete' }]
-              }
-            ]
-          },
-          {
-            title: '嵌套的路由',
-            icon: 'nested',
-            path: 'nested',
-            isMenu: 1,
-            children: [
-              {
-                title: '子路由1',
-                path: 'child1',
-                isMenu: 1
-              },
-              {
-                title: '子路由2',
-                path: 'child2',
-                isMenu: 1
-              }
-            ]
+            children: [{ path: 'add' }, { path: 'edit' }, { path: 'delete' }]
           }
         ]
       })

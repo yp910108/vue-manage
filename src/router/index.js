@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Layout from '@/layout'
+import Login from '@/views/user/login'
+import Redirect from '@/views/redirect'
+import NotFound from '@/views/404'
 
 Vue.use(Router)
 
@@ -19,7 +22,7 @@ export default new Router({
     {
       path: '/user/login',
       name: 'UserLogin',
-      component: () => import('@/views/user/login')
+      component: Login
     },
     {
       path: '/redirect',
@@ -27,13 +30,13 @@ export default new Router({
       children: [
         {
           path: ':path*',
-          component: () => import('@/views/redirect')
+          component: Redirect
         }
       ]
     },
     {
       path: '/404',
-      component: () => import('@/views/404')
+      component: NotFound
     }
   ]
 })

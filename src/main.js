@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import store from './store'
 import router from './router'
 
 import './icons'
@@ -7,7 +8,6 @@ import './plugins'
 import './mixins'
 import './directives'
 import './permission'
-import store from './store' // TODO tree-select
 
 import App from './App'
 

@@ -52,5 +52,29 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
+    // set split-chunks
+    config.when(process.env.NODE_ENV !== 'development', (config) => {
+      config.optimization.splitChunks({
+        chunks: 'all',
+        cacheGroups: {
+          vendors: {
+            name: 'chunk-vendors',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10,
+            chunks: 'initial'
+          },
+          element: {
+            name: 'chunk-element',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?element-ui(.*)/
+          },
+          components: {
+            name: 'chunk-components',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?(@yp910108\/y-components)(.*)/
+          }
+        }
+      })
+    })
   }
 }

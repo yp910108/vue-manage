@@ -10,24 +10,24 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style type="text/css">
-      @keyframes antRotate {
+      @keyframes rotate {
         to {
           -webkit-transform: rotate(405deg);
           transform: rotate(405deg);
         }
       }
-      @-webkit-keyframes antRotate {
+      @-webkit-keyframes rotate {
         to {
           -webkit-transform: rotate(405deg);
           transform: rotate(405deg);
         }
       }
-      @keyframes antSpinMove {
+      @keyframes spinMove {
         to {
           opacity: 1;
         }
       }
-      @-webkit-keyframes antSpinMove {
+      @-webkit-keyframes spinMove {
         to {
           opacity: 1;
         }
@@ -56,7 +56,7 @@
         width: 64px;
         height: 64px;
         font-size: 64px;
-        animation: antRotate 1.2s infinite linear;
+        animation: rotate 1.2s infinite linear;
       }
       .pre__loading__dot i {
         position: absolute;
@@ -67,7 +67,7 @@
         height: 22px;
         background-color: #1677ff;
         opacity: 0.3;
-        animation: antSpinMove 1s infinite linear alternate;
+        animation: spinMove 1s infinite linear alternate;
       }
       .pre__loading__dot i:nth-child(1) {
         left: 0;

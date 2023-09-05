@@ -11,7 +11,7 @@
     "build:prod": "vue-cli-service build --mode production",
     "lint": "eslint --ext .js,.vue src",
     "fix": "eslint --fix --ext .js,.vue src",
-    "svgo": "svgo -f src/base/icon/svg --config=src/base/icon/svgo.yml"
+    "svgo": "svgo -f src/icons --config=src/icons/svgo.yml"
   },
   "dependencies": {
     "@yp910108/y-components": "^1.0.17",
